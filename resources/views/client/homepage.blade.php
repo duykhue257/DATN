@@ -262,6 +262,29 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-3 col-md-4 col-sm-6 mix women men kid accessories cosmetic">
+            <div class="product__item sale">
+                <div class="product__item__pic set-bg" data-setbg="img/product/product-8.jpg">
+                    <div class="label">Sale</div>
+                    <ul class="product__hover">
+                        <li><a href="img/product/product-8.jpg" class="image-popup"><span class="arrow_expand"></span></a></li>
+                        <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+                        <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                    </ul>
+                </div>
+                <div class="product__item__text">
+                    <h6><a href="#">Áo sơ mi nam chất nhung tăm VICENZO phong cách trẻ trung basic</a></h6>
+                    <div class="rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                    </div>
+                    <div class="product__price">159.000đ <span>200.000đ</span></div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </section>
