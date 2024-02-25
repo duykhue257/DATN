@@ -9,11 +9,11 @@
             <div class="card-body">
                 <div class="">
                     <div class="m-8">
-                        <form class="max-w-md mx-auto" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('category.store') }}" class="max-w-md mx-auto" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
                                 <label for="name" class="form-label">Tên loại</label>
-                                <input type="text" name="name" id="name" class="form-control" placeholder="" />
+                                <input type="text" name="name_cate" id="name_cate" class="form-control" placeholder="" />
                             </div>
                            
                             <button type="submit" class="btn btn-success">Thêm</button>

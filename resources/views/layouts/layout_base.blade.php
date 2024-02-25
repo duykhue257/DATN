@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ClassicMan</title>
-    
+
 
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
@@ -15,10 +16,11 @@
     <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/slicknav.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
- 
+
     <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" />
 </head>
+
 <body>
     <div id="preloder">
         <div class="loader"></div>
@@ -31,24 +33,36 @@
         <ul class="offcanvas__widget">
             <li><span class="icon_search search-switch"></span></li>
             <li><a href="#"><span class="icon_heart_alt"></span>
-                <div class="tip">2</div>
-            </a></li>
+                    <div class="tip">2</div>
+                </a></li>
             <li><a href="#"><span class="icon_bag_alt"></span>
-                <div class="tip">2</div>
-            </a></li>
+                    <div class="tip">2</div>
+                </a></li>
         </ul>
         <div class="offcanvas__logo">
-            <a href="./index.html"><img src="img/logo.png"  alt=""></a>
+            <a href="./index.html"><img src="img/logo.png" alt=""></a>
         </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__auth">
-            <a href="/signin">Đăng nhập</a>
-            <a href="">Đăng ký</a>
+            @if (Auth::check())
+                <!-- Hiển thị nút đăng xuất nếu người dùng đã đăng nhập -->
+                <form {{ Auth::user() ? '' : 'hidden' }} action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit">Đăng xuất</button>
+                </form>
+            @else
+                <!-- Hiển thị nút đăng nhập và đăng ký nếu người dùng chưa đăng nhập -->
+                <div style="display: none;">
+                    <a {{ Auth::user() ? 'hidden' : '' }} href="{{ route('login') }}">Đăng nhập</a>
+                    <a href="{{ route('signup') }}">Đăng ký</a>
+
+                </div>
+            @endif
         </div>
     </div>
     <!-- Offcanvas Menu End -->
-   
-         
+
+
     <!-- Header Section Begin -->
     <header class="header">
         <div class="container-fluid">
@@ -62,7 +76,7 @@
                     <nav class="header__menu align-items-center">
                         <ul>
                             <li class="active"><a href="/home">Trang chủ</a></li>
-                            
+
                             <li><a href="#">Set</a></li>
                             <li><a href="/shop">Sản phẩm</a></li>
                             {{-- <li><a href="#">Pages</a>
@@ -80,18 +94,36 @@
                 </div>
                 <div class="col-lg-3">
                     <div class="header__right">
+
+                        <!-- Hiển thị nút đăng nhập và đăng ký nếu người dùng chưa đăng nhập -->
                         <div class="header__right__auth">
-                            <a href="/signin">Đăng nhập</a>
-                            <a href="/signup">Đăng ký</a>
+                            {{-- @if (Auth::check())
+                                <!-- Hiển thị nút đăng xuất nếu người dùng đã đăng nhập -->
+                                <form action="{{ route('logout') }}"
+                                    method="POST">
+                                    @csrf
+                                    <a  type="submit"><a href="">Đăng xuất</a></a>
+                                </form>
+                            @else --}}
+                            @if (Auth::check())
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" >Đăng xuất</button>
+                                </form>
+                                @else
+                                    <a href="{{ route('login') }}">Đăng nhập</a>
+                                    <a href="{{ route('signup') }}">Đăng ký</a>
+                            @endif
                         </div>
+                        {{-- @endif --}}
                         <ul class="header__right__widget">
                             <li><span class="icon_search search-switch"></span></li>
                             <li><a href="#"><span class="icon_heart_alt"></span>
-                                <div class="tip">2</div>
-                            </a></li>
+                                    <div class="tip">2</div>
+                                </a></li>
                             <li><a href="/cart"><span class="icon_bag_alt"></span>
-                                <div class="tip">2</div>
-                            </a></li>
+                                    <div class="tip">2</div>
+                                </a></li>
                         </ul>
                     </div>
                 </div>
@@ -101,148 +133,154 @@
             </div>
         </div>
     </header>
-      <!-- MAIN -->
+    <!-- MAIN -->
     <div>
         @yield('main')
-    </div>  
+    </div>
 
-<!-- Instagram Begin -->
-<div class="instagram">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-2 col-md-4 col-sm-4 p-0">
-                <div class="instagram__item set-bg" data-setbg="img/instagram/insta-1.jpg">
-                    <div class="instagram__text">
-                        <i class="fa fa-instagram"></i>
-                        <a href="#">@ ClassicMan</a>
+    <!-- Instagram Begin -->
+    <div class="instagram">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-1.jpg">
+                        <div class="instagram__text">
+                            <i class="fa fa-instagram"></i>
+                            <a href="#">@ ClassicMan</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-2 col-md-4 col-sm-4 p-0">
-                <div class="instagram__item set-bg" data-setbg="img/instagram/insta-2.jpg">
-                    <div class="instagram__text">
-                        <i class="fa fa-instagram"></i>
-                        <a href="#">@ ClassicMan</a>
+                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-2.jpg">
+                        <div class="instagram__text">
+                            <i class="fa fa-instagram"></i>
+                            <a href="#">@ ClassicMan</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-2 col-md-4 col-sm-4 p-0">
-                <div class="instagram__item set-bg" data-setbg="img/instagram/insta-3.jpg">
-                    <div class="instagram__text">
-                        <i class="fa fa-instagram"></i>
-                        <a href="#">@ ClassicMan</a>
+                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-3.jpg">
+                        <div class="instagram__text">
+                            <i class="fa fa-instagram"></i>
+                            <a href="#">@ ClassicMan</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-2 col-md-4 col-sm-4 p-0">
-                <div class="instagram__item set-bg" data-setbg="img/instagram/insta-4.jpg">
-                    <div class="instagram__text">
-                        <i class="fa fa-instagram"></i>
-                        <a href="#">@ ClassicMan</a>
+                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-4.jpg">
+                        <div class="instagram__text">
+                            <i class="fa fa-instagram"></i>
+                            <a href="#">@ ClassicMan</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-2 col-md-4 col-sm-4 p-0">
-                <div class="instagram__item set-bg" data-setbg="img/instagram/insta-5.jpg">
-                    <div class="instagram__text">
-                        <i class="fa fa-instagram"></i>
-                        <a href="#">@ ClassicMan</a>
+                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-5.jpg">
+                        <div class="instagram__text">
+                            <i class="fa fa-instagram"></i>
+                            <a href="#">@ ClassicMan</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-2 col-md-4 col-sm-4 p-0">
-                <div class="instagram__item set-bg" data-setbg="img/instagram/insta-6.jpg">
-                    <div class="instagram__text">
-                        <i class="fa fa-instagram"></i>
-                        <a href="#">@ ClassicMan</a>
+                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-6.jpg">
+                        <div class="instagram__text">
+                            <i class="fa fa-instagram"></i>
+                            <a href="#">@ ClassicMan</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Instagram End -->
+    <!-- Instagram End -->
 
-<!-- Footer Section Begin -->
-<footer class="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-7">
-                <div class="footer__about">
-                    <div class="footer__logo">
-                        <a href="./index.html"><img src="img/logo.png" alt=""></a>
+  
+
+    <!-- Footer Section Begin -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-7">
+                    <div class="footer__about">
+                        <div class="footer__logo">
+                            <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                        </div>
+                        <p>Việc khách hàng nhận thức được nhu cầu của mình là rất quan trọng nhưng đây chính là thời
+                            điểm cắt tóc.</p>
+                        <div class="footer__payment">
+                            <a href="#"><img src="img/payment/payment-1.png" alt=""></a>
+                            <a href="#"><img src="img/payment/payment-2.png" alt=""></a>
+                            <a href="#"><img src="img/payment/payment-3.png" alt=""></a>
+                            <a href="#"><img src="img/payment/payment-4.png" alt=""></a>
+                            <a href="#"><img src="img/payment/payment-5.png" alt=""></a>
+                        </div>
                     </div>
-                    <p>Việc khách hàng nhận thức được nhu cầu của mình là rất quan trọng nhưng đây chính là thời điểm cắt tóc.</p>
-                    <div class="footer__payment">
-                        <a href="#"><img src="img/payment/payment-1.png" alt=""></a>
-                        <a href="#"><img src="img/payment/payment-2.png" alt=""></a>
-                        <a href="#"><img src="img/payment/payment-3.png" alt=""></a>
-                        <a href="#"><img src="img/payment/payment-4.png" alt=""></a>
-                        <a href="#"><img src="img/payment/payment-5.png" alt=""></a>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-5">
+                    <div class="footer__widget">
+                        <h6>Liên kết nhanh</h6>
+                        <ul>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Blogs</a></li>
+                            <li><a href="#">Liên Hệ</a></li>
+                            <li><a href="#">Câu hỏi thường gặp</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-4">
+                    <div class="footer__widget">
+                        <h6>TÀI KHOẢN</h6>
+                        <ul>
+                            <li><a href="#">Tài khoản của tôi</a></li>
+                            <li><a href="#">Theo dõi đơn hàng</a></li>
+                            <li><a href="#">Thủ tục thanh toán</a></li>
+                            <li><a href="#">Danh sách yêu thích</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-8 col-sm-8">
+                    <div class="footer__newslatter">
+                        <h6>NEWSLETTER</h6>
+                        <form action="#">
+                            <input type="text" placeholder="Email">
+                            <button type="submit" class="site-btn">Subscribe</button>
+                        </form>
+                        <div class="footer__social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-youtube-play"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-3 col-sm-5">
-                <div class="footer__widget">
-                    <h6>Liên kết nhanh</h6>
-                    <ul>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Blogs</a></li>
-                        <li><a href="#">Liên Hệ</a></li>
-                        <li><a href="#">Câu hỏi thường gặp</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-4">
-                <div class="footer__widget">
-                    <h6>TÀI KHOẢN</h6>
-                    <ul>
-                        <li><a href="#">Tài khoản của tôi</a></li>
-                        <li><a href="#">Theo dõi đơn hàng</a></li>
-                        <li><a href="#">Thủ tục thanh toán</a></li>
-                        <li><a href="#">Danh sách yêu thích</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-8 col-sm-8">
-                <div class="footer__newslatter">
-                    <h6>NEWSLETTER</h6>
-                    <form action="#">
-                        <input type="text" placeholder="Email">
-                        <button type="submit" class="site-btn">Subscribe</button>
-                    </form>
-                    <div class="footer__social">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-youtube-play"></i></a>
-                        <a href="#"><i class="fa fa-instagram"></i></a>
-                        <a href="#"><i class="fa fa-pinterest"></i></a>
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    <div class="footer__copyright__text">
+                        <p>Copyright WD-20 - SP24&copy;
+                            <script>
+                                document.write(new Date().getFullYear());
+                            </script> DATN
                     </div>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                <div class="footer__copyright__text">
-                    <p>Copyright WD-20 - SP24&copy; <script>document.write(new Date().getFullYear());</script> DATN
-                </div>
-                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
         </div>
     </div>
-</footer>
-<!-- Footer Section End -->
-
-<!-- Search Begin -->
-<div class="search-model">
-    <div class="h-100 d-flex align-items-center justify-content-center">
-        <div class="search-close-switch">+</div>
-        <form class="search-model-form">
-            <input type="text" id="search-input" placeholder="Search here.....">
-        </form>
-    </div>
-</div>
 </body>
 {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 <script src="js/jquery-3.3.1.min.js"></script>

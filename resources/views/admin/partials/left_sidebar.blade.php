@@ -42,29 +42,29 @@
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Sản phẩm :</h6>
-                    <a class="collapse-item" href="/admin/dashboard">Danh sách sản phẩm</a>
-                    <a class="collapse-item" href="/admin/product/add">Thêm sản phẩm</a>
-                    <h6 class="collapse-header">Thể loại :</h6>
-                    <a class="collapse-item" href="/admin/cate/list">Danh sách loại</a>
-                    <a class="collapse-item" href="/admin/cate/add">Thêm loại</a>
+                    <h6 class="collapse-header ">Product </h6>
+                    <a class="collapse-item" href="{{ route('product.index') }}">List Products</a>
+                    <a class="collapse-item" href="{{ route('product.create') }}">Add Product</a>
+                    <h6 class="collapse-header">Category :</h6>
+                    <a class="collapse-item" href="{{ route('category.index') }}">List Categories</a>
+                    <a class="collapse-item" href="{{ route('category.create') }}">Add Category</a>
                 </div>
             </div>
         </li>
-        
+
         <!-- Nav Item - Utilities Collapse Menu -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                 aria-expanded="true" aria-controls="collapseUtilities">
                 <i class="fa-solid fa-users"></i>
-                <span>Người dùng</span>
+                <span>User</span>
             </a>
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                  
-                    <a class="collapse-item" href="/admin/profile">Danh sách</a>
-                    <a class="collapse-item" href="/admin/profile/edit">Sửa thông tin</a>
+
+                    <a class="collapse-item" href="{{ route('listUser') }}">List User</a>
+          
                 </div>
             </div>
         </li>
@@ -87,13 +87,13 @@
             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Login Screens:</h6>
-                    <a class="collapse-item" href="login.html">Login</a>
-                    <a class="collapse-item" href="register.html">Register</a>
+                    <a class="collapse-item" href="{{ route('login') }}">Login</a>
+                    <a class="collapse-item" href="{{ route('signup') }}">Register</a>
                     <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                    <div class="collapse-divider"></div>
-                    <h6 class="collapse-header">Other Pages:</h6>
-                    <a class="collapse-item" href="404.html">404 Page</a>
-                    <a class="collapse-item" href="blank.html">Blank Page</a>
+                    {{-- <div class="collapse-divider"></div> --}}
+                    {{-- <h6 class="collapse-header">Other Pages:</h6> --}}
+                    {{-- <a class="collapse-item" href="404.html">404 Page</a> --}}
+                    {{-- <a class="collapse-item" href="blank.html">Blank Page</a> --}}
                 </div>
             </div>
         </li>
@@ -130,7 +130,7 @@
         <div id="content">
 
             <!-- Topbar -->
-          
+
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
@@ -140,7 +140,7 @@
         </div>
         <!-- End of Main Content -->
 
-       
+
 
     </div>
     <!-- End of Content Wrapper -->

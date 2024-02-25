@@ -59,6 +59,6 @@
 @endsection --}}
 @section('body')
     <!-- Main row -->
-    @include('admin.product.list_product')
+    @include('admin.product.index')
     <!-- /.row (main row) -->
 @endsection

@@ -9,13 +9,13 @@ use App\Models\Products;
 class Category extends Model
 {
     use HasFactory;
+    protected $table = 'categories';
     protected $fillable = [
-        'id',
-        'name_cate',
+        'id','name_cate'
     ];
 
     public function products()
     {
-        return $this->hasMany(Products::class, 'id_cate', 'id');
+        return $this->hasMany(Products::class,'category_id', 'id');
     }
 }

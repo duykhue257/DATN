@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('size_id');
             $table->unsignedBigInteger('color_id');
-            $table->decimal('price', 8, 2);
+    
             // Thêm các trường khác nếu cần thiết
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

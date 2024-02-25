@@ -42,8 +42,8 @@
         </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__auth">
-            <a href="/signin">Đăng nhập</a>
-            <a href="">Đăng ký</a>
+            <a href="{{ route('login') }}">Đăng nhập</a>
+            <a href="{{ route('signup') }}">Đăng ký</a>
         </div>
     </div>
     <!-- Offcanvas Menu End -->

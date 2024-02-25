@@ -60,7 +60,7 @@
 </div>
 </section>
 <!-- Categories Section End -->
-
+@include('layouts.notify')
 <!-- Product Section Begin -->
 <section class="product spad">
 <div class="container">
