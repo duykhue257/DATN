@@ -16,13 +16,16 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('size_id');
             $table->unsignedBigInteger('color_id');
-    
+            $table->string('image')->nullable();
+            $table->integer('quantity')->default(0);
+            $table->decimal('price');
+            $table->decimal('price_reduced');
             // Thêm các trường khác nếu cần thiết
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreign('size_id')->references('id')->on('sizes')->onDelete('cascade');
             $table->foreign('color_id')->references('id')->on('colors')->onDelete('cascade');
-
+            
             $table->timestamps();
         });
     }

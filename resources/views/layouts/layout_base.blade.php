@@ -44,20 +44,13 @@
         </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__auth">
-            @if (Auth::check())
-                <!-- Hiển thị nút đăng xuất nếu người dùng đã đăng nhập -->
-                <form {{ Auth::user() ? '' : 'hidden' }} action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit">Đăng xuất</button>
-                </form>
-            @else
-                <!-- Hiển thị nút đăng nhập và đăng ký nếu người dùng chưa đăng nhập -->
-                <div style="display: none;">
-                    <a {{ Auth::user() ? 'hidden' : '' }} href="{{ route('login') }}">Đăng nhập</a>
-                    <a href="{{ route('signup') }}">Đăng ký</a>
 
-                </div>
-            @endif
+            <div style="display: none;">
+                <a href="{{ route('login') }}">Đăng nhập</a>
+                <a href="{{ route('signup') }}">Đăng ký</a>
+
+            </div>
+
         </div>
     </div>
     <!-- Offcanvas Menu End -->
@@ -106,13 +99,20 @@
                                 </form>
                             @else --}}
                             @if (Auth::check())
-                                <form action="{{ route('logout') }}" method="POST">
+                                <span>{{ Auth::user()->name }}</span>
+                                @if (Auth::user()->avatar)
+                                    <img src="{{ asset('path/to/avatar/' . Auth::user()->avatar) }}" alt="Avatar">
+                                @endif
+                                <a href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Đăng
+                                    xuất</a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    style="display: none;">
                                     @csrf
-                                    <button type="submit" >Đăng xuất</button>
                                 </form>
-                                @else
-                                    <a href="{{ route('login') }}">Đăng nhập</a>
-                                    <a href="{{ route('signup') }}">Đăng ký</a>
+                            @else
+                                <a href="{{ route('login') }}">Đăng nhập</a>
+                                <a href="{{ route('signup') }}">Đăng ký</a>
                             @endif
                         </div>
                         {{-- @endif --}}
@@ -195,7 +195,7 @@
     </div>
     <!-- Instagram End -->
 
-  
+
 
     <!-- Footer Section Begin -->
     <footer class="footer">

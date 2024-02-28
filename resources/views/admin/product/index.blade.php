@@ -14,11 +14,12 @@
                                  <tr>
                                      <th>ID</th>
                                      <th>Name</th>
-                                     <th>Description</th>
                                      <th>Image</th>
-                                     <th>Quantity</th>
-                                     <th>Category</th>
                                      <th>Price</th>
+                                     <th>Price Reduced</th>
+                                     <th>color</th>
+                                     <th>Size</th>
+                                     <th>Quantity</th>
                                      <th>Action</th>
                                  </tr>
                              </thead>
@@ -26,19 +27,20 @@
                                  @foreach ($products as $prd)
                                      <tr>
                                          <th>{{ $prd->id }}</th>
-                                         <td>{{ $prd->name }}</td>
-                                         <td>{{ $prd->description }}</td>
+                                         <td>{{ $prd->products->name }}</td>
                                          <td style="width:150px">
-                                             <img style="width:100%" src="{{ Storage::url($prd->image) }}" alt="">
-                                         </td>
-                                         <td>{{ $prd->quantity }}</td>
-                                         <td>{{ $prd->name_cate }}</td>
+                                            <img style="width:100%" src="{{ Storage::url($prd->image) }}" alt="">
+                                        </td>
                                          <td>{{ $prd->price }}</td>
+                                         <td>{{ $prd->price_reduced }}</td>
+                                         <td>{{ $prd->colors->color }}</td>
+                                         <td>{{ $prd->sizes->size }}</td>
+                                         <td>{{ $prd->quantity }}</td>
                                          <td>
-                                            <form action="{{ route('product.destroy', $prd->id_prd) }}" method="POST">
+                                            <form action="{{ route('product.destroy', $prd->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <a class="btn btn-primary" href="{{ route('product.edit', $prd->id_prd) }}">EDIT</a>
+                                                <a class="btn btn-primary" href="{{ route('product.edit', $prd->id) }}">EDIT</a>
                                                 <button onclick="return confirm('are you sure?')"  class="btn btn-danger" type="submit">DELETE</button>
                                             </form>
                                         </td>

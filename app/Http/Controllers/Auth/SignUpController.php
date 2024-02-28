@@ -22,8 +22,8 @@ class  SignUpController extends Controller
     {
         // Validate dữ liệu nhập vào từ form đăng ký
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:users|max:255',
+            'name' => 'required|string|max:255|unique:users,name',
+            'email' => 'required|string|email|unique:users,email|max:255',
             'password' => 'required|string|min:3|confirmed',
         ]);
 

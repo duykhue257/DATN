@@ -14,20 +14,39 @@
                             @csrf
                             <div class="mb-3">
                                 <label for="name" class="form-label">Name</label>
-                                <input type="text" name="name" id="name" class="form-control" placeholder="" />
+                                <select id="product_id" name="product_id" class="form-select">
+                                    @foreach ($product as $prd)
+                                        <option value="{{ $prd->id }}">{{ $prd->name }} </option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label for="price" class="form-label">Price</label>
                                 <input type="text" name="price" id="price" class="form-control" placeholder="" />
                             </div>
                             <div class="mb-3">
+                                <label for="price_reduced" class="form-label">Price reduced</label>
+                                <input type="text" name="price_reduced" id="price_reduced" class="form-control" placeholder="" />
+                            </div>
+                            <div class="mb-3">
                                 <label for="quantity" class="form-label">Quantity</label>
                                 <input type="text" name="quantity" id="quantity" class="form-control" placeholder="" />
                             </div>
                             <div class="mb-3">
-                                <label for="description" class="form-label">Description</label>
-                                <input type="text" name="description" id="description" class="form-control"
-                                    placeholder="" />
+                                <label for="color_id" class="form-label">Color</label>
+                                <select id="color_id" name="color_id" class="form-select">
+                                    @foreach ($color as $cl)
+                                        <option value="{{ $cl->id }}">{{ $cl->color }} </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="size_id" class="form-label">size</label>
+                                <select id="size_id" name="size_id" class="form-select">
+                                    @foreach ($size as $sz)
+                                        <option value="{{ $sz->id }}">{{ $sz->size }} </option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label for="img" class="form-label">Image</label>
@@ -41,14 +60,14 @@
                                     style="max-width: 100%; max-height: 200px;">
                             </div>
 
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label class="form-label">Category</label>
                                 <select id="category_id" name="category_id" class="form-select">
                                     @foreach ($categories as $ct)
                                         <option value="{{ $ct->id }}">{{ $ct->name_cate }} </option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> --}}
                             <button type="submit" class="btn btn-success">Thêm</button>
                             <button class="btn btn-primary"><a class="text-white text-decoration-none" href="{{ route('product.index') }}">List</a></button>
 
