@@ -1,4 +1,4 @@
-@extends('layouts.layout_base')
+@extends('layouts.client.layout_base')
 @section('main')
 <section class="categories">
     <div class="container-fluid">
@@ -12,7 +12,7 @@
                         chuyển động cùng với mọi sự kiện diễn ra. 
                         Bạn thậm chí có thể nhận biết sự đến gần của một cuộc cách mạng trong trang phục. 
                         Bạn có thể nhìn và cảm nhận mọi điều thông qua trang phục.”</p>
-                    <a href="#">Mua Ngay</a>
+                    
                 </div>
             </div>
         </div>
@@ -23,7 +23,7 @@
                         <div class="categories__text">
                             <h4>Phong cách Classic</h4>
                             <p>10 items</p>
-                            <a href="#">Mua Ngay</a>
+                            
                         </div>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                         <div class="categories__text">
                             <h4>Phong cách Casual</h4>
                             <p>10 items</p>
-                            <a href="#">Mua Ngay</a>
+                            
                         </div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                         <div class="categories__text">
                             <h4>Phong cách Streetwear</h4>
                             <p>10 items</p>
-                            <a href="#">Mua Ngay</a>
+                            
                         </div>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                         <div class="categories__text">
                             <h4>Phong cách Business</h4>
                             <p>10 items</p>
-                            <a href="#">Mua Ngay</a>
+                            
                         </div>
                     </div>
                 </div>
@@ -74,7 +74,6 @@
             <ul class="filter__controls">
                 <li class="active" data-filter="*">Tất cả</li>
                 <li data-filter=".women">Đồ thể thao</li>
-                <li data-filter=".men">Set</li>
                 <li data-filter=".kid">Áo sơ mi</li>
                 <li data-filter=".accessories">Áo phông</li>
                 <li data-filter=".cosmetic">Áo blazer</li>
@@ -93,7 +92,7 @@
                     </ul>
                 </div>
                 <div class="product__item__text">
-                    <h6><a href="#">Áo Thun Sơmi Dài Tay FVNXY Phom Slim-fit Màu Trắng</a></h6>
+                    <h6><a href="/detail_product">Áo Thun Sơmi Dài Tay FVNXY Phom Slim-fit Màu Trắng</a></h6>
                     <div class="rating">
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
@@ -138,7 +137,7 @@
                     </ul>
                 </div>
                 <div class="product__item__text">
-                    <h6><a href="#">Áo thun PLEASURE / Preference Cream Tee</a></h6>
+                    <h6><a href="/detail_product">Áo thun PLEASURE / Preference Cream Tee</a></h6>
                     <div class="rating">
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
@@ -300,21 +299,21 @@
                     <div class="banner__text">
                         <span>ClassicMan</span>
                         <h1>Tưng bừng sắm đồ đón xuân</h1>
-                        <a href="#">Mua Ngay</a>
+                        
                     </div>
                 </div>
                 <div class="banner__item">
                     <div class="banner__text">
                         <span>ClassicMan</span>
                         <h1>Chào mừng xuân tới</h1>
-                        <a href="#">Mua Ngay</a>
+                        
                     </div>
                 </div>
                 <div class="banner__item">
                     <div class="banner__text">
                         <span>ClassicMan</span>
                         <h1>Mua càng nhiều sale càng nhiều</h1>
-                        <a href="#">Mua Ngay</a>
+                        
                     </div>
                 </div>
             </div>
@@ -532,7 +531,7 @@
                         <p>Sec</p>
                     </div>
                 </div>
-                <a href="#">Mua Ngay</a>
+                
             </div>
         </div>
     </div>

@@ -1,4 +1,4 @@
-@extends('layouts.layout_auth')
+@extends('layouts.client.layout_auth')
 @section('main')
     <!-- Section: Design Block -->
     <section class="text-center">

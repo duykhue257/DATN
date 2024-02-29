@@ -1,4 +1,4 @@
-@extends('layouts.layout_base')
+@extends('layouts.client.layout_base')
 @section('main')
 <div class="breadcrumb-option">
     <div class="container">
