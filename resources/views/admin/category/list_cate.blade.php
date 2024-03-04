@@ -8,6 +8,9 @@
                      <h6 class="m-0 font-weight-bold text-primary">Sản phẩm</h6>
                  </div>
                  <div class="card-body">
+                    <button class="btn btn-primary"><a class="text-white text-decoration-none"
+                        href="{{ route('category.create') }}">Thêm mới</a></button>
+                   <br><br>
                      <div class="table-responsive">
                          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                              <thead>

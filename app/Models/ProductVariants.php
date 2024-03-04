@@ -10,19 +10,19 @@ class ProductVariants extends Model
     use HasFactory;
     protected $table = 'product_variants';
     protected $fillable = [
-        'id','image','price','price_reduced','quantity','color_id','size_id','product_id'
+        'id','image','quantity','color_id','size_id','product_id'
     ];
    
     public function carts()
     {
-        return $this->belongsToMany(Cart::class);
+        return $this->belongsToMany(Order::class);
     }
 
     public function bills()
     {
         return $this->belongsToMany(Bill::class);
     }
-    public function products()
+    public function product()
     {
         return $this->belongsTo(Products::class, 'product_id');
     }

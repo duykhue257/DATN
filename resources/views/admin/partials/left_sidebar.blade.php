@@ -5,7 +5,7 @@
 <div id="wrapper">
 
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul class="navbar-nav bg-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/home">
@@ -38,16 +38,16 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                 aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-folder"></i>
-                <span>Danh mục</span>
+                <span>Danh mục sản phẩm</span>
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header ">Product </h6>
-                    <a class="collapse-item" href="{{ route('product.index') }}">List Products</a>
-                    <a class="collapse-item" href="{{ route('product.create') }}">Add Product</a>
-                    <h6 class="collapse-header">Category :</h6>
-                    <a class="collapse-item" href="{{ route('category.index') }}">List Categories</a>
-                    <a class="collapse-item" href="{{ route('category.create') }}">Add Category</a>
+                    <h6 class="collapse-header ">Quản lý sản phẩm </h6>
+                    <a class="collapse-item" href="{{ route('product.index') }}">Hiển thị sản phẩm</a>
+                    <a class="collapse-item" href="{{ route('productVariant.index') }}">Hiển thị biến thể</a>
+                    <h6 class="collapse-header">Quản lý loại hàng </h6>
+                    <a class="collapse-item" href="{{ route('category.index') }}">Loại sản phẩm</a>
+                    <a class="collapse-item" href="{{ route('category.create') }}">Thêm loại</a>
                 </div>
             </div>
         </li>

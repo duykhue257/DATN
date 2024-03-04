@@ -1,10 +1,6 @@
 <?php
 
-// use App\Http\Controllers\ProductsController;
-
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\LogOutController;
-// use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\SignUpController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,18 +20,12 @@ Route::get('/', function () {
    return view('welcome');
 });
 
-Route::get('/home', function () {
-   return view('client.homepage');
-})->name('homePage');
+Route::get('/home', [App\Http\Controllers\client\HomeController::class,'home'])->name('homePage');
 Route::get('/blog', function () {
    return view('client.blog');
 });
-Route::get('/shop', function () {
-   return view('client.shop');
-});
-Route::get('/detail_product', function () {
-   return view('client.detail_product');
-});
+Route::get('/shop', [App\Http\Controllers\client\HomeController::class,'shop']);
+Route::get('/detail_product', [App\Http\Controllers\client\HomeController::class,'ProductDetail'])->name('detail_product');
 Route::get('/cart', function () {
    return view('client.cart');
 });
@@ -60,8 +50,10 @@ route::middleware(['auth'])->group(function () {
       Route::get('/', function () {
          return view('admin.home');
       })->name('admin.index');
-      //products routes
+      //products route
       route::resource('product', \App\Http\Controllers\ProductsController::class);
+      //products variant route
+      route::resource('productVariant', \App\Http\Controllers\ProductVariansController::class);
       //category route 
       route::resource('category', \App\Http\Controllers\CategoryController::class);
       //user route
@@ -75,7 +67,6 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 // Route::post('/signin', 'AuthController@login')->name('signin');
 // Route hiển thị form đăng ký
 Route::get('/signup', [SignUpController::class, 'showRegistrationForm'])->name('signup');
-
 // Route xử lý đăng ký
 Route::post('/signup', [SignUpController::class, 'signup']);
 

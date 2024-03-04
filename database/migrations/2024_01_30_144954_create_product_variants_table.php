@@ -18,8 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('color_id');
             $table->string('image')->nullable();
             $table->integer('quantity')->default(0);
-            $table->decimal('price');
-            $table->decimal('price_reduced');
+
             // Thêm các trường khác nếu cần thiết
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

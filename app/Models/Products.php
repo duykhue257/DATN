@@ -10,21 +10,22 @@ class Products extends Model
     use HasFactory;
     protected $table = 'products';
     protected $fillable = [
-        'id','name','description','category_id','color_id',
+        'id', 'name', 'price', 'price_reduced', 'description', 'category_id', 'color_id','default_image'
     ];
 
     public function variants()
     {
-        return $this->hasMany(ProductVariants::class);
+        return $this->hasMany(ProductVariants::class, 'product_id');
     }
+
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
-    
-    public function carts()
+
+    public function Order()
     {
-        return $this->belongsToMany(Cart::class);
+        return $this->belongsToMany(Order::class);
     }
 
     public function bills()
@@ -33,11 +34,11 @@ class Products extends Model
     }
     public function sizes()
     {
-        return $this->belongsToMany(Size::class, 'product_variants','product_id', 'size_id')->withTimestamps();
+        return $this->belongsToMany(Size::class, 'product_variants', 'product_id', 'size_id')->withTimestamps();
     }
-    
+
     public function colors()
     {
-        return $this->belongsToMany(Color::class, 'product_variants','product_id', 'size_id')->withTimestamps();
+        return $this->belongsToMany(Color::class, 'product_variants', 'product_id', 'size_id')->withTimestamps();
     }
 }

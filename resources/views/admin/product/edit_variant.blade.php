@@ -9,33 +9,25 @@
             <div class="card-body">
                 <div class="">
                     <div class="m-8">
-                        <form class="max-w-md mx-auto" action="{{ route('product.update', $product->id) }}" method="POST"
+                        <form class="max-w-md mx-auto" action="{{ route('productVariant.update', $product->id) }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="mb-3">
                                 <label for="name" class="form-label">Name</label>
                                 <select id="product_id" name="product_id" class="form-select">
-                                    <option value="{{ $product->products->id }}">{{ $product->products->name }} </option>
+                                    <option hidden  value="{{ $product->product->id }}">{{ $product->product->name }} </option>
                                     @foreach ($products as $prd)
                                         <option value="{{ $prd->id }}">{{ $prd->name }} </option>
                                     @endforeach
                                 </select>
                             </div>
+                       
                             <div class="mb-3">
-                                <label for="price" class="form-label">price</label>
-                                <input type="text" name="price" id="price" class="form-control" placeholder=""
-                                    value="{{ $product->price }}" />
-                            </div>
-                            <div class="mb-3">
-                                <label for="price" class="form-label">Price Reduced</label>
-                                <input type="text" name="price_reduced" id="price_reduced" class="form-control"
-                                    placeholder="" value="{{ $product->price_reduced }}" />
-                            </div>
-                            <div class="mb-3">
-                                <label for="quantity" class="form-label">Color</label>
-                                <option value="{{ $product->colors->id }}">{{ $product->colors->color }} </option>
+                                <label for="color" class="form-label">Color</label>
+                             
                                 <select id="color_id" name="color_id" class="form-select">
+                                    <option hidden value="{{ $product->colors->id }}">{{ $product->colors->color }} </option>
                                     @foreach ($colors as $cl)
                                         <option value="{{ $cl->id }}">{{ $cl->color }} </option>
                                     @endforeach
@@ -45,8 +37,9 @@
                             <div class="mb-3">
                                 <label class="form-label">Size</label>
                                 <div class="col-sm-9">
-                                    <option value="{{ $product->sizes->id }}">{{ $product->sizes->size }} </option>
+                                   
                                     <select id="size_id" name="size_id" class="form-select">
+                                        <option hidden value="{{ $product->sizes->id }}">{{ $product->sizes->size }} </option>
                                         @foreach ($sizes as $sz)
                                             <option value="{{ $sz->id }}">{{ $sz->size }} </option>
                                         @endforeach
@@ -72,9 +65,10 @@
                             </div>
 
                             <button type="submit" class="btn btn-warning">Sửa</button>
-                            <button class="btn btn-primary"><a class="text-white text-decoration-none"
-                                    href="{{ route('product.index') }}">List</a></button>
-                        </form>
+                            <a class=" btn btn-primary text-white text-decoration-none"
+                                    href="{{ route('productVariant.index') }}">List</a>
+                        </form> 
+                   
                     </div>
                 </div>
             </div>
