@@ -16,6 +16,7 @@
 
 <!-- Shop Cart Section Begin -->
 <section class="shop-cart spad">
+    @if($cartItems->Count() > 0)
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -31,11 +32,12 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($cartItems as $item)
                             <tr>
                                 <td class="cart__product__item">
-                                    <img src="img/shop-cart/cp-1.jpg" alt="">
+                                    <img src="{{ asset('storage/app/public/imgProduct/' . $item->product_image) }}" alt="{{ $item->product_name }}">
                                     <div class="cart__product__item__title">
-                                        <h6>Áo sơ mi tay ngắn nam nữ unisex form rộng</h6>
+                                        <h6>{{ $item->product_name }}</h6>
                                         <div class="rating">
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
@@ -45,98 +47,51 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="cart__price">119.000đ</td>
+                                <td class="cart__price">${{ $item->product_price }}</td>
+                                {{-- <td class="cart__quantity">
+                                    <div class="pro-qty">
+                                        <input data-rowid="{{$item->rowId}}" name="quantity" type="number"
+                                        onchange="updateQuantity(this)"
+                                         value="{{$item->qty}}">
+                                    </div>
+                                </td> --}}
                                 <td class="cart__quantity">
                                     <div class="pro-qty">
-                                        <input type="text" value="1">
+                                        <input data-rowid="{{ $item->rowId }}" name="quantity" type="number" onchange="updateQuantity(this)" value="{{ $item->qty }}">
                                     </div>
                                 </td>
-                                <td class="cart__total">199.000đ</td>
-                                <td class="cart__close"><span class="icon_close"></span></td>
+                                
+                                <td class="cart__total">${{$item->subtotal()}}</td>
+                                <td class="cart__close">
+                                    <a href="javascript:void(0)" onclick="removeItemFromCart('{{$item->rowId}}')">
+                                        <span class="icon_close"></span>
+                                    </a>
+                                </td>
                             </tr>
-                            <tr>
-                                <td class="cart__product__item">
-                                    <img src="img/shop-cart/cp-2.jpg" alt="">
-                                    <div class="cart__product__item__title">
-                                        <h6>Áo sơ mi Khóa kéo tay ngắn nam nữ unisex form rộng</h6>
-                                        <div class="rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="cart__price">139.000đ</td>
-                                <td class="cart__quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1">
-                                    </div>
-                                </td>
-                                <td class="cart__total">139.000đ</td>
-                                <td class="cart__close"><span class="icon_close"></span></td>
-                            </tr>
-                            <tr>
-                                <td class="cart__product__item">
-                                    <img src="img/shop-cart/cp-3.jpg" alt="">
-                                    <div class="cart__product__item__title">
-                                        <h6>áo Unisex - In 5D chữ No War phông tay lỡ cực đẹp</h6>
-                                        <div class="rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="cart__price">149.000đ</td>
-                                <td class="cart__quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1">
-                                    </div>
-                                </td>
-                                <td class="cart__total">149.000đ</td>
-                                <td class="cart__close"><span class="icon_close"></span></td>
-                            </tr>
-                            <tr>
-                                <td class="cart__product__item">
-                                    <img src="img/shop-cart/cp-4.jpg" alt="">
-                                    <div class="cart__product__item__title">
-                                        <h6>Áo sơ mi túi basic chất kaki cao cấp</h6>
-                                        <div class="rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="cart__price">159.000đ</td>
-                                <td class="cart__quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1">
-                                    </div>
-                                </td>
-                                <td class="cart__total">159.000đ</td>
-                                <td class="cart__close"><span class="icon_close"></span></td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
+        @else
+        <div class="row mb-5">
+            <div class="col-md-12 text-center ">
+                <h2>Giỏ hàng trống !</h2>
+                <h5>Thêm sản phẩm ngay</h5>
+                <a href="/shop" class="btn btn-dark mt-5">Về trang sản phẩm</a>
+            </div> 
+        </div>
+     @endif
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="cart__btn">
-                    <a href="#">TIẾP TỤC MUA SẮM</a>
+                    <a href="/shop">TIẾP TỤC MUA SẮM</a>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="cart__btn update__btn">
-                    <a href="#"><span class="icon_loading"></span>CẬP NHẬT GIỎ HÀNG</a>
+                    {{-- <a href="javascript:void(0)" onclick="clearCart()" >XÓA TOÀN BỘ GIỎ HÀNG</a> --}}
                 </div>
             </div>
         </div>
@@ -154,8 +109,9 @@
                 <div class="cart__total__procced">
                     <h6>TỔNG SỐ GIỎ HÀNG</h6>
                     <ul>
-                        <li>Tổng tạm tính <span>646.000đ</span></li>
-                        <li>Tổng cộng <span>646.000đ</span></li>
+                        <li>Tổng tạm tính <span>${{Cart::instance('cart')->subtotal()}}</span></li>
+                        <li>Phí giao hàng <span>${{Cart::instance('cart')->tax()}}</span></li>
+                        <li>Tổng cộng <span>${{Cart::instance('cart')->total()}}</span></li>
                     </ul>
                     <a href="/checkout" class="primary-btn">TIẾN HÀNH THANH TOÁN</a>
                 </div>
@@ -164,4 +120,41 @@
     </div>
 </section>
 <!-- Shop Cart Section End -->
+<form id="updateCartQty" action="{{route('cart.update')}}" method="POST">
+    @csrf
+    @method('put')
+    <input type="hidden" id="rowId" name="rowId" />
+    <input type="hidden" id="quantity" name="quantity" />
+</form>
+<form id="deleteFromCart" action="{{route('cart.remove')}}" method="post">
+    @csrf
+    @method('delete')
+    <input type="hidden" id="rowId_D" name="rowId" />
+</form>
+<form id="clearCart" action="{{route('cart.clear')}}" method="post">
+    @csrf
+    @method('delete') 
+</form>
 @endsection
+
+@push('scripts')
+    <script>
+        function updateQuantity(qty)
+        {
+            $('#rowId').val($(qty).data('rowid'));
+            $('#quantity').val($(qty).val());
+            $('#updateCartQty').submit();
+        }  
+     
+        function removeItemFromCart(rowId)
+        {
+            $('#rowId_D').val(rowId);
+            $('#deleteFromCart').submit();
+        }  
+        function clearCart()
+        {
+            $('#cleartCart').submit();
+        }             
+    </script>
+@endpush
+

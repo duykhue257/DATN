@@ -53,7 +53,7 @@
                                 <div class="tip">2</div>
                             </a></li>
                         <li><a href="/cart"><span class="icon_bag_alt"></span>
-                                <div class="tip">2</div>
+                                <div class="tip"> {{Cart::instance('cart')->content()->count()}}</div>
                             </a></li>
                     </ul>
                 </div>

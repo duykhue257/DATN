@@ -61,13 +61,22 @@
                         - Chấp nhận đổi hàng khi size không vừa trong 3 ngày.
                         </p>
                         <div class="product__details__button">
-                            <div class="quantity">
+                             <div class="quantity">
                                 <span>Số lượng:</span>
                                 <div class="pro-qty">
-                                    <input type="text" value="1">
+                                        <input type="text" value="1">
                                 </div>
                             </div>
-                            <a href="#" class="cart-btn"><span class="icon_bag_alt"></span> Thêm vào giỏ hàng</a>
+                            {{-- <a  class="cart-btn"><span class="icon_bag_alt"></span> </a> --}}
+                            
+                                <a href="javascript:void(0)"  onclick="event.preventDefault();document.getElementById('addtocart').submit();" id="cartEffect" class="btn btn-solid hover-solid btn-animation">
+                                     <span class="cart-btn"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</span>
+                                    <form id="addtocart" method="post" action="{{route('cart.store')}}">
+                                          @csrf
+                                        <input type="hidden" name="id" value="{{$product->id}}">                                             
+                                        <input type="hidden" name="quantity" id="qty" value="1">
+                                         </form>
+                                </a>
                             <ul>
                                 <li><a href="#"><span class="icon_heart_alt"></span></a></li>
                                 <li><a href="#"><span class="icon_adjust-horiz"></span></a></li>

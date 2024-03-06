@@ -12,7 +12,6 @@ class Products extends Model
     protected $fillable = [
         'id', 'name', 'price', 'price_reduced', 'description', 'category_id', 'color_id','default_image'
     ];
-
     public function variants()
     {
         return $this->hasMany(ProductVariants::class, 'product_id');
@@ -41,4 +40,8 @@ class Products extends Model
     {
         return $this->belongsToMany(Color::class, 'product_variants', 'product_id', 'size_id')->withTimestamps();
     }
+    // cart 
+    protected $casts = [
+        'price' => 'decimal:2', // Định dạng kiểu dữ liệu cho trường giá
+    ];
 }
