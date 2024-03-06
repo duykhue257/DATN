@@ -31,100 +31,29 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="cart__product__item">
-                                    <img src="img/shop-cart/cp-1.jpg" alt="">
-                                    <div class="cart__product__item__title">
-                                        <h6>Áo sơ mi tay ngắn nam nữ unisex form rộng</h6>
-                                        <div class="rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
+                            @foreach ($cart as $item)
+                                <tr>
+                                    <td class="cart__product__item">
+                                        {{-- <img src="{{ $item['image'] }}" alt=""> --}}
+                                        <div class="cart__product__item__title">
+                                            <h6>{{ $item['name'] }}</h6>
+                                            <!-- Đây là nơi bạn có thể hiển thị các thông tin khác về sản phẩm, như mô tả, đánh giá, vv -->
                                         </div>
-                                    </div>
-                                </td>
-                                <td class="cart__price">119.000đ</td>
-                                <td class="cart__quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1">
-                                    </div>
-                                </td>
-                                <td class="cart__total">199.000đ</td>
-                                <td class="cart__close"><span class="icon_close"></span></td>
-                            </tr>
-                            <tr>
-                                <td class="cart__product__item">
-                                    <img src="img/shop-cart/cp-2.jpg" alt="">
-                                    <div class="cart__product__item__title">
-                                        <h6>Áo sơ mi Khóa kéo tay ngắn nam nữ unisex form rộng</h6>
-                                        <div class="rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
+                                    </td>
+                                    <td class="cart__price">{{ number_format($item['price']) }}đ</td>
+                                    <td class="cart__quantity">
+                                        <div class="pro-qty">
+                                            <input type="text" value="{{ $item['quantity'] }}">
                                         </div>
-                                    </div>
-                                </td>
-                                <td class="cart__price">139.000đ</td>
-                                <td class="cart__quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1">
-                                    </div>
-                                </td>
-                                <td class="cart__total">139.000đ</td>
-                                <td class="cart__close"><span class="icon_close"></span></td>
-                            </tr>
-                            <tr>
-                                <td class="cart__product__item">
-                                    <img src="img/shop-cart/cp-3.jpg" alt="">
-                                    <div class="cart__product__item__title">
-                                        <h6>áo Unisex - In 5D chữ No War phông tay lỡ cực đẹp</h6>
-                                        <div class="rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="cart__price">149.000đ</td>
-                                <td class="cart__quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1">
-                                    </div>
-                                </td>
-                                <td class="cart__total">149.000đ</td>
-                                <td class="cart__close"><span class="icon_close"></span></td>
-                            </tr>
-                            <tr>
-                                <td class="cart__product__item">
-                                    <img src="img/shop-cart/cp-4.jpg" alt="">
-                                    <div class="cart__product__item__title">
-                                        <h6>Áo sơ mi túi basic chất kaki cao cấp</h6>
-                                        <div class="rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="cart__price">159.000đ</td>
-                                <td class="cart__quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1">
-                                    </div>
-                                </td>
-                                <td class="cart__total">159.000đ</td>
-                                <td class="cart__close"><span class="icon_close"></span></td>
-                            </tr>
+                                    </td>
+                                    <td class="cart__total">{{ number_format($item['price'] * $item['quantity']) }}đ</td>
+                                    <td class="cart__close"><a href="{{ route('removeItemFromCart', $item['id']) }}"><span class="icon_close"></span></a></td>
+                                    <!-- Nút 'Xóa' có thể gửi yêu cầu đến một route để xóa sản phẩm khỏi giỏ hàng -->
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
+                    
                 </div>
             </div>
         </div>

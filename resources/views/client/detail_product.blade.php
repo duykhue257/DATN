@@ -61,24 +61,26 @@
                         - Chấp nhận đổi hàng khi size không vừa trong 3 ngày.
                         </p>
                         <div class="product__details__button">
-                            <div class="quantity">
-                                <span>Số lượng:</span>
-                                <div class="pro-qty">
-                                    <input type="text" value="1">
+                            <form action="" method="post">
+                                @csrf
+                                <div class="quantity">
+                                    <span>Số lượng:</span>
+                                    <div class="pro-qty">
+                                        <input type="text" name="quantity" value="1" min="1" max="{{ $product->variants->max('quantity') }}">
+                                    </div>
                                 </div>
-                            </div>
-                            <a href="#" class="cart-btn"><span class="icon_bag_alt"></span> Thêm vào giỏ hàng</a>
-                            <ul>
-                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                <li><a href="#"><span class="icon_adjust-horiz"></span></a></li>
-                            </ul>
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <button type="submit" class="cart-btn"><span class="icon_bag_alt"></span> Thêm vào giỏ
+                                    hàng</button>
+                            </form>
                         </div>
+
                         <div class="product__details__widget">
                             <ul>
                                 <li>
                                     <span>Khả dụng còn :</span>
                                     <div class="stock__checkbox">
-                                        {{ $variant->quantity }}
+                                        {{ $product->variants->first()->quantity }}
                                     </div>
                                 </li>
                                 <li>
@@ -173,34 +175,38 @@
                     </div>
                 </div>
                 @foreach ($categoryProducts as $Prd_type)
-                    <div class="col-lg-3 col-md-4 col-sm-6">
-                        
-                        <div class="product__item">
-                            <div class="product__item__pic set-bg"
-                                data-setbg="{{ $Prd_type->variants ? Storage::url($Prd_type->variants[0]->image) : '' }}">
-                                {{-- <div class="label new">New</div> --}}
-                                <ul class="product__hover">
-                                    <li><a href="{{ $product->variants ? Storage::url($Prd_type->variants[0]->image) : '' }}" class="image-popup"><span
-                                                class="arrow_expand"></span></a></li>
-                                    <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                    <li><a href="#"><span class="icon_bag_alt"></span></a></li>
-                                </ul>
-                            </div>
-                            <div class="product__item__text">
-                                <h6><a href="{{ route('detail_product') }}?id={{ $product->id }}">{{ $product->name }}</a></h6>
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
+                    @if ($Prd_type->id != $product->id)
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg"
+                                    data-setbg="{{ $Prd_type->variants ? Storage::url($Prd_type->variants[0]->image) : '' }}">
+                                    <ul class="product__hover">
+                                        <li><a href="{{ $product->variants ? Storage::url($Prd_type->variants[0]->image) : '' }}"
+                                                class="image-popup"><span class="arrow_expand"></span></a></li>
+                                        <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+                                        <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                                    </ul>
                                 </div>
-                                <div class="product__price">{{ Number_format($product->price_reduced) }}đ
-                                    <span>{{ Number_format($product->price) }}đ</span></div>
+                                <div class="product__item__text">
+                                    <h6><a
+                                            href="{{ route('detail_product') }}?id={{ $Prd_type->id }}">{{ $Prd_type->name }}</a>
+                                    </h6>
+                                    <div class="rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="product__price">{{ Number_format($Prd_type->price_reduced) }}đ
+                                        <span>{{ Number_format($Prd_type->price) }}đ</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 @endforeach
+
 
             </div>
         </div>

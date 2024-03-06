@@ -3,7 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\SignUpController;
 use Illuminate\Support\Facades\Route;
-
+// use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,4 +69,12 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/signup', [SignUpController::class, 'showRegistrationForm'])->name('signup');
 // Route xử lý đăng ký
 Route::post('/signup', [SignUpController::class, 'signup']);
+
+
+
+
+// Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('cart.add');
+// Route::get('/cart', [CartController::class, 'showCart'])->name('cart.show');
+// Route::post('/remove-from-cart/{productId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+
 

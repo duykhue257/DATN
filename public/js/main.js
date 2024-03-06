@@ -211,18 +211,23 @@
     proQty.on('click', '.qtybtn', function () {
         var $button = $(this);
         var oldValue = $button.parent().find('input').val();
+        var maxValue = parseFloat($button.parent().find('input').attr('max'));
         if ($button.hasClass('inc')) {
             var newVal = parseFloat(oldValue) + 1;
+            // Check if new value exceeds maximum value
+            if (newVal > maxValue) {
+                newVal = maxValue;
+            }
         } else {
+            var newVal = parseFloat(oldValue) - 1;
             // Don't allow decrementing below zero
-            if (oldValue > 0) {
-                var newVal = parseFloat(oldValue) - 1;
-            } else {
+            if (newVal < 0) {
                 newVal = 0;
             }
         }
         $button.parent().find('input').val(newVal);
     });
+    
 
     /*-------------------
 		Radio Btn

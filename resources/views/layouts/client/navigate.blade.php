@@ -10,8 +10,6 @@
                 <nav class="header__menu align-items-center">
                     <ul>
                         <li class=""><a href="/home">Trang chủ</a></li>
-
-                       
                         <li><a href="/shop">Sản phẩm</a></li>
                         {{-- <li><a href="#">Pages</a>
                             <ul class="dropdown">
@@ -52,7 +50,7 @@
                         <li><a href="#"><span class="icon_heart_alt"></span>
                                 <div class="tip">2</div>
                             </a></li>
-                        <li><a href="/cart"><span class="icon_bag_alt"></span>
+                        <li><a href=""><span class="icon_bag_alt"></span>
                                 <div class="tip">2</div>
                             </a></li>
                     </ul>
