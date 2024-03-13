@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            //
-            $table->unsignedBigInteger('category_id');
-       
+        Schema::create('payment', function (Blueprint $table) {
+            $table->id();
+            $table->string('method');
+            $table->timestamps();
+
         });
     }
 
@@ -23,9 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            //
-            $table->dropForeign(['category_id']);
-        });
+        Schema::dropIfExists('payment');
     }
 };

@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\SignUpController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\CartController;
 
@@ -24,14 +26,13 @@ Route::get('/home', [App\Http\Controllers\client\HomeController::class,'home'])-
 Route::get('/blog', function () {
    return view('client.blog');
 });
-Route::get('/shop', [App\Http\Controllers\client\HomeController::class,'shop']);
+// Route::get('/shop', [App\Http\Controllers\client\HomeController::class,'shop']);
+Route::match(['POST', 'GET'], '/shop', [App\Http\Controllers\client\HomeController::class, 'shop']);
 Route::get('/detail_product', [App\Http\Controllers\client\HomeController::class,'ProductDetail'])->name('detail_product');
-Route::get('/cart', function () {
-   return view('client.cart');
-});
-Route::get('/checkout', function () {
-   return view('client.checkout');
-});
+
+// Route::get('/checkout', function () {
+//    return view('client.checkout');
+// });
 Route::get('/contact', function () {
    return view('client.contact');
 });
@@ -71,10 +72,18 @@ Route::get('/signup', [SignUpController::class, 'showRegistrationForm'])->name('
 Route::post('/signup', [SignUpController::class, 'signup']);
 
 
+Route::get('/cart',[CartController::class, 'index'])->name('cart.show');
+Route::post('/cart/store',[CartController::class, 'addToCart'])->name('cart.store');
+Route::put('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
+Route::delete('/cart/remove', [CartController::class, 'removeItem'])->name('cart.remove');
+Route::delete('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
 
 
-// Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('cart.add');
-// Route::get('/cart', [CartController::class, 'showCart'])->name('cart.show');
-// Route::post('/remove-from-cart/{productId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout');
+
+
+// Route::get('/checkout', 'CartController@checkout')->name('checkout');
+
 
 

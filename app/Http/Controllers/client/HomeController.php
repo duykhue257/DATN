@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Products;
 use App\Models\ProductVariants;
-
+use Cart;
 class HomeController extends Controller
 {
     //
@@ -15,7 +15,8 @@ class HomeController extends Controller
           $products = Products::all();
           return view('client.homepage', compact('products'));
     }
-    public function shop(){
+    public function shop( Request $request){
+        $product= ProductVariants::find($request->id);
         $products = Products::with('variants')->get();
         return view('client.shop', compact('products'));
     }

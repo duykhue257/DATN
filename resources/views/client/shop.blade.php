@@ -241,9 +241,14 @@
                                                 <li><a href="{{ $product->variants ? Storage::url($product->variants[0]->image) : '' }}"
                                                         class="image-popup"><span class="arrow_expand"></span></a></li>
                                                 <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                                <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                                                <li><a href="javascript:void(0)"  onclick="event.preventDefault();document.getElementById('addtocart').submit();" id="cartEffect"><span class="icon_bag_alt"></span>
+                                                    <form id="addtocart" method="post" action="{{route('cart.store')}}">
+                                                        @csrf
+                                                      <input type="hidden" name="id" value="{{$product->id}}">                                             
+                                                      <input type="hidden" name="quantity" id="qty" value="1">
+                                                       </form>
+                                                </a></li>
                                             </ul>
-
                                         </div>
                                     @endif
 

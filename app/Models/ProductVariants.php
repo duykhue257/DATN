@@ -10,9 +10,9 @@ class ProductVariants extends Model
     use HasFactory;
     protected $table = 'product_variants';
     protected $fillable = [
-        'id','image','quantity','color_id','size_id','product_id'
+        'id', 'image', 'quantity', 'color_id', 'size_id', 'product_id'
     ];
-   
+
     public function carts()
     {
         return $this->belongsToMany(Order::class);
@@ -29,11 +29,16 @@ class ProductVariants extends Model
 
     public function sizes()
     {
-        return $this->belongsTo(Size::class,'size_id');
+        return $this->belongsTo(Size::class, 'size_id');
     }
 
     public function colors()
     {
-        return $this->belongsTo(Color::class,'color_id');
+        return $this->belongsTo(Color::class, 'color_id');
+    }
+
+    public function subtotal()
+    {
+        return $this->price_reduced * $this->quantity;
     }
 }
