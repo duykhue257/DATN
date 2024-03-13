@@ -16,6 +16,7 @@
     <!-- Breadcrumb End -->
 
     <!-- Product Details Section Begin -->
+
     <section class="product-details spad">
         <div class="container">
             <div class="row">
@@ -24,7 +25,8 @@
                         <div class="product__details__pic__left product__thumb nice-scroll">
                             @foreach ($product->variants as $index => $variant)
                                 <a class="pt" href="#product-{{ $numbers[$index] }}">
-                                    <img src="{{ Storage::url($variant->image) }}" alt="">
+                                    <img class="variant-image" src="{{ Storage::url($variant->image) }}" alt=""
+                                        data-variant-id="{{ $variant->id }}">
                                 </a>
                             @endforeach
                         </div>
@@ -32,12 +34,14 @@
                             <div class="product__details__pic__slider owl-carousel">
                                 @foreach ($product->variants as $index => $variant)
                                     <img data-hash="product-{{ $numbers[$index] }}" class="product__big__img"
-                                        src="{{ Storage::url($variant->image) }}" alt="">
+                                        src="{{ Storage::url($variant->image) }}" alt=""
+                                        data-variant-id="{{ $variant->id }}">
                                 @endforeach
                             </div>
                         </div>
-
                     </div>
+
+
 
 
                 </div>
@@ -61,33 +65,40 @@
                         - Chấp nhận đổi hàng khi size không vừa trong 3 ngày.
                         </p>
                         <div class="product__details__button">
-                             <div class="quantity">
+                            <div class="quantity">
                                 <span>Số lượng:</span>
                                 <div class="pro-qty">
-                                        <input type="text" value="1">
+                                    <input type="text" value="1">
                                 </div>
                             </div>
                             {{-- <a  class="cart-btn"><span class="icon_bag_alt"></span> </a> --}}
-                            
-                                <a href="javascript:void(0)"  onclick="event.preventDefault();document.getElementById('addtocart').submit();" id="cartEffect" class="btn btn-solid hover-solid btn-animation">
-                                     <span class="cart-btn"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</span>
-                                    <form id="addtocart" method="post" action="{{route('cart.store')}}">
-                                          @csrf
-                                        <input type="hidden" name="id" value="{{$product->id}}">                                             
-                                        <input type="hidden" name="quantity" id="qty" value="1">
-                                         </form>
-                                </a>
-                            <ul>
-                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                <li><a href="#"><span class="icon_adjust-horiz"></span></a></li>
-                            </ul>
+
+                            <a href="javascript:void(0)"
+                                onclick="event.preventDefault();document.getElementById('addtocart').submit();"
+                                id="cartEffect" class="btn btn-solid hover-solid btn-animation">
+
+                                <form id="addtocart" method="post" action="{{ route('cart.store') }}">
+                                    @csrf
+                                    <span class="cart-btn"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</span>
+                                    <input type="hidden" name="id" value="{{ $product->id }}">
+                                    <input type="hidden" name="variant_id" value="{{ $product->variants->first()->id }}">
+                                    {{-- @php
+                                        dd( $product->variants );
+                                    @endphp --}}
+                                    <input type="hidden" name="quantity" id="qty" value="1" min="1"
+                                        max="{{ $product->variants->max('quantity') }}">
+                                </form>
+                            </a>
+                           
+
                         </div>
+
                         <div class="product__details__widget">
                             <ul>
                                 <li>
                                     <span>Khả dụng còn :</span>
                                     <div class="stock__checkbox">
-                                        {{ $variant->quantity }}
+                                        {{ $product->variants->first()->quantity }}
                                     </div>
                                 </li>
                                 <li>
@@ -182,36 +193,55 @@
                     </div>
                 </div>
                 @foreach ($categoryProducts as $Prd_type)
-                    <div class="col-lg-3 col-md-4 col-sm-6">
-                        
-                        <div class="product__item">
-                            <div class="product__item__pic set-bg"
-                                data-setbg="{{ $Prd_type->variants ? Storage::url($Prd_type->variants[0]->image) : '' }}">
-                                {{-- <div class="label new">New</div> --}}
+                    @if ($Prd_type->id != $product->id)
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg"
+                                @if(isset($Prd_type->variants[0]->image)) data-setbg="{{ Storage::url($Prd_type->variants[0]->image) }}" @endif>
                                 <ul class="product__hover">
-                                    <li><a href="{{ $product->variants ? Storage::url($Prd_type->variants[0]->image) : '' }}" class="image-popup"><span
-                                                class="arrow_expand"></span></a></li>
+                                    @if(isset($Prd_type->variants[0]->image))
+                                        <li><a href="{{ Storage::url($Prd_type->variants[0]->image) }}" class="image-popup"><span class="arrow_expand"></span></a></li>
+                                    @endif
                                     <li><a href="#"><span class="icon_heart_alt"></span></a></li>
                                     <li><a href="#"><span class="icon_bag_alt"></span></a></li>
                                 </ul>
                             </div>
-                            <div class="product__item__text">
-                                <h6><a href="{{ route('detail_product') }}?id={{ $product->id }}">{{ $product->name }}</a></h6>
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
+                                <div class="product__item__text">
+                                    <h6><a
+                                            href="{{ route('detail_product') }}?id={{ $Prd_type->id }}">{{ $Prd_type->name }}</a>
+                                    </h6>
+                                    <div class="rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="product__price">{{ Number_format($Prd_type->price_reduced) }}đ
+                                        <span>{{ Number_format($Prd_type->price) }}đ</span>
+                                    </div>
                                 </div>
-                                <div class="product__price">{{ Number_format($product->price_reduced) }}đ
-                                    <span>{{ Number_format($product->price) }}đ</span></div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 @endforeach
+
 
             </div>
         </div>
     </section>
+    
 @endsection
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Lắng nghe sự kiện khi ảnh biến thể được chọn
+        $('.variant-image').on('click', function() {
+            // Lấy giá trị variant_id từ data-attribute của ảnh đã chọn
+            var variantId = $(this).data('variant-id');
+            
+            // Cập nhật giá trị của input hidden variant_id trong form
+            $('input[name="variant_id"]').val(variantId);
+        });
+    });
+</script>

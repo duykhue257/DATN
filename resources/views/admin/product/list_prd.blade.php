@@ -32,6 +32,9 @@
                                         <td>{{ $prd->name }}</td>
                                         <td>{{ $prd->price }}</td>
                                         <td>{{ $prd->price_reduced }}</td>
+                                        {{-- @php
+                                            dd($prd->price);
+                                        @endphp --}}
                                         <td>{{ $prd->description }}</td>
                                         <td>{{ $prd->name_cate }}</td>
                                         <td>

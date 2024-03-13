@@ -3,8 +3,9 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\SignUpController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use Illuminate\Support\Facades\Route;
-
+// use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,14 +29,10 @@ Route::get('/blog', function () {
 // Route::get('/shop', [App\Http\Controllers\client\HomeController::class,'shop']);
 Route::match(['POST', 'GET'], '/shop', [App\Http\Controllers\client\HomeController::class, 'shop']);
 Route::get('/detail_product', [App\Http\Controllers\client\HomeController::class,'ProductDetail'])->name('detail_product');
-Route::get('/cart',[CartController::class, 'index'])->name('cart.index');
-Route::post('/cart/store',[CartController::class, 'addToCart'])->name('cart.store');
-Route::put('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
-Route::delete('/cart/remove', [CartController::class, 'removeItem'])->name('cart.remove');
-Route::delete('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
-Route::get('/checkout', function () {
-   return view('client.checkout');
-});
+
+// Route::get('/checkout', function () {
+//    return view('client.checkout');
+// });
 Route::get('/contact', function () {
    return view('client.contact');
 });
@@ -73,4 +70,20 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/signup', [SignUpController::class, 'showRegistrationForm'])->name('signup');
 // Route xử lý đăng ký
 Route::post('/signup', [SignUpController::class, 'signup']);
+
+
+Route::get('/cart',[CartController::class, 'index'])->name('cart.show');
+Route::post('/cart/store',[CartController::class, 'addToCart'])->name('cart.store');
+Route::put('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
+Route::delete('/cart/remove', [CartController::class, 'removeItem'])->name('cart.remove');
+Route::delete('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
+
+
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout');
+
+
+// Route::get('/checkout', 'CartController@checkout')->name('checkout');
+
+
 

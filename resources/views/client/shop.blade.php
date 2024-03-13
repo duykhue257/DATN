@@ -249,7 +249,6 @@
                                                        </form>
                                                 </a></li>
                                             </ul>
-
                                         </div>
                                     @endif
 

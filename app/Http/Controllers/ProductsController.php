@@ -45,10 +45,6 @@ class ProductsController extends Controller
         return redirect()->route('product.index');
     }
 
-    // public function show(Products $product){
-    //     $categories = Category::all();
-    //     return view('client.templates.home.detailPrd',compact('product','categories'));
-    // }
 
     public function edit(String $id)
     {
