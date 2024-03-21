@@ -235,7 +235,62 @@
     $(".size__btn label").on('click', function () {
         $(".size__btn label").removeClass('active');
         $(this).addClass('active');
+    
+      
+        if ($('.size__btn label.active').length > 0 && $('.color__btn label.active').length > 0) {
+    
+        }
     });
+    
+    $(".color__btn label").on('click', function () {
+        $(".color__btn label").removeClass('active');
+        $(this).addClass('active');
+    
+      
+        if ($('.size__btn label.active').length > 0 && $('.color__btn label.active').length > 0) {
+  
+        }
+    });
+
+
+
+
+    // function isAuthenticated() {
+    //     // Trong ví dụ này, giả sử chúng ta có một biến global isAuthenticated
+    //     // Biến này có thể được đặt khi người dùng đăng nhập thành công
+    //     return isAuthenticated;
+    // }
+    // $(".site-btn").on('click', function (event) {
+    //     // Ngăn chặn hành động mặc định của nút submit
+    //     event.preventDefault();
+        
+    //     // Kiểm tra xem người dùng đã đăng nhập hay chưa
+    //     if (isAuthenticated()) {
+    //         // Nếu người dùng đã đăng nhập, cho phép mua hàng
+    //         // Thực hiện các hành động cần thiết, chẳng hạn như gửi yêu cầu AJAX để đặt hàng
+            
+    //         // Ví dụ: Thực hiện gửi yêu cầu AJAX để đặt hàng
+    //         $.ajax({
+    //             url: '/place-order',
+    //             type: 'POST',
+    //             data: { /* Các dữ liệu cần thiết cho việc đặt hàng */ },
+    //             success: function(response) {
+    //                 // Xử lý phản hồi từ máy chủ sau khi đặt hàng thành công
+    //                 alert('Đặt hàng thành công!');
+    //             },
+    //             error: function(xhr, status, error) {
+    //                 // Xử lý lỗi nếu có
+    //                 console.error('Đã xảy ra lỗi khi đặt hàng:', error);
+    //             }
+    //         });
+    //     } else {
+    //         // Nếu người dùng chưa đăng nhập, hiển thị thông báo và yêu cầu họ đăng nhập
+    //         alert('Vui lòng đăng nhập để tiếp tục mua hàng.');
+    //         // Bạn có thể chuyển hướng người dùng đến trang đăng nhập ở đây
+    //         // window.location.href = '/login';
+    //     }
+    // });
+    
 
 function formatCurrency(value) {
     var formattedValue = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);

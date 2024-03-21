@@ -5,30 +5,34 @@
         <div class="container-fluid">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Tài khoản</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Kích Cỡ</h6>
                 </div>
                 <div class="card-body">
+                   <button class="btn btn-primary"><a class="text-white text-decoration-none"
+                       href="{{ route('size.create') }}">Thêm mới</a></button>
+                  <br><br>
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Tên tài khoản</th>
-                                    <th>email</th>
-                                    <th>hành động</th>
+                                    <th>Kích cỡ</th> 
+                                    <th>Hành động</th>
                                 </tr>
                             </thead>
+
                             <tbody>
-                                @foreach ($users as $user)
+                                @foreach ($sizes as $ct)
                                     <tr>
-                                        <td>{{ $user->id }}</td>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->email }}</td> 
+                                        <td>{{ $ct->id }}</td>
+                                        <td>{{ $ct->size }}</td>
                                         <td>
-                                            <form action="{{ route('account.destroy') }}" method="POST">
+                                            <form action="{{ route('size.destroy', $ct->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="btn btn-danger" type="submit">Xóa</button>
+                                                <a class="btn btn-primary"
+                                                    href="{{ route('size.edit', $ct->id) }}">sửa</a>
+                                                <button onclick="return confirm('are you sure?')" class="btn btn-danger" type="submit">xóa</button>
                                             </form>
                                         </td>
                                     </tr>

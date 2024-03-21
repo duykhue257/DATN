@@ -8,7 +8,13 @@ class UserController extends Controller
 {
     //
     public function index(){
-        $user = User::all();
-        return view('admin.user.list_user',compact('user'));
+        $users = User::where('role', 0)->get();
+        return view('admin.user.list_user', compact('users'));
     }
+    
+    public function admin(){
+        $admins = User::where('role', 1)->get();
+        return view('admin.user.list_admin', compact('admins'));
+    }
+    
 }
