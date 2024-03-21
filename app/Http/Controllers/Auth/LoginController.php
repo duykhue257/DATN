@@ -20,21 +20,16 @@ class LoginController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
+    
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-
-            if ($user->role == 1) {
-                return redirect()->route('admin.product'); // Chuyển hướng tới trang dashboard cho admin
-            } else {
-                Session::flash('success', 'Đăng nhập thành công.');
-                // dd($user);
-                return redirect()->route('homePage'); // Chuyển hướng tới trang chính cho user thông thường
-            }
+            return redirect()->route('homePage');
         }
-
+    
+        
         return redirect()->route('login')->with('error', 'Email hoặc mật khẩu không đúng.');
     }
+    
 
     public function logout(Request $request)
     {
@@ -42,4 +37,5 @@ class LoginController extends Controller
         Session::flash('success', 'Đăng xuất thành công');
         return redirect()->route('homePage');
     }
+    
 }

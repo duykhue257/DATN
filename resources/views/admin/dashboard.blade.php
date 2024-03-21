@@ -27,7 +27,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas aa</span>
                                 <img class="img-profile rounded-circle"
                                     src="{{asset('admin_assets/img/undraw_profile.svg')}}">
                             </a>
@@ -59,6 +59,6 @@
 @endsection --}}
 @section('body')
     <!-- Main row -->
-    @include('admin.product.index')
+    {{-- @include('admin.product.list_prd') --}}
     <!-- /.row (main row) -->
 @endsection

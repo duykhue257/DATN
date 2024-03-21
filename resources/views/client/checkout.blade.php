@@ -44,7 +44,6 @@
                                     <input type="tel" name="phone" required>
                                 </div>
 
-
                                 <div class="checkout__form__input">
                                     <p>Thị trấn/Thành phố <span>*</span></p>
                                     <select  required class="form-control" id="province" name="province"></select>
@@ -223,5 +222,6 @@
                 getWard(Number(event.target.value))
             }
         })
+        
     </script>
 @endpush

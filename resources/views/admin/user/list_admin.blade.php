@@ -19,17 +19,22 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $user)
+                                @foreach ($admins as $user)
                                     <tr>
                                         <td>{{ $user->id }}</td>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td> 
                                         <td>
-                                            <form action="{{ route('account.destroy') }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-danger" type="submit">Xóa</button>
-                                            </form>
+                                            <td>
+                                                @if(auth()->user()->id !== $user->id) <!-- Kiểm tra xem đây có phải tài khoản của chính người dùng hiện tại hay không -->
+                                                    <form action="{{ route('account.destroy', $user->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-danger" type="submit">Xóa</button>
+                                                    </form>
+                                                @endif
+                                            </td>
+                                            
                                         </td>
                                     </tr>
                                 @endforeach

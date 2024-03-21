@@ -17,9 +17,9 @@ class CartController extends Controller
     public function index()
     {
         $cartItems = Cart::instance('cart')->content();
-        $size = Size::all();
-        // $sum = 0;
-        $color = Color::all();
+        // $size = Size::all();
+        // // $sum = 0;
+        // $color = Color::all();
         foreach ($cartItems as $item) {
             // $sum += $item->price;
             $productVariant = ProductVariants::with('sizes','colors')->find($item->id);
@@ -35,7 +35,7 @@ class CartController extends Controller
         
         }
         // dd($sum);
-        return view('client.cart', compact('cartItems', 'size', 'color'));
+        return view('client.cart', compact('cartItems'));
 
     }
 
@@ -60,6 +60,7 @@ class CartController extends Controller
             $productVariant->image, // ảnh của biến thể
             $request->quantity, // số lượng
             $product->price, // giá của sản phẩm
+            // $request->color_id
         )->associate('App\Models\ProductVariants'); // Liên kết với model ProductVariants
     
         return redirect()->back()->with('message', 'Sản phẩm đã được thêm vào giỏ hàng');

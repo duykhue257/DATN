@@ -5,8 +5,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
-                        <a href="./index.html"><i class="fa fa-home"></i> Home</a>
-                        <a href="#">Sản Phẩm </a>
+                        <a href="{{ route('homePage') }}"><i class="fa fa-home"></i> Trang chủ</a>
+                        <a href="/shop">Sản phẩm </a>
                         <span>{{ $product->name }}</span>
                     </div>
                 </div>
@@ -65,32 +65,39 @@
                         - Chấp nhận đổi hàng khi size không vừa trong 3 ngày.
                         </p>
                         <div class="product__details__button">
-                            <div class="quantity">
-                                <span>Số lượng:</span>
-                                <div class="pro-qty">
-                                    <input type="text" value="1">
+                            <form id="addtocart" method="post" action="{{ route('cart.store') }}">
+                                @csrf
+                                <div class="quantity">
+                                    <span>Số lượng:</span>
+                                    <div class="pro-qty">
+                                        <input type="text" name="quantity" id="qty" value="1" min="1"
+                                            max="{{ $product->variants->max('quantity') }}">
+                                    </div>
                                 </div>
-                            </div>
-                            {{-- <a  class="cart-btn"><span class="icon_bag_alt"></span> </a> --}}
-
-                            <a href="javascript:void(0)"
-                                onclick="event.preventDefault();document.getElementById('addtocart').submit();"
-                                id="cartEffect" class="btn btn-solid hover-solid btn-animation">
-
-                                <form id="addtocart" method="post" action="{{ route('cart.store') }}">
-                                    @csrf
+                                <button type="button" onclick="addToCart()"
+                                    class="btn btn-solid hover-solid btn-animation">
                                     <span class="cart-btn"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</span>
-                                    <input type="hidden" name="id" value="{{ $product->id }}">
-                                    <input type="hidden" name="variant_id" value="{{ $product->variants->first()->id }}">
-                                    {{-- @php
-                                        dd( $product->variants );
-                                    @endphp --}}
-                                    <input type="hidden" name="quantity" id="qty" value="1" min="1"
-                                        max="{{ $product->variants->max('quantity') }}">
-                                </form>
-                            </a>
-                           
+                                </button>
+                                <input type="hidden" name="id" value="{{ $product->id }}">
+                                <input type="hidden" name="variant_id" value="{{ $product->variants->first()->id }}">
+                            </form>
 
+                            <div id="notification" class="notification hidden">
+                                <svg width="64px" height="64px" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0" />
+
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path d="M4 12.6111L8.92308 17.5L20 6.5" stroke="#47be37" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </g>
+
+                                </svg>
+                                Thêm vào giỏ hàng thành công
+                            </div>
                         </div>
 
                         <div class="product__details__widget">
@@ -103,14 +110,15 @@
                                 </li>
                                 <li>
                                     <span>Màu sẵn có:</span>
-                                    <div class="size__btn">
+                                    <div class="color__btn">
                                         @php
                                             $uniqueColors = [];
                                         @endphp
                                         @foreach ($product->colors as $color)
                                             @if (!in_array($color->color, $uniqueColors))
                                                 <label for="{{ $color->color }}-btn">
-                                                    <input type="radio" id="{{ $color->color }}-btn">
+                                                    <input type="radio" id="{{ $color->color }}-btn" name="color"
+                                                        value="{{ $color->color }}">
                                                     {{ $color->color }}
                                                 </label>
                                                 @php
@@ -119,6 +127,7 @@
                                             @endif
                                         @endforeach
                                     </div>
+
                                 </li>
 
 
@@ -197,15 +206,18 @@
                         <div class="col-lg-3 col-md-4 col-sm-6">
                             <div class="product__item">
                                 <div class="product__item__pic set-bg"
-                                @if(isset($Prd_type->variants[0]->image)) data-setbg="{{ Storage::url($Prd_type->variants[0]->image) }}" @endif>
-                                <ul class="product__hover">
-                                    @if(isset($Prd_type->variants[0]->image))
-                                        <li><a href="{{ Storage::url($Prd_type->variants[0]->image) }}" class="image-popup"><span class="arrow_expand"></span></a></li>
-                                    @endif
-                                    <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                    <li><a href="#"><span class="icon_bag_alt"></span></a></li>
-                                </ul>
-                            </div>
+                                    @if (isset($Prd_type->variants[0]->image)) data-setbg="{{ Storage::url($Prd_type->variants[0]->image) }}" @endif>
+                                    <ul class="product__hover">
+                                        @if (isset($Prd_type->variants[0]->image))
+                                            <li><a class="d-flex justify-content-center align-items-center"
+                                                    href="{{ Storage::url($Prd_type->variants[0]->image) }}"
+                                                    class="image-popup"><span class="arrow_expand"></span></a></li>
+                                        @endif
+                                        <li><a class="d-flex justify-content-center align-items-center"
+                                                href=""><span class="icon_heart_alt"></span></a></li>
+
+                                    </ul>
+                                </div>
                                 <div class="product__item__text">
                                     <h6><a
                                             href="{{ route('detail_product') }}?id={{ $Prd_type->id }}">{{ $Prd_type->name }}</a>
@@ -230,18 +242,47 @@
             </div>
         </div>
     </section>
-    
-@endsection
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        // Lắng nghe sự kiện khi ảnh biến thể được chọn
-        $('.variant-image').on('click', function() {
-            // Lấy giá trị variant_id từ data-attribute của ảnh đã chọn
-            var variantId = $(this).data('variant-id');
-            
-            // Cập nhật giá trị của input hidden variant_id trong form
-            $('input[name="variant_id"]').val(variantId);
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Lắng nghe sự kiện khi ảnh biến thể được chọn
+            $('.variant-image').on('click', function() {
+                // Lấy giá trị variant_id từ data-attribute của ảnh đã chọn
+                var variantId = $(this).data('variant-id');
+
+                // Cập nhật giá trị của input hidden variant_id trong form
+                $('input[name="variant_id"]').val(variantId);
+            });
         });
-    });
-</script>
+        document.getElementById('cartEffect').addEventListener('click', function(event) {
+            event.preventDefault(); // Ngăn chặn hành vi mặc định của liên kết
+            document.getElementById('addtocart').submit(); // Gửi biểu mẫu
+            showSuccessMessage(); // Hiển thị thông báo
+        });
+        // Hàm hiển thị thông báo
+        function showSuccessMessage() {
+            document.getElementById('notification').classList.remove('hidden');
+
+            // Tự động ẩn hộp thông báo sau một khoảng thời gian
+            setTimeout(function() {
+                document.getElementById('notification').classList.add('hidden');
+            }, 3000); // 3000 miliseconds = 3 seconds
+        }
+
+        function addToCart() {
+            var formData = $('#addtocart').serialize();
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('cart.store') }}',
+                data: formData,
+                success: function(response) {
+                    showSuccessMessage(); // Hiển thị thông báo thành công
+                    // Thực hiện các hành động khác sau khi thêm vào giỏ hàng thành công
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText); // Hiển thị thông báo lỗi nếu có
+                }
+            });
+        }
+    </script>
+@endsection

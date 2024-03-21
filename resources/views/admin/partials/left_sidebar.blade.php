@@ -42,30 +42,40 @@
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header ">Quản lý sản phẩm </h6>
-                    <a class="collapse-item" href="{{ route('product.index') }}">Hiển thị sản phẩm</a>
-                    <a class="collapse-item" href="{{ route('productVariant.index') }}">Hiển thị biến thể</a>
-                    <h6 class="collapse-header">Quản lý loại hàng </h6>
-                    <a class="collapse-item" href="{{ route('category.index') }}">Loại sản phẩm</a>
-                    <a class="collapse-item" href="{{ route('category.create') }}">Thêm loại</a>
+                    <h6 class="collapse-header" data-toggle="collapse" data-target="#manageProduct"
+                        aria-expanded="true" aria-controls="manageProduct">Quản lý sản phẩm </h6>
+                    <div id="manageProduct" class="collapse" aria-labelledby="manageProduct"
+                        data-parent="#collapseTwo">
+                        <a class="collapse-item" href="{{ route('product.index') }}">Hiển thị sản phẩm</a>
+                        <a class="collapse-item" href="{{ route('productVariant.index') }}">Hiển thị biến thể</a>
+                    </div>
+                    <h6 class="collapse-header" data-toggle="collapse" data-target="#manageCategory"
+                        aria-expanded="true" aria-controls="manageCategory">Quản lý loại hàng </h6>
+                    <div id="manageCategory" class="collapse" aria-labelledby="manageCategory"
+                        data-parent="#collapseTwo">
+                        <a class="collapse-item" href="{{ route('category.index') }}">Loại sản phẩm</a>
+                        <a class="collapse-item" href="{{ route('size.index') }}">Kích cỡ</a>
+                        <a class="collapse-item" href="{{ route('color.index') }}">Màu sắc</a>
+                    </div>
                 </div>
             </div>
         </li>
+
 
         <!-- Nav Item - Utilities Collapse Menu -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                 aria-expanded="true" aria-controls="collapseUtilities">
                 <i class="fa-solid fa-users"></i>
-                <span>User</span>
+                <span>Tài khoản</span>
             </a>
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-
-                    <a class="collapse-item" href="{{ route('listUser') }}">List User</a>
-          
+                    <a class="collapse-item" href="{{ route('listUser') }}">Danh sách user</a>
+                    <a class="collapse-item" href="{{ route('listAdmin') }}">Danh sách admin</a>
                 </div>
+                
             </div>
         </li>
 
@@ -76,7 +86,21 @@
         <div class="sidebar-heading">
             Addons
         </div>
-
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#orderUtilies"
+                aria-expanded="true" aria-controls="orderUtilies">
+                <i class="fa-solid fa-users"></i>
+                <span>Đơn hàng</span>
+            </a>
+            <div id="orderUtilies" class="collapse" aria-labelledby="headingUtilities"
+                data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="{{ route('orderAdmin') }}">Danh sách đặt hàng</a>
+                    {{-- <a class="collapse-item" href="{{ route('listAdmin') }}">Danh sách admin</a> --}}
+                </div>
+                
+            </div>
+        </li>
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"

@@ -33,7 +33,7 @@
                                         <th></th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="">
                                     @foreach ($cartItems as $item)
                                         <tr>
 
@@ -46,31 +46,15 @@
                                             </td>
                                             <td class="cart__price">{{ $item->price }}đ</td>
                                             <td class="cart__price">
-                                                <div class="col-sm-9">
-
-                                                    <select id="size_id" name="size_id" class="form-select">
-                                                        <option hidden value="{{ $item->size }}">{{ $item->size }}
-                                                        </option>
-                                                        @foreach ($size as $sz)
-                                                            <option value="{{ $sz->id }}">{{ $sz->size }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
+                                             <div class="cart__product__item__title ">
+                                                    <h6>{{ $item->size }}</h6>
+                                              </div>
                                             </td>
                                             <td class="cart__price">
-                                                <div class="col-sm-9">
-
-                                                    <select id="size_id" name="color_id" class="form-select">
-                                                        <option hidden value="{{ $item->color }}">{{ $item->color }}
-                                                        </option>
-                                                        @foreach ($color as $co)
-                                                            <option value="{{ $co->id }}">{{ $co->color }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </td>
+                                                <div class="cart__product__item__title">
+                                                       <h6>{{ $item->color }}</h6>
+                                                   </div>
+                                               </td>
                                             <td class="cart__quantity">
                                                 <div class="pro-qty">
                                                     <input data-rowid="{{ $item->rowId }}" name="quantity" type="number"
@@ -132,7 +116,7 @@
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="cart__btn update__btn">
-                    {{-- <a href="javascript:void(0)" onclick="clearCart()" >XÓA TOÀN BỘ GIỎ HÀNG</a> --}}
+                     <a href="javascript:void(0)" onclick="clearCart()" >XÓA TOÀN BỘ GIỎ HÀNG</a>
                 </div>
             </div>
         </div>
@@ -185,6 +169,23 @@
             $('#quantity').val($(qty).val());
             $('#updateCartQty').submit();
         }
+
+        var selectedColor = null;
+
+        // Hàm xử lý khi người dùng thay đổi lựa chọn
+        function updateColor(color) {
+            selectedColor = $(color).val();
+            $('#rowId').val($(color).data('rowid'));
+            $('#updateCartQty').submit();
+        }
+
+        // Sự kiện xảy ra khi trang được tải lại
+        $(document).ready(function() {
+            // Đặt lại giá trị mặc định cho select box
+            if (selectedColor !== null) {
+                $('#color_id').val(selectedColor);
+            }
+        });
 
         function removeItemFromCart(rowId) {
             $('#rowId_D').val(rowId);
