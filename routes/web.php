@@ -40,6 +40,25 @@ Route::get('/detail_blog', function () {
    return view('client.detail_blog');
 });
 
+Route::get('/account', function () {
+   return view('client.account.info_account');
+});
+Route::get('/address', function () {
+   return view('client.account.address');
+});
+Route::get('/address_add', function () {
+   return view('client.account.address_add');
+});
+Route::get('/purchase_history', function () {
+   return view('client.account.purchase_history');
+});
+Route::get('/wishlist', function () {
+   return view('client.account.wishlist');
+});
+Route::get('/promotion', function () {
+   return view('client.account.promotion');
+});
+
 Route::get('/signup', function () {
    return view('auth.signup');
 });
