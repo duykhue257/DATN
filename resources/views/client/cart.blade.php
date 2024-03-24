@@ -44,7 +44,7 @@
                                                     <h6>{{ $item->name }}</h6>
                                                 </div>
                                             </td>
-                                            <td class="cart__price">{{ $item->price }}đ</td>
+                                            <td class="cart__price">{{ Number_format($item->price) }}đ</td>
                                             <td class="cart__price">
                                              <div class="cart__product__item__title ">
                                                     <h6>{{ $item->size }}</h6>
@@ -61,8 +61,7 @@
                                                         min="1" onchange="updateQuantity(this)"
                                                         value="{{ $item->qty }}">
                                                 </div>
-                                            </td>
-
+                                            </td> 
                                             <script>
                                                 function updateQuantity(input) {
                                                     var rowId = $(input).data('rowid');
@@ -86,6 +85,7 @@
 
                                             <td class="cart__close">
                                                 <a href="javascript:void(0)"
+                                                    
                                                     onclick="removeItemFromCart('{{ $item->rowId }}')">
                                                     <span class="icon_close"></span>
                                                 </a>
@@ -123,7 +123,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="discount__content">
-                    <h6>NHẬP MÃ GIẢM GIÁ</h6>
+                    <h6 class="my-4">NHẬP MÃ GIẢM GIÁ</h6>
                     <form action="#">
                         <input type="text" placeholder="Nhập mã phiếu giảm giá của bạn">
                         <button type="submit" class="site-btn">Apply</button>
@@ -186,11 +186,12 @@
                 $('#color_id').val(selectedColor);
             }
         });
-
-        function removeItemFromCart(rowId) {
+        
+            function removeItemFromCart(rowId) {
             $('#rowId_D').val(rowId);
             $('#deleteFromCart').submit();
         }
+       
 
         function clearCart() {
             $('#clearCart').submit();

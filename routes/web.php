@@ -107,3 +107,10 @@ Route::delete('/cart/clear', [CartController::class, 'clearCart'])->name('cart.c
 //checkout
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout');
+
+Route::get('/thanks', function () {
+   return view('client.thanks');
+});
+Route::get('/charts', function () {
+   return view('admin.partials.charts');
+});

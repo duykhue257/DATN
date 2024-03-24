@@ -156,6 +156,7 @@
     <!-- Page level custom scripts -->
     <script src="{{ asset('admin_assets/js/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('admin_assets/js/demo/chart-pie-demo.js') }}"></script>
+    <script src="{{ asset('admin_assets/js/demo/chart-bar-demo.js') }}"></script>
 </body>
 
 </html>

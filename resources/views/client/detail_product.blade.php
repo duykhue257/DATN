@@ -67,16 +67,16 @@
                         <div class="product__details__button">
                             <form id="addtocart" method="post" action="{{ route('cart.store') }}">
                                 @csrf
-                                <div class="quantity">
+                                <div class="quantity mt-2">
                                     <span>Số lượng:</span>
                                     <div class="pro-qty">
                                         <input type="text" name="quantity" id="qty" value="1" min="1"
                                             max="{{ $product->variants->max('quantity') }}">
                                     </div>
                                 </div>
-                                <button type="button" onclick="addToCart()"
-                                    class="btn btn-solid hover-solid btn-animation">
-                                    <span class="cart-btn"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</span>
+                                <button  type="button" onclick="addToCart()"
+                                    class=" btn btn-solid hover-solid btn-animation">
+                                    <span class="cart-btn button_detail"><i class="fa fa-shopping-cart mr-2"></i>Thêm vào giỏ hàng</span>
                                 </button>
                                 <input type="hidden" name="id" value="{{ $product->id }}">
                                 <input type="hidden" name="variant_id" value="{{ $product->variants->first()->id }}">
@@ -266,7 +266,7 @@
             // Tự động ẩn hộp thông báo sau một khoảng thời gian
             setTimeout(function() {
                 document.getElementById('notification').classList.add('hidden');
-            }, 3000); // 3000 miliseconds = 3 seconds
+            }, 2000); // 3000 miliseconds = 3 seconds
         }
 
         function addToCart() {
@@ -284,5 +284,13 @@
                 }
             });
         }
+      
+        
+    $(document).ready(function () {
+        $('li').click(function () {
+            $(this).toggleClass('selected');
+        });
+    });
+
     </script>
 @endsection

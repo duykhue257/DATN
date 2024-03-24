@@ -89,7 +89,7 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#orderUtilies"
                 aria-expanded="true" aria-controls="orderUtilies">
-                <i class="fa-solid fa-users"></i>
+                <i class="fa-solid fa-basket-shopping"></i>
                 <span>Đơn hàng</span>
             </a>
             <div id="orderUtilies" class="collapse" aria-labelledby="headingUtilities"
