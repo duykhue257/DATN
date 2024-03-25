@@ -13,11 +13,11 @@
                             mới</a></button>
                     <br><br>
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table table-bordered" id="order" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Tên</th>
+                                    <th>Tên khách hàng</th>
                                     <th>sdt</th>
                                     <th>số lượng</th>
                                     <th>trạng thái</th>
@@ -36,7 +36,7 @@
                                         <td>{{ $order->created_at->diffForHumans() }}</td>
                                     
                                         <td>
-                                            <a class=" btn btn-primary px-2" href="">Chi Tiết</a>
+                                            <a class=" btn btn-primary px-2" href="/admin/order_detail">Chi Tiết</a>
                                         </td>
                                     </tr>
                                 @endforeach

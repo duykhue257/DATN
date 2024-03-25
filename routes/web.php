@@ -79,6 +79,9 @@ route::middleware(['admin'])->group(function () {
       route::get('listAdmin', [UserController::class, 'admin'])->name('listAdmin');
       //order route
       Route::get('/order', [OrderController::class,'index'])->name('orderAdmin');
+      Route::get('/order_detail', function () {
+         return view('admin.order.order_detail');
+      });
       //voucher route
       Route::resource('voucher', VoucherController::class);
    });
