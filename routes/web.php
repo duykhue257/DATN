@@ -10,6 +10,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\client\HomeController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProductVariansController;
 use App\Http\Controllers\SizeController;
@@ -55,7 +56,7 @@ Route::get('/signin', function () {
    return view('auth.signin');
 });
 //account admin
-route::get('loginAdmin', [AdminController::class, 'login']);
+route::get('loginAdmin', [AdminController::class, 'login'])->name('login.admin');
 route::post('loginAdmin', [AdminController::class, 'postlogin'])->name('admin.login');
 route::get('logout', [AdminController::class, 'logout'])->name('admin.logout');
 
@@ -107,3 +108,8 @@ Route::delete('/cart/clear', [CartController::class, 'clearCart'])->name('cart.c
 //checkout
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout');
+//payment
+Route::post('/vnpay', [PaymentController::class, 'Payment'])->name('vnpay_payment');
+Route::get('/vnpay-return', [PaymentController::class, 'vnpayReturn'])->name('vnpay.return');
+//voucher apply
+Route::post('/apply-discount',[VoucherController::class, 'applyDiscount'])->name('apply.discount');

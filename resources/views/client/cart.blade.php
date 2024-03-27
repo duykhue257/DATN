@@ -124,9 +124,10 @@
             <div class="col-lg-6">
                 <div class="discount__content">
                     <h6>NHẬP MÃ GIẢM GIÁ</h6>
-                    <form action="#">
-                        <input type="text" placeholder="Nhập mã phiếu giảm giá của bạn">
-                        <button type="submit" class="site-btn">Apply</button>
+                    <form id="applyDiscountForm" action="{{ route('apply.discount') }}" method="POST">
+                        @csrf
+                        <input type="text" name="discount_code" id="discount_code" placeholder="Nhập mã giảm giá của bạn">
+                        <button type="submit" class="site-btn">apply</button>
                     </form>
                 </div>
             </div>
@@ -135,9 +136,21 @@
                     <h6>TỔNG SỐ GIỎ HÀNG</h6>
                     <ul>
                         <li>Tổng tạm tính <span>{{ Cart::instance('cart')->subtotal() }}đ</span></li>
+                        <li>Giảm giá 
+                            <span>
+                                @php
+                                    $totalDiscount = 0;
+                                    foreach(Cart::instance('cart')->content() as $item) {
+                                        $totalDiscount += $item->discount * $item->qty;
+                                    }
+                                    echo $totalDiscount . 'đ';
+                                @endphp
+                            </span>
+                        </li>
                         <li>Phí giao hàng <span>{{ Cart::instance('cart')->tax() }}đ</span></li>
-                        <li>Tổng cộng <span>{{ Cart::instance('cart')->total() }}đ</span></li>
+                        <li>Tổng cộng <span>{{ Cart::instance('cart')->total() - $totalDiscount }}đ</span></li>
                     </ul>
+                    
                     <a href="/checkout" class="primary-btn">TIẾN HÀNH THANH TOÁN</a>
                 </div>
             </div>

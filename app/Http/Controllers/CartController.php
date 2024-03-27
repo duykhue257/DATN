@@ -17,12 +17,15 @@ class CartController extends Controller
     public function index()
     {
         $cartItems = Cart::instance('cart')->content();
+        // dd($cartItems['id']);
+        $orderNumber = session('order_number');
+        // dd($orderNumber);
         // $size = Size::all();
         // // $sum = 0;
         // $color = Color::all();
         foreach ($cartItems as $item) {
             // $sum += $item->price;
-            $productVariant = ProductVariants::with('sizes','colors')->find($item->id);
+            $productVariant = ProductVariants::with('sizes', 'colors')->find($item->id);
             // dd($productVariant->name);
             $productVariant->load('product'); // Load thông tin sản phẩm liên quan
             // Gán thông tin sản phẩm vào mỗi item trong giỏ hàng
@@ -31,12 +34,11 @@ class CartController extends Controller
             $item->price = $productVariant->product->price_reduced;
             $item->size = $productVariant->sizes->size;
             $item->color = $productVariant->colors->color;
-        //  dd( $item->product_price);
-        
+            //  dd( $item->product_price);
+
         }
         // dd($sum);
-        return view('client.cart', compact('cartItems'));
-
+        return view('client.cart', compact('cartItems','orderNumber'));
     }
 
     public function addToCart(Request $request)
@@ -48,28 +50,34 @@ class CartController extends Controller
         // Tìm sản phẩm chính và biến thể tương ứng
         $product = Products::find($productId);
         $productVariant = ProductVariants::find($variantId);
-    
+
         // Kiểm tra xem sản phẩm và biến thể có tồn tại hay không
         if (!$product || !$productVariant) {
             return redirect()->back()->with('error', 'Sản phẩm không tồn tại');
         }
-    
+        // Tạo mã đơn hàng
+        $orderNumber = uniqid();
+
         // Thêm sản phẩm vào giỏ hàng
-        Cart::instance('cart')->add(
+        $cartItem = Cart::instance('cart')->add(
             $variantId, // id của biến thể
             $productVariant->image, // ảnh của biến thể
             $request->quantity, // số lượng
-            $product->price, // giá của sản phẩm
-            // $request->color_id
+            $product->price // giá của sản phẩm
         )->associate('App\Models\ProductVariants'); // Liên kết với model ProductVariants
-    
+        
+        // Lưu order_number vào session
+        session(['order_number' => $orderNumber]);
+        
+        // Lấy mảng giỏ hàng ra khỏi session
+        $cartContent = session('cart');
+        // Thêm order_number vào mục giỏ hàng mới thêm vào
+        $cartContent[$cartItem->rowId]['order_number'] = $orderNumber;
+        // Đặt lại giỏ hàng vào session
+        session(['cart' => $cartContent]);
+        // dd($orderNumber);
         return redirect()->back()->with('message', 'Sản phẩm đã được thêm vào giỏ hàng');
     }
-    
-    
-    
-    
-
 
     public function updateCart(Request $request)
     {

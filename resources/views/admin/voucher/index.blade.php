@@ -17,7 +17,7 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>code</th>
+                                    <th>mã</th>
                                     <th>phần trăm</th>
                                     <th>giá tối thiểu</th>
                                     <th>ngày bắt đầu</th>
@@ -31,7 +31,7 @@
                                     <tr>
                                         <th>{{ $voucher->id }}</th>
                                         <td>{{ $voucher->code }}</td>
-                                        <td>{{ $voucher->percent }}</td>
+                                        <td>{{ $voucher->percent }}%</td>
                                         <td>{{ $voucher->min_price }}</td>
                                         <td>{{ $voucher->start_at }}</td>
                                         <td>{{ $voucher->end_at }}</td>

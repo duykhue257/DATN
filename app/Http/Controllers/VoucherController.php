@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Voucher;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 
 class VoucherController extends Controller
@@ -15,7 +16,8 @@ class VoucherController extends Controller
     {
         //
         $voucher = Voucher::all();
-        return view('admin.voucher.index',compact('voucher'));
+        // dd($voucher);
+        return view('admin.voucher.index', compact('voucher'));
     }
 
     /**
@@ -23,14 +25,14 @@ class VoucherController extends Controller
      */
     public function create()
     {
-        
+
         return view('admin.voucher.add');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request )
+    public function store(Request $request)
     {
         //
         // $request->validate([
@@ -41,7 +43,7 @@ class VoucherController extends Controller
         //     'end_at'=>'required',
         //     'quantity'=>'required|min:1',
         // ]);
-        $voucher = $request->only("code",'percent','min_price','start_at','end_at','quantity');
+        $voucher = $request->only("code", 'percent', 'min_price', 'start_at', 'end_at', 'quantity');
         // dd($voucher);
         Voucher::create($voucher);
         return redirect()->route('voucher.index');
@@ -62,10 +64,10 @@ class VoucherController extends Controller
     {
         //
         $voucher = Voucher::find($id);
-        if($voucher){
-            return view('admin.voucher.edit',compact('voucher'));
-        }else{
-           return  "voucher loi";
+        if ($voucher) {
+            return view('admin.voucher.edit', compact('voucher'));
+        } else {
+            return  "voucher loi";
         }
     }
 
@@ -76,10 +78,10 @@ class VoucherController extends Controller
     {
         //
         $voucher = Voucher::find($id);
-        if($voucher){
+        if ($voucher) {
             $voucher->update($request->all());
             return back();
-        }else{
+        } else {
             return 0;
         }
     }
@@ -91,9 +93,29 @@ class VoucherController extends Controller
     {
         //
         $voucher = Voucher::find($id);
-        if($voucher){
+        if ($voucher) {
             $voucher->delete();
             return redirect()->route('voucher.index');
+        }
+    }
+    public function applyDiscount(Request $request)
+    {
+        // Kiểm tra mã giảm giá trong database hoặc bất kỳ cơ sở dữ liệu nào bạn lưu trữ
+        $discount = Voucher::where('code', $request->discount_code)->first();
+
+        if ($discount) {
+            // Tính toán giảm giá dựa trên giá trị của từng mục trong giỏ hàng
+            foreach(Cart::instance('cart')->content() as $item) {
+                $itemPrice = $item->price * (1 - $discount->value / 100); // Tính giá mới sau khi áp dụng giảm giá
+                Cart::instance('cart')->update($item->rowId, [
+                    'price' => $itemPrice,
+                    'discount' => $discount->value, // Lưu giá trị giảm giá vào mục
+                ]);
+            } 
+    
+            return redirect()->back()->with('success', 'Đã áp dụng mã giảm giá thành công.');
+        } else {
+            return redirect()->back()->with('error', 'Mã giảm giá không hợp lệ.');
         }
     }
 }

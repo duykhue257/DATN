@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 use App\Models\Order;
-
+use App\Models\OrderStatus;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
     //
     public function index(){
-        $order = Order::with('detail_order')->get();
-        // dd($order);
-        return view('admin.order.index',compact('order'));
+        $orders = Order::with('detail_order', 'status')->get();
+    
+        return view('admin.order.index', compact('orders'));
     }
 }

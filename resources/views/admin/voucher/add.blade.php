@@ -13,7 +13,7 @@
                             enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
-                                <label for="code" class="form-label">code</label>
+                                <label for="code" class="form-label">Mã giảm</label>
                                 <input type="text" name="code" id="code" value="{{ old('code') }}"
                                     class="form-control" placeholder="" />
                             </div>
@@ -21,7 +21,7 @@
                                 <p style="color: red">{{ $message }}</p>
                             @enderror --}}
                             <div class="mb-3">
-                                <label for="percent" class="form-label">percent</label>
+                                <label for="percent" class="form-label">Phần trăm</label>
                                 <input type="text" name="percent" id="percent" value="{{ old('percent') }}"
                                     class="form-control" placeholder="" />
                             </div>

@@ -26,7 +26,7 @@
                                 </tr>
                             </thead>
                             <tfoot>
-                                @foreach ($order as $order)
+                                @foreach ($orders as $order)
                                     <tr>
                                         <th>{{ $order->id }}</th>
                                         <td>{{ $order->name }}</td>
