@@ -138,3 +138,6 @@ Route::get('/thanks', function () {
 Route::get('/charts', function () {
    return view('admin.partials.charts');
 });
+Route::get('/succer', function () {
+   return view('client.succer');
+});
