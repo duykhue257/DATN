@@ -91,7 +91,7 @@
                                             <li><a href="{{ $product->variants ? Storage::url($product->variants[0]->image) : '' }}"
                                                     class="image-popup"><span class="arrow_expand"></span></a></li>
                                             <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                            <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                                            {{-- <li><a href="#"><span class="icon_bag_alt"></span></a></li> --}}
                                         </ul>
                                     </div>
                                 @endif

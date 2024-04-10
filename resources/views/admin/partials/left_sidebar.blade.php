@@ -34,7 +34,7 @@
         </div>
 
         <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                 aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-folder"></i>
@@ -42,10 +42,9 @@
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header" data-toggle="collapse" data-target="#manageProduct"
-                        aria-expanded="true" aria-controls="manageProduct">Quản lý sản phẩm </h6>
-                    <div id="manageProduct" class="collapse" aria-labelledby="manageProduct"
-                        data-parent="#collapseTwo">
+                    <h6 class="collapse-header" data-toggle="collapse" data-target="#manageProduct" aria-expanded="true"
+                        aria-controls="manageProduct">Quản lý sản phẩm </h6>
+                    <div id="manageProduct" class="collapse" aria-labelledby="manageProduct" data-parent="#collapseTwo">
                         <a class="collapse-item" href="{{ route('product.index') }}">Hiển thị sản phẩm</a>
                         <a class="collapse-item" href="{{ route('productVariant.index') }}">Hiển thị biến thể</a>
                     </div>
@@ -59,10 +58,45 @@
                     </div>
                 </div>
             </div>
+        </li> --}}
+
+        <!-- Nav Item - product Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseproduct"
+                aria-expanded="true" aria-controls="collapseproduct">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Quản lý sản phẩm</span>
+            </a>
+            
+            <div id="collapseproduct" class="collapse" aria-labelledby="headingUtilities"
+                data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="{{ route('product.index') }}">Hiển thị sản phẩm</a>
+                    <a class="collapse-item" href="{{ route('productVariant.index') }}">Hiển thị biến thể</a>
+                </div>
+
+            </div>
+        </li>
+        <!-- Nav Item - categories Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsecate"
+                aria-expanded="true" aria-controls="collapsecate">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Quản lý loại hàng</span>
+            </a>
+            <div id="collapsecate" class="collapse" aria-labelledby="headingUtilities"
+                data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="{{ route('category.index') }}">Thể loại</a>
+                    <a class="collapse-item" href="{{ route('size.index') }}">Kích cỡ</a>
+                    <a class="collapse-item" href="{{ route('color.index') }}">Màu sắc</a>
+                </div>
+
+            </div>
         </li>
 
 
-        <!-- Nav Item - Utilities Collapse Menu -->
+        <!-- Nav Item - users Collapse Menu -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                 aria-expanded="true" aria-controls="collapseUtilities">
@@ -75,7 +109,7 @@
                     <a class="collapse-item" href="{{ route('listUser') }}">Danh sách user</a>
                     <a class="collapse-item" href="{{ route('listAdmin') }}">Danh sách admin</a>
                 </div>
-                
+
             </div>
         </li>
 
@@ -89,16 +123,15 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#orderUtilies"
                 aria-expanded="true" aria-controls="orderUtilies">
-                <i class="fa-solid fa-users"></i>
+                <i class="fa-solid fa-basket-shopping"></i>
                 <span>Đơn hàng</span>
             </a>
-            <div id="orderUtilies" class="collapse" aria-labelledby="headingUtilities"
-                data-parent="#accordionSidebar">
+            <div id="orderUtilies" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="{{ route('orderAdmin') }}">Danh sách đặt hàng</a>
                     {{-- <a class="collapse-item" href="{{ route('listAdmin') }}">Danh sách admin</a> --}}
                 </div>
-                
+
             </div>
         </li>
         <!-- Nav Item - Pages Collapse Menu -->
@@ -124,14 +157,14 @@
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
-            <a class="nav-link" href="charts.html">
+            <a class="nav-link" href="{{ route('chart') }}">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>Charts</span></a>
         </li>
 
         <!-- Nav Item - Tables -->
         <li class="nav-item active">
-            <a class="nav-link" href="tables.html">
+            <a class="nav-link" href="">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Tables</span></a>
         </li>

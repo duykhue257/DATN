@@ -46,7 +46,7 @@
                             </div>
                             <button type="submit" class="btn btn-success">Thêm</button>
                             <button class="btn btn-primary"><a class="text-white text-decoration-none"
-                                    href="{{ route('productVariant.index') }}">List</a></button>
+                                    href="{{ route('product.index') }}">Danh sách sản phẩm</a></button>
 
                         </form>
                     </div>

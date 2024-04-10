@@ -12,6 +12,10 @@ class Products extends Model
     protected $fillable = [
         'id', 'name', 'price', 'price_reduced', 'description', 'category_id', 'color_id','default_image'
     ];
+    public function price_reduced_numeric()
+    {
+        return (float) $this->price_reduced;
+    }
     public function variants()
     {
         return $this->hasMany(ProductVariants::class, 'product_id');

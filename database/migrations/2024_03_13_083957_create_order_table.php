@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('status_id')->constrained("order_status","id");
             $table->foreignId('payment_id')->constrained("payment","id");
 
+            $table->string('order_code');
             $table->integer('user_id')->nullable();
             $table->string('name');
             $table->string('phone');
@@ -26,6 +27,9 @@ return new class extends Migration
             $table->integer('shipping_cost')->default(0);
             $table->string('shipping_by');
             $table->boolean('is_payment')->default(false);
+            $table->decimal('total', 10, 2);
+            $table->string('address')->nullable();
+            $table->string('note')->nullable();
          
             $table->timestamps();
         });

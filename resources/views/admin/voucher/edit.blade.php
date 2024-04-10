@@ -23,7 +23,7 @@
                             @enderror --}}
                             <div class="mb-3">
                                 <label for="percent" class="form-label">percent</label>
-                                <input type="text" name="percent" id="percent" value="{{ $voucher->code }}"
+                                <input type="text" name="percent" id="percent" value="{{ $voucher->percent }}"
                                     class="form-control" placeholder="" />
                             </div>
                         

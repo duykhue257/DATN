@@ -24,7 +24,7 @@
                                         <td>{{ $user->id }}</td>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td> 
-                                        <td>
+                                    
                                             <td>
                                                 @if(auth()->user()->id !== $user->id) <!-- Kiểm tra xem đây có phải tài khoản của chính người dùng hiện tại hay không -->
                                                     <form action="{{ route('account.destroy', $user->id) }}" method="POST">
@@ -35,7 +35,7 @@
                                                 @endif
                                             </td>
                                             
-                                        </td>
+                                     
                                     </tr>
                                 @endforeach
                             </tbody>

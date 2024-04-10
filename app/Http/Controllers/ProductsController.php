@@ -46,15 +46,16 @@ class ProductsController extends Controller
     }
 
 
-    public function edit(String $id)
+    public function edit(int $id)
     {
-        $product = Products::with('products')->find($id);
-        $products = Products::all(); // Sử dụng Product thay vì Products
-        return view('admin.product.edit', compact('product', 'products'));
+        $categories = Category::all();
+        $product = Products::with('category')->find($id);
+        return view('admin.product.edit_prd', compact('product','categories'));
     }
 
     public function update(Request $request, Products $product)
     {
+        // dd($request->all());
         $product->name = $request->name;
         $product->price = $request->price;
         $product->price_reduced = $request->price_reduced;

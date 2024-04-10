@@ -41,6 +41,7 @@
                               <label class="form-check-label" for="form2Example33">
                                   Lưu thông tin đăng nhập
                               </label>
+                              <a  class="ml-3" href="">Quên mật khẩu</a>
                           </div>
 
                           <!-- Submit button -->

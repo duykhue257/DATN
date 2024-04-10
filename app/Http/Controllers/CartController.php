@@ -6,6 +6,7 @@ use App\Models\ProductVariants;
 use App\Models\Products;
 use App\Models\Size;
 use App\Models\Color;
+use App\Models\Voucher;
 use Illuminate\Http\Request;
 // use Cart;
 // use Hardevine\Shoppingcart\Facades\Cart;
@@ -14,36 +15,43 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CartController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+
         $cartItems = Cart::instance('cart')->content();
+// dd($cartItems);
+        // dd(Cart::instance('cart')->total());
+        $subtotal = Cart::instance('cart')->subtotal();
+        $subtotal = str_replace(',', '', $subtotal); // Loại bỏ dấu phẩy
+        $subtotal = floatval($subtotal); // Chuyển đổi thành số
         // dd($cartItems['id']);
         $orderNumber = session('order_number');
         // dd($orderNumber);
-        // $size = Size::all();
-        // // $sum = 0;
-        // $color = Color::all();
+  
         foreach ($cartItems as $item) {
             // $sum += $item->price;
             $productVariant = ProductVariants::with('sizes', 'colors')->find($item->id);
             // dd($productVariant->name);
             $productVariant->load('product'); // Load thông tin sản phẩm liên quan
             // Gán thông tin sản phẩm vào mỗi item trong giỏ hàng
+            $item->is_checked = false;
             $item->product_image = $productVariant->image;
             $item->name = $productVariant->product->name;
             $item->price = $productVariant->product->price_reduced;
             $item->size = $productVariant->sizes->size;
             $item->color = $productVariant->colors->color;
+            $item->quantity = (int)$item->qty;
             //  dd( $item->product_price);
 
         }
         // dd($sum);
-        return view('client.cart', compact('cartItems','orderNumber'));
+        return view('client.cart', compact('cartItems', 'orderNumber','productVariant'));
     }
 
     public function addToCart(Request $request)
     {
-        // Lấy id của sản phẩm chính và biến thể từ yêu cầu
+        
+
         $productId = $request->id;
         $variantId = $request->variant_id;
         //  dd($request->id);
@@ -58,17 +66,17 @@ class CartController extends Controller
         // Tạo mã đơn hàng
         $orderNumber = uniqid();
 
-        // Thêm sản phẩm vào giỏ hàng
-        $cartItem = Cart::instance('cart')->add(
-            $variantId, // id của biến thể
-            $productVariant->image, // ảnh của biến thể
-            $request->quantity, // số lượng
-            $product->price // giá của sản phẩm
-        )->associate('App\Models\ProductVariants'); // Liên kết với model ProductVariants
         
+        $cartItem = Cart::instance('cart')->add(
+            $variantId, 
+            $productVariant->image, 
+            $request->quantity, 
+            $product->price 
+        )->associate('App\Models\ProductVariants'); // Liên kết với model ProductVariants
+
         // Lưu order_number vào session
         session(['order_number' => $orderNumber]);
-        
+
         // Lấy mảng giỏ hàng ra khỏi session
         $cartContent = session('cart');
         // Thêm order_number vào mục giỏ hàng mới thêm vào
@@ -111,4 +119,74 @@ class CartController extends Controller
         Cart::instance('cart')->destroy();
         return redirect()->route('cart.show');
     }
+
+    public function applyDiscount(Request $request)
+    {
+        // Lấy mã giảm giá từ yêu cầu
+        $discountCode = $request->discount_code;
+    
+        // Kiểm tra xem mã giảm giá có tồn tại trong cơ sở dữ liệu không
+        $voucher = Voucher::where('code', $discountCode)
+            ->where('start_at', '<=', now())
+            ->where('end_at', '>=', now())
+            ->where('quantity', '>', 0)
+            ->first();
+    
+        if ($voucher) {
+            // Chuyển đổi trường percent thành số
+            $percent = (int) $voucher->percent;
+            $subtotal = Cart::instance('cart')->subtotal();
+            $subtotal = str_replace(',', '', $subtotal); // Loại bỏ dấu phẩy
+            $subtotal = floatval($subtotal); // Chuyển đổi thành số
+            // Tính toán giảm giá theo phần trăm hoặc số tiền cố định
+            $discountAmount = ($percent / 100) * $subtotal;
+    
+            // Lưu thông tin giảm giá vào session
+            $request->session()->put('discountAmount', $discountAmount);
+    
+            // Tính toán và lưu total mới vào session
+            $totalAfterDiscount = $subtotal - $discountAmount;
+            $request->session()->put('newTotal', $totalAfterDiscount);
+    
+            return response()->json([
+                'success' => true,
+                'discountAmount' => $discountAmount,
+                'message' => 'Áp dụng mã giảm giá thành công.'
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Mã giảm giá không hợp lệ hoặc đã hết hạn.'
+            ], 422);
+        }
+    }
+    
+
+    public function cancelDiscount(Request $request)
+    {
+        // Kiểm tra xem session 'discountAmount' có tồn tại không
+        if ($request->session()->has('discountAmount')) {
+            // Xóa session 'discountAmount'
+            $request->session()->forget('discountAmount');
+            
+            // Lấy tổng tạm tính ban đầu từ giỏ hàng
+            $subtotal = str_replace(',', '', Cart::instance('cart')->subtotal());
+            
+            // Tính toán và lưu total mới vào session
+            $request->session()->put('newTotal', $subtotal);
+        
+            return response()->json([
+                'success' => true,
+                'message' => 'Đã hủy mã giảm giá thành công.'
+            ]);
+        } else {
+            // Nếu không tồn tại session 'discountAmount', không cần thực hiện gì cả
+            return response()->json([
+                'success' => false,
+                'message' => 'Không có mã giảm giá để hủy.'
+            ], 422);
+        }
+    }
+    
+
 }

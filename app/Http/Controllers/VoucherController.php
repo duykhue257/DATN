@@ -98,24 +98,10 @@ class VoucherController extends Controller
             return redirect()->route('voucher.index');
         }
     }
-    public function applyDiscount(Request $request)
-    {
-        // Kiểm tra mã giảm giá trong database hoặc bất kỳ cơ sở dữ liệu nào bạn lưu trữ
-        $discount = Voucher::where('code', $request->discount_code)->first();
 
-        if ($discount) {
-            // Tính toán giảm giá dựa trên giá trị của từng mục trong giỏ hàng
-            foreach(Cart::instance('cart')->content() as $item) {
-                $itemPrice = $item->price * (1 - $discount->value / 100); // Tính giá mới sau khi áp dụng giảm giá
-                Cart::instance('cart')->update($item->rowId, [
-                    'price' => $itemPrice,
-                    'discount' => $discount->value, // Lưu giá trị giảm giá vào mục
-                ]);
-            } 
+
+
+   
     
-            return redirect()->back()->with('success', 'Đã áp dụng mã giảm giá thành công.');
-        } else {
-            return redirect()->back()->with('error', 'Mã giảm giá không hợp lệ.');
-        }
-    }
+    
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CheckoutRequest;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Payment;
@@ -10,12 +11,19 @@ use Illuminate\Http\Request;
 class PaymentController extends Controller
 {
     //
+   
     public function Payment(Request $request)
-    {
-        $orderData = $request->only('name', 'phone', 'province', 'district', 'ward', 'detail', 'shipping_by', 'total', 'code');
-        $total = is_numeric(str_replace(',', '', $orderData['total'])) ? (int) str_replace(',', '', $orderData['total']) * 100 : 0;
+    {   
+        $da = $request->all();
+        $request->session()->put('detail_order', $request->detail_order);
+    //    dd($da);
+        
+        $orderData = $request->only( 'user_id','name', 'phone', 'province', 'district', 'ward', 'detail', 'shipping_by', 'total', 'order_code','note','address');
+        $total = is_numeric(str_replace(',', '', $orderData['total'])) ? (int) str_replace(',', '', $orderData['total']) : 0;
         
         $order = [
+            'user_id' => isset($orderData['user_id']) ? $orderData['user_id'] : null,
+            // 'user_id' => $orderData['user_id'],
             'name' => $orderData['name'],
             'phone' => $orderData['phone'],
             'province' => $orderData['province'],
@@ -24,16 +32,18 @@ class PaymentController extends Controller
             'detail' => $orderData['detail'],
             'shipping_by' => $orderData['shipping_by'],
             'total' => $total,
-            'code' => $orderData['code']
+            'order_code' => $orderData['order_code'],
+            'note' => $orderData['note'],
+            'address' => $orderData['address'],
         ];
-        
+        // dd($order['total']);
         // Lấy giá trị payment_id từ request và kiểm tra tồn tại
         $paymentId = $request->payment;
         $paymentMethod = Payment::find($paymentId);
         if ($paymentMethod) {
             $order['payment_id'] = $paymentId;
         } else {
-            // Xử lý khi không tìm thấy phương thức thanh toán
+            
         }
         
         // Tạo một đối tượng Order và gán giá trị status_id
@@ -42,16 +52,19 @@ class PaymentController extends Controller
         
         // Lưu thông tin đơn hàng vào session
         $request->session()->put('order', $order);
+        // dd(session('order'));
 
+// dd($total);
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         $vnp_Returnurl = route('vnpay.return');
         $vnp_TmnCode = "TVB87HF4"; //Mã website tại VNPAY 
         $vnp_HashSecret = "SRGQHBUYYDMODMSKOHLDLBNIROJNENQL"; //Chuỗi bí mật
 
-        $vnp_TxnRef = $orderData['code']; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        $vnp_TxnRef = $orderData['order_code']; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
         $vnp_OrderInfo = "Thanh toán online";
         $vnp_OrderType = "oke";
         $vnp_Amount = $total;
+        // dd($vnp_Amount);
         $vnp_Locale = 'VN';
         $vnp_BankCode = 'NCB';
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
@@ -60,7 +73,7 @@ class PaymentController extends Controller
         $inputData = array(
             "vnp_Version" => "2.1.0",
             "vnp_TmnCode" => $vnp_TmnCode,
-            "vnp_Amount" => $vnp_Amount,
+            "vnp_Amount" => $vnp_Amount *100,
             "vnp_Command" => "pay",
             "vnp_CreateDate" => date('YmdHis'),
             "vnp_CurrCode" => "VND",
@@ -72,13 +85,14 @@ class PaymentController extends Controller
             "vnp_TxnRef" => $vnp_TxnRef,
 
         );
+        // dd($inputData);
 
         if (isset($vnp_BankCode) && $vnp_BankCode != "") {
             $inputData['vnp_BankCode'] = $vnp_BankCode;
         }
-        // if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
-        //     $inputData['vnp_Bill_State'] = $vnp_Bill_State;
-        // }
+        if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
+            $inputData['vnp_Bill_State'] = $vnp_Bill_State;
+        }
 
         //var_dump($inputData);
         ksort($inputData);
@@ -113,15 +127,18 @@ class PaymentController extends Controller
         
 
     }
-    public function vnpayReturn(Request $request)
+    public function vnpayReturn(CheckoutRequest $request)
     {
-        // Kiểm tra xem kết quả trả về từ VNPay có hợp lệ không
+        $detailOrder = $request->session()->get('detail_order');
+        // dd($detailOrder);
         if ($request->has('vnp_ResponseCode') && $request->vnp_ResponseCode == '00') {
             // Lấy thông tin đơn hàng từ session
             $order = session()->get('order');
-            
+            // dd(session('order'));
+                // dd($order['total']);
             // Tạo đơn hàng trong cơ sở dữ liệu
             $newOrder = new Order();
+            $newOrder->user_id = $order['user_id'];
             $newOrder->name = $order['name'];
             $newOrder->phone = $order['phone'];
             $newOrder->province = $order['province'];
@@ -130,7 +147,10 @@ class PaymentController extends Controller
             $newOrder->detail = $order['detail'];
             $newOrder->shipping_by = $order['shipping_by'];
             // $newOrder->total = $order['total'];
-            // $newOrder->code = $order['code'];
+            $newOrder->total = intval($order['total']);
+            $newOrder->order_code = $order['order_code'];
+            $newOrder->note = $order['note'];
+            $newOrder->address = $order['address'];
     
             // Lấy phương thức thanh toán từ session
             if (isset($order['payment_id'])) {
@@ -144,17 +164,15 @@ class PaymentController extends Controller
             $newOrder->save();
     
             // Tạo các chi tiết đơn hàng
-            if ($request->detail_order) {
-                foreach ($request->detail_order as $detail) {
+            if ($detailOrder) {
+                foreach ($detailOrder as $detail) {
                     $detail['order_id'] = $newOrder->id;
                     OrderDetail::create($detail);
                 }
             }
-    
-            // Xóa thông tin đơn hàng khỏi session sau khi đã lưu vào cơ sở dữ liệu
             session()->forget('order');
-            return redirect()->route('homePage');
-            // Tiếp tục xử lý các công việc khác sau khi tạo đơn hàng thành công
+            return redirect()->route('thanks');
+          
         }
     }
     
