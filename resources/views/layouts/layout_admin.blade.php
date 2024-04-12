@@ -14,6 +14,7 @@
     <link href="{{ asset('admin_assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin_assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.min.css">
 
 </head>
 
@@ -157,6 +158,9 @@
     <script src="{{ asset('admin_assets/js/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('admin_assets/js/demo/chart-pie-demo.js') }}"></script>
     <script src="{{ asset('admin_assets/js/demo/chart-bar-demo.js') }}"></script>
+
+    {{-- datatables --}}
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
 </body>
 
 </html>

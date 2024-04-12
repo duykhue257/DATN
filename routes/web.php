@@ -164,7 +164,6 @@ Route::get('/succer', function () {
    return view('client.success');
 });
 
-});
 Route::get('/charts', function () {
    return view('admin.partials.charts');
 });
