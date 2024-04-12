@@ -47,8 +47,8 @@
                         @if (Auth::check())
                             {{ Auth::user()->name }}
                         @endif
-                        <li><i class="fa-regular fa-user"></i></li>
-                        <li><a href="#"><span class="icon_heart_alt"></span>
+                        <li><a href="/account"><i class="fa-regular fa-user"></i></a></li>
+                        <li><a href="/wishlist"><span class="icon_heart_alt"></span>
                                 <div class="tip">2</div>
                             </a></li>
 

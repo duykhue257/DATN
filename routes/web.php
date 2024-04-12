@@ -56,6 +56,27 @@ Route::get('/signup', function () {
 Route::get('/signin', function () {
    return view('auth.signin');
 });
+
+/* page profile */
+Route::get('/account', function () {
+   return view('client.account.info_account');
+});
+Route::get('/address', function () {
+   return view('client.account.address');
+});
+Route::get('/address_add', function () {
+   return view('client.account.address_add');
+});
+Route::get('/order_history', function () {
+   return view('client.account.order_history');
+});
+Route::get('/wishlist', function () {
+   return view('client.account.wishlist');
+});
+Route::get('/promotion', function () {
+   return view('client.account.promotion');
+});
+
 //account admin
 route::get('loginAdmin', [AdminController::class, 'login'])->name('login.admin');
 route::post('loginAdmin', [AdminController::class, 'postlogin'])->name('admin.login');
@@ -135,9 +156,19 @@ Route::post('/cancel-discount', [CartController::class,'cancelDiscount'])->name(
 
 Route::get('/thanks', function () {
    return view('client.thanks');
+
 })->name('thanks');
 
 Route::get('/chart', [ChartController::class,'viewChart'])->name('chart');
 Route::get('/succer', function () {
    return view('client.success');
 });
+
+});
+Route::get('/charts', function () {
+   return view('admin.partials.charts');
+});
+Route::get('/succer', function () {
+   return view('client.succer');
+});
+
