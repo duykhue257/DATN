@@ -17,26 +17,26 @@
             <p>Đơn hàng của bạn đã được nhận và đang được xử lý.</p>
             <p>Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.</p>
         </div>
-        <div class="thank-item2 p-4">
+        {{-- <div class="thank-item2 p-4">
             <h4 class="my-4">Thông tin khách hàng</h4>
             <p class="font-weight-normal">Tên khách hàng: <span>Nguyễn Văn A</span></p>
-            {{-- <label class="font-weight-bold" for="">Tên khách hàng:<span>Nguyễn Văn A</span></label> --}}
+            <label class="font-weight-bold" for="">Tên khách hàng:<span>Nguyễn Văn A</span></label>
             <p class="font-weight-normal">Số điện thoại : <span>0986625323</span></p>
             <p class="font-weight-normal">Địa chỉ : <span> Cống 7 Miễn, Vĩnh Hoà Hưng Nam, Gò Quao, Kiên Giang, Việt Nam</span></p>
             <p class="font-weight-normal">Phương thức thanh toán: <span>Thanh toán sau khi lấy hàng</span></p>
             
-        </div>
+        </div> --}}
         <div>
-            <div class="d-flex justify-content-between mt-4">
-                <p><i class="fa-solid fa-circle-question"></i><span class="ml-3">Cần hộ trợ liên hệ chúng tôi : 09290219312</span></p>
-                <div class="">
+            <div class=" text-center mt-4">
+                {{-- <p><i hidden class="fa-solid fa-circle-question"></i><span hidden class="ml-3">Cần hộ trợ liên hệ chúng tôi : 09290219312</span></p> --}}
+                <div class=" text-center">
                     <div class="cart__btn">
                         <a href="/shop">TIẾP TỤC MUA SẮM</a>
                     </div>
                 </div>
             </div>
         </div>
-        {{-- <img src="https://khuevipro.sirv.com/Images/hinh-nen-powerpoint-cam-on_021545174.jpg" alt="" width="900px" height="300px"> --}}
+        {{-- <img src="https://khuevipro.sirv.com/Images/hinh-nen-powerpoint-cam-on_021545174.jpg" alt="" width="500px" height="300px"> --}}
     </div>
  </div>
 

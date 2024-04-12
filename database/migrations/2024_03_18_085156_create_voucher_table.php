@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('voucher', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
-            $table->string('percent');
+            $table->string('code')->unique();
+            $table->integer('percent');
             $table->integer('min_price');
             $table->dateTime('start_at');
             $table->dateTime('end_at');

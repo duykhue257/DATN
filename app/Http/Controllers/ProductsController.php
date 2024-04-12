@@ -45,16 +45,28 @@ class ProductsController extends Controller
         return redirect()->route('product.index');
     }
 
+    public function show(int $id){
+        // Truy vấn biến thể sản phẩm theo ID sản phẩm
+        $products = ProductVariants::with('product', 'sizes', 'colors')
+                                    ->where('product_id', $id) // Lọc theo ID sản phẩm
+                                    ->latest()
+                                    ->get();
+                                    $productId = $id;
+                                    // dd($productId);
+        return view('admin.product.list_variant', compact('products','productId'));
+    }
+    
 
-    public function edit(String $id)
+    public function edit(int $id)
     {
-        $product = Products::with('products')->find($id);
-        $products = Products::all(); // Sử dụng Product thay vì Products
-        return view('admin.product.edit', compact('product', 'products'));
+        $categories = Category::all();
+        $product = Products::with('category')->find($id);
+        return view('admin.product.edit_prd', compact('product','categories'));
     }
 
     public function update(Request $request, Products $product)
     {
+        // dd($request->all());
         $product->name = $request->name;
         $product->price = $request->price;
         $product->price_reduced = $request->price_reduced;

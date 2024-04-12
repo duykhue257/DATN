@@ -34,10 +34,12 @@ class HomeController extends Controller
         return view('client.shop', compact('products','colors','sizes','categories'));
     }
     public function ProductDetail(Request $request) {
-        $productId = $request->input('id');
-        $product = Products::with('variants','colors','sizes')->find($productId);
-   
-        $categoryProducts = Products::where('category_id', $product->category_id)->with('variants')->get();
+       
+        $productId = $request->input('id') ?? $request->query('id');
+        $product = Products::with('variants')->find($productId);
+        // dd($product->variants->pluck('colors'));
+        // return $product;
+        $categoryProducts = Products::where('category_id', 2)->with('variants')->get();
 
         $numbers = range(1, 4);
         

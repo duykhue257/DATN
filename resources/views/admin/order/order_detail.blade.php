@@ -23,12 +23,11 @@
                             </thead>
 
                             <tbody>
-                                <td>Nguyễn văn A</td>
-                                <td>Tòa nhà FPT Polytechnic., Cổng số 2, 13 P. Trịnh Văn Bô, Xuân Phương, Nam Từ Liêm, Hà
-                                    Nội, Việt Nam</td>
-                                <td>0987654321</td>
+                                <td>{{ $order->name }}</td>
+                                <td>{{ $order->note }},{{ $order->address }}</td>
+                                <td>{{ $order->phone }}</td>
                                 <td></td>
-                                <td>Chuyển khoản</td>
+                                <td>{{ $order->payment->method }}</td>
                             </tbody>
                         </table>
                         {{-- Thong tin sản phẩm --}}
@@ -37,7 +36,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Tên sản phẩm</th>
-                                    <th></th>
+                                    <th>Màu,Kích cỡ</th>
                                     <th>Số lượng</th>
                                     <th>Giá sản phẩm</th>
                                     <th>Tổng tiền</th>
@@ -45,27 +44,60 @@
                             </thead>
 
                             <tbody>
+                                @foreach ($order->detail_order as $detail)
                                 <tr>
-                                    <td>1</td>
-                                    <td>Áo sơ mi tay ngắn nam nữ unisex form rộng</td>
-                                    <th>màu đỏ, L</th>
-                                    <td>2</td>
-                                    <td>100.000<span>đ</span></td>
-                                    <td>200.000</td>
+                                    <td>{{ $detail->id }}</td>
+                                    @php
+                                        $totalPrice = 0; // Khởi tạo biến tổng tiền
+                                    @endphp
+                                    @foreach ($detail->variants as $variant)
+                                        <td>{{ $variant->product->name }}</td>
+                                        <th>{{ $variant->colors->color }}, {{ $variant->sizes->size }}</th>
+                                        <td>{{ $detail->quantity }}</td>
+                                        <td>{{ $variant->product->price_reduced }}<span>.đ</span></td>
+                                        @php
+                                            $totalPrice += $variant->product->price_reduced * $detail->quantity; // Tính tổng tiền
+                                        @endphp
+                                    @endforeach
+                                    <td>{{ $totalPrice }}<span>.đ</span></td> <!-- Hiển thị tổng tiền -->
                                 </tr>
+                                
+                                @endforeach
                             </tbody>
 
                             <tfoot>
                                 <tr>
                                     <th colspan="4" rowspan="3"></th>
-                                    <th colspan="2">Tổng tạm tính: <span>100.000đ</span></th>
+                                    <th colspan="2">Tổng tạm tính: 
+                                        @php
+                                            $totalTemp = 0; // Khởi tạo biến tổng tạm tính
+                                        @endphp
+                                        @foreach ($order->detail_order as $detail)
+                                            @foreach ($detail->variants as $variant)
+                                                @php
+                                                    $totalTemp += $variant->product->price_reduced * $detail->quantity; // Tính tổng tạm tính
+                                                @endphp
+                                            @endforeach
+                                        @endforeach
+                                        {{ $totalTemp }}<span>.đ</span>
+                                    </th>
                                 </tr>
+                                
                                 <tr>
-                                    <th colspan="2">Giảm giá: <span>10.000đ</span></th>
+                                    <th colspan="2">Giảm giá: 
+                                        @php
+                                            $discount = $totalTemp - $order->total; // Tính giảm giá
+                                        @endphp
+                                        {{ $discount }}<span>.đ</span>
+                                    </th>
                                 </tr>
+                                
                                 <tr>
-                                    <th colspan="2">Tổng cộng: <span>90.000đ</span></th>
+                                    <th colspan="2">Tổng cộng: 
+                                        <span>{{ $order->total }}</span>
+                                    </th>
                                 </tr>
+                                
                             </tfoot>
                         </table>
                     </div>

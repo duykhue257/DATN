@@ -12,4 +12,10 @@ class OrderDetail extends Model
     protected $fillable = [
         'order_id','product_variant_id','name','price','quantity'
     ];
+
+    public function variants()
+    {
+        return $this->hasMany(ProductVariants::class, 'id', 'product_variant_id');
+    }
+    
 }

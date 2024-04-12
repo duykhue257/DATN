@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Voucher;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 
 class VoucherController extends Controller
@@ -15,7 +16,8 @@ class VoucherController extends Controller
     {
         //
         $voucher = Voucher::all();
-        return view('admin.voucher.index',compact('voucher'));
+        // dd($voucher);
+        return view('admin.voucher.index', compact('voucher'));
     }
 
     /**
@@ -23,25 +25,17 @@ class VoucherController extends Controller
      */
     public function create()
     {
-        
+
         return view('admin.voucher.add');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request )
+    public function store(Request $request)
     {
-        //
-        // $request->validate([
-        //     'code'=>'required|min:5|max:10|unique:voucher',
-        //     'present'=>'required|min:1|max:100',
-        //     'min_price'=>'required',
-        //     'start_at'=>'required',
-        //     'end_at'=>'required',
-        //     'quantity'=>'required|min:1',
-        // ]);
-        $voucher = $request->only("code",'percent','min_price','start_at','end_at','quantity');
+     
+        $voucher = $request->only("code", 'percent', 'min_price', 'start_at', 'end_at', 'quantity');
         // dd($voucher);
         Voucher::create($voucher);
         return redirect()->route('voucher.index');
@@ -62,10 +56,10 @@ class VoucherController extends Controller
     {
         //
         $voucher = Voucher::find($id);
-        if($voucher){
-            return view('admin.voucher.edit',compact('voucher'));
-        }else{
-           return  "voucher loi";
+        if ($voucher) {
+            return view('admin.voucher.edit', compact('voucher'));
+        } else {
+            return  "voucher loi";
         }
     }
 
@@ -76,10 +70,10 @@ class VoucherController extends Controller
     {
         //
         $voucher = Voucher::find($id);
-        if($voucher){
+        if ($voucher) {
             $voucher->update($request->all());
             return back();
-        }else{
+        } else {
             return 0;
         }
     }
@@ -91,9 +85,15 @@ class VoucherController extends Controller
     {
         //
         $voucher = Voucher::find($id);
-        if($voucher){
+        if ($voucher) {
             $voucher->delete();
             return redirect()->route('voucher.index');
         }
     }
+
+
+
+   
+    
+    
 }

@@ -7,6 +7,7 @@ class Order extends Model
 {
     protected $table = 'order';
     protected $fillable = [
+        'order_code',
         'user_id', 
         'name',
         'phone',
@@ -16,8 +17,11 @@ class Order extends Model
         'detail',
         'status_id',
         'payment_id',
-        'shipping_by'
-    ];
+        'shipping_by',
+        'total',
+        'address',
+        'note'
+    ]; 
 
     public function user()
     {
@@ -30,7 +34,11 @@ class Order extends Model
     }
     public function status()
     {
-        return $this->hasOne(OrderStatus::class,'id','id');
+        return $this->hasOne(OrderStatus::class,'id','status_id');
+    }
+    public function payment()
+    {
+        return $this->hasOne(Payment::class,'id','payment_id');
     }
     public function detail_order()
     {

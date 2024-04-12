@@ -23,13 +23,13 @@
                             @enderror --}}
                             <div class="mb-3">
                                 <label for="percent" class="form-label">percent</label>
-                                <input type="text" name="percent" id="percent" value="{{ $voucher->code }}"
+                                <input type="number" name="percent" id="percent" value="{{ $voucher->percent }}"
                                     class="form-control" placeholder="" />
                             </div>
                         
                             <div class="mb-3">
                                 <label for="min_price" class="form-label">giá tối thiểu</label>
-                                <input type="text" name="min_price" id="min_price" value="{{ $voucher->min_price }}"
+                                <input type="number" name="min_price" id="min_price" value="{{ $voucher->min_price }}"
                                     class="form-control" placeholder="" />
                             </div>
 

@@ -114,7 +114,7 @@
                                         <div class="rating">
                                             <!-- Đánh giá sản phẩm -->
                                         </div>
-                                        <div class="product__price">{{ $product['price'] }}</div> <!-- Giá sản phẩm -->
+                                        <div class="product__price">{{ $product['price_reduced'] }}</div> <!-- Giá sản phẩm -->
                                     </div>
                                 </div>
                             </div>

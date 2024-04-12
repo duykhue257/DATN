@@ -3945,6 +3945,7 @@ p {
 .selected {
     border: 2px solid black;
 }
+
 /* succer */
 body {
 	margin: 0;
@@ -3953,23 +3954,45 @@ body {
 	display: flex;
 	margin: 70px;
   }
-  
+
   .left {
 	width: calc(60%);
 	height: auto;
 	margin-right: 70px;
   }
+
+
+  #botton {
+	display: flex;
+  }
+
+
   
   #botton {
 	display: flex;
   }
   
+
   #mark {
 	margin-right: 10px;
 	margin-top: 15px;
 	height: 80px;
 	width: auto;
   }
+
+  h1 {
+	font-weight: 300;
+  }
+
+  a {
+	text-decoration: none;
+  }
+
+  #mot {
+	margin-top: 0;
+  }
+
+
   
   h1 {
 	font-weight: 300;
@@ -3983,22 +4006,30 @@ body {
 	margin-top: 0;
   }
   
+
   .information {
 	border: 1px solid black;
 	border-radius: 10px;
 	padding-left: 10px;
 	margin-top: 30px;
   }
+
+
+  .suport {
+	display: flex;
+  }
+
+
   
   .suport {
 	display: flex;
   }
-  
+
   .continue-shopping {
 	margin-left: auto;
 	margin-top: 20px;
   }
-  
+
   .continue-shopping {
 	display: block;
 	background-color: #4c87af;
@@ -4009,6 +4040,17 @@ body {
 	cursor: pointer;
 	transition: background-color 0.3s;
   }
+
+
+  .continue-shopping:hover {
+	background-color: #4c53af;
+  }
+
+  #right-child {
+	display: flex;
+  }
+
+
   
   .continue-shopping:hover {
 	background-color: #4c53af;
@@ -4018,31 +4060,47 @@ body {
 	display: flex;
   }
   
+
   #p {
 	margin-left: 10px;
 	font-size: 17px;
   }
+
+  #product {
+	display: flex;
+  }
+
+
   
   #product {
 	display: flex;
   }
-  
+
   #price {
 	margin-top: 40px;
 	font-size: 18px;
 	margin-left: 110px;
   }
-  
+
   #bill.left-column {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
   }
-  
+
   .vertical-line {
 	border-left: 1px solid black;
 	margin-right: 15px;
   }
+
+  #bill p {
+	margin: 0;
+  }
+
+  #bill p:last-child {
+	text-align: right;
+  }
+
   
   #bill p {
 	margin: 0;
@@ -4052,6 +4110,7 @@ body {
 	text-align: right;
   }
   
+
   .total-price {
 	font-weight: bold;
 	font-size: 20px;
@@ -4065,32 +4124,35 @@ body {
 	display: flex;
 	justify-content: space-between;
   }
-  
+
   .right-total {
 	display: flex;
 	align-items: center;
   }
-  
+
   .currency {
 	font-weight: bold;
 	margin-right: 5px;
   }
-  
+
   .total-total {
 	font-weight: bold;
 	margin: 0 5px;
   }
-  
+
   /* Responsive Design */
   @media only screen and (max-width: 768px) {
 	.main {
 	  flex-direction: column;
 	  margin: 20px;
 	}
-  
+
 	.left {
 	  width: 100%;
 	  margin-right: 0;
 	}
+
   }
-  
+
+  }
+

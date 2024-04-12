@@ -74,12 +74,13 @@
                                             max="{{ $product->variants->max('quantity') }}">
                                     </div>
                                 </div>
-                                <button  type="button" onclick="addToCart()"
+                                <button id="addToCart" disabled type="button"
                                     class=" btn btn-solid hover-solid btn-animation">
-                                    <span class="cart-btn button_detail"><i class="fa fa-shopping-cart mr-2"></i>Thêm vào giỏ hàng</span>
+                                    <span class="cart-btn button_detail"><i class="fa fa-shopping-cart mr-2"></i>Thêm vào
+                                        giỏ hàng</span>
                                 </button>
-                                <input type="hidden" name="id" value="{{ $product->id }}">
-                                <input type="hidden" name="variant_id" value="{{ $product->variants->first()->id }}">
+                                <input type="hidden" name="id" id="id" value="{{ $product->id }}">
+                                <input type="hidden" name="variant_id" id="variant_id">
                             </form>
 
                             <div id="notification" class="notification hidden">
@@ -104,21 +105,24 @@
                             <ul>
                                 <li>
                                     <span>Khả dụng còn :</span>
-                                    <div class="stock__checkbox">
-                                        {{ $product->variants->first()->quantity }}
+                                    <div id="avalibale_quantity" class="stock__checkbox">
+                                        0
                                     </div>
                                 </li>
                                 <li>
                                     <span>Màu sẵn có:</span>
+                                    {{-- @foreach ($product->variants->pluck('colors') as $color)
+                                          <span>{{ $color->color }} </span>
+                                    @endforeach --}}
                                     <div class="color__btn">
                                         @php
                                             $uniqueColors = [];
                                         @endphp
-                                        @foreach ($product->colors as $color)
+                                        @foreach ($product->variants->pluck('colors') as $color)
                                             @if (!in_array($color->color, $uniqueColors))
                                                 <label for="{{ $color->color }}-btn">
-                                                    <input type="radio" id="{{ $color->color }}-btn" name="color"
-                                                        value="{{ $color->color }}">
+                                                    <input class="color" type="radio" id="{{ $color->color }}-btn"
+                                                        name="color" value="{{ $color->id }}">
                                                     {{ $color->color }}
                                                 </label>
                                                 @php
@@ -129,27 +133,36 @@
                                     </div>
 
                                 </li>
-
-
-
-
                                 <li>
                                     <span>Kích thước sẵn có:</span>
                                     <div class="size__btn">
                                         @php
                                             $uniqueSizes = [];
                                         @endphp
-                                        @foreach ($product->sizes as $size)
+                                        {{-- @foreach ($product->sizes as $size)
                                             @if (!in_array($size->size, $uniqueSizes))
                                                 <label for="{{ $size->size }}-btn">
-                                                    <input type="radio" id="{{ $size->size }}-btn">
+                                                    <input  class="size" type="radio" id="{{ $size->size }}-btn"
+                                                        value="{{ $size->id }}">
                                                     {{ $size->size }}
                                                 </label>
                                                 @php
                                                     $uniqueSizes[] = $size->size;
                                                 @endphp
                                             @endif
-                                        @endforeach
+                                        @endforeach --}}
+                                        @foreach ($product->sizes as $size)
+                                        @if (!in_array($size->size, $uniqueSizes))
+                                            <label for="{{ $size->size }}-btn" data-color="{{ $size->color_id }}">
+                                                <input class="size" type="radio" id="{{ $size->size }}-btn" value="{{ $size->id }}" data-color="{{ $size->color_id }}">
+                                                {{ $size->size }}
+                                            </label>
+                                            @php
+                                                $uniqueSizes[] = $size->size;
+                                            @endphp
+                                        @endif
+                                    @endforeach
+                                    
                                     </div>
                                 </li>
 
@@ -242,6 +255,7 @@
             </div>
         </div>
     </section>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -284,13 +298,84 @@
                 }
             });
         }
-      
-        
-    $(document).ready(function () {
-        $('li').click(function () {
-            $(this).toggleClass('selected');
+
+
+        $(document).ready(function() {
+            $('li').click(function() {
+                $(this).toggleClass('selected');
+            });
         });
-    });
+    </script>
+    <script>
+        function addToCart() {
+            var formData = $('#addtocart').serialize();
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('cart.store') }}',
+                data: formData,
+                success: function(response) {
+                    showSuccessMessage(); // Hiển thị thông báo thành công
+                    // Thực hiện các hành động khác sau khi thêm vào giỏ hàng thành công
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText); // Hiển thị thông báo lỗi nếu có
+                }
+            });
+        }
+        const product = <?php echo json_encode($product); ?>;
+
+        const attribute = {
+            color: null,
+            size: null
+        }
+        const colors = document.querySelectorAll('.color')
+        const sizes = document.querySelectorAll('.size')
+
+        colors.forEach(color => {
+
+            color.onclick = (event) => {
+                attribute.color = event.target.value
+                getVariant()
+            }
+        });
+
+        sizes.forEach(size => {
+
+            size.onclick = (event) => {
+                attribute.size = event.target.value
+                getVariant() 
+            }
+        });
+
+        function getVariant() {
+            // console.log(addToCart);
+            // console.log(product.variants.find(p => p.color_id == attribute.color && p.size_id == attribute.size));
+            if (attribute.color !== null && attribute.size !== null) {
+                const variant = product.variants.find(p => p.color_id == attribute.color && p.size_id == attribute.size)
+                if (variant) {
+                    // console.log(variant);
+                    document.querySelector('#avalibale_quantity').innerText = variant.quantity
+                    const addToCart = document.querySelector('#addToCart')
+                    addToCart.disabled = false
+                    document.querySelector('#variant_id').value = variant.id
+
+                    document.querySelector('#addToCart').onclick = () => {
+                        if (document.querySelector('#qty').value > variant.quantity) {
+                            alert('vượt quá số lượng hiện có')
+                        } else {
+                            this.addToCart()
+                        }
+                    }
+                } else {
+                    document.querySelector('#avalibale_quantity').innerText = "0"
+                    const addToCart = document.querySelector('#addToCart')
+                    addToCart.disabled = true
+                    document.querySelector('#variant_id').value = null
+                    document.querySelector('#addToCart').onclick = null
+                }
+            }
+        }
+       
 
     </script>
 @endsection

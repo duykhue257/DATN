@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-success">Thêm Sản phẩm biến thể</h6>
+                <h6 class="m-0 font-weight-bold text-success">Thêm Sản phẩm biến thể cho {{ $product->name }}</h6>
             </div>
             <div class="card-body">
                 <div class="">
@@ -13,13 +13,15 @@
                             enctype="multipart/form-data">
                             @csrf
                        
-                            <div class="mb-3">
+                            <div hidden class="mb-3">
                                 <label for="name" class="form-label">Name</label>
-                                <select id="product_id" name="product_id" class="form-select">
-                                    @foreach ($product as $prd)
-                                        <option value="{{ $prd->id }}">{{ $prd->name }} </option>
-                                    @endforeach
-                                </select>
+                                <input type="text"  id="product_id" class="form-control" value="{{ $product->name }}">
+                                <input  type="text" name="product_id" id="product_id" class="form-control" value="{{ $product->id }}">
+                                {{-- <select id="product_id" name="product_id" class="form-select">
+                       
+                                        <option value="{{ $product->id }}">{{ $product->name }} </option>
+                                 
+                                </select> --}}
                             </div>
                             {{-- <div class="mb-3">
                                 <label for="price" class="form-label">Price</label>
