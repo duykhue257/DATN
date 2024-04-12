@@ -34,15 +34,7 @@ class VoucherController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        // $request->validate([
-        //     'code'=>'required|min:5|max:10|unique:voucher',
-        //     'present'=>'required|min:1|max:100',
-        //     'min_price'=>'required',
-        //     'start_at'=>'required',
-        //     'end_at'=>'required',
-        //     'quantity'=>'required|min:1',
-        // ]);
+     
         $voucher = $request->only("code", 'percent', 'min_price', 'start_at', 'end_at', 'quantity');
         // dd($voucher);
         Voucher::create($voucher);

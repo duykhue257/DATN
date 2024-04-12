@@ -10,7 +10,8 @@
 
                  <div class="card-body">
                      <button class="btn btn-primary"><a class="text-white text-decoration-none"
-                             href="{{ route('productVariant.create') }}">Thêm mới</a></button>
+                             href="{{ route('productVariant.create',$productId) }}">Thêm mới</a></button>
+                            
                         <br><br>
                      <div class="table-responsive">
                          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

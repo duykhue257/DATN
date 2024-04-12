@@ -13,41 +13,51 @@ use Illuminate\Http\Request;
 class ProductVariansController extends Controller
 {
 
-    public function index()
-    {
-        // $products = Products::join('categories', 'products.category_id', '=', 'categories.id')
-        //     ->select('products.*', 'categories.name_cate', 'products.id as id_prd')
-        //     ->get();
-        // dd($products->id_prd);
-        $products = ProductVariants::with('product', 'sizes', 'colors')->latest()->get();
-       
-  
+    public function index(int $id){
+        // Truy vấn biến thể sản phẩm theo ID sản phẩm
+        $products = ProductVariants::with('product', 'sizes', 'colors')
+                                    ->where('product_id', $id) // Lọc theo ID sản phẩm
+                                    ->latest()
+                                    ->get();
         return view('admin.product.list_variant', compact('products'));
     }
+    
 
-    public function create()
+    public function create(Request $request)
     {
+        $productId = $request->all(); 
+        $keys = array_keys($productId); 
+        // dd($keys[0]);
+        $key = $keys[0]; 
+        $product = Products::findOrFail($key);
+      
+
         $categories = Category::all();
-        $product = Products::all();
+    
         $color = Color::all();
         $size = Size::all();
         // dd($product);
-        return view('admin.product.add_variant', compact('categories','product','color','size'));
+        return view('admin.product.add_variant', compact('categories','product','color','size','key'));
     }
 
     public function store(Request $request, ProductVariants $product)
     {
+    //  dd($request->all());
         $product->product_id = $request->product_id;
-    
         $product->quantity = $request->quantity;
         $product->color_id = $request->color_id;
         $product->size_id = $request->size_id;
-        $imagePath = $request->file('image')->store('imgProduct', 'public');
-        $product->image = $imagePath;
+        
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('imgProduct', 'public');
+            $product->image = $imagePath;
+        }
+    
         $product->save();
-
-        return redirect()->route('productVariant.index');
+    
+        return redirect()->route('product.show', $product->product_id);
     }
+    
 
     public function edit(String $id)
     {
@@ -60,33 +70,36 @@ class ProductVariansController extends Controller
     
 
 
-    public function update(Request $request, ProductVariants $product,$id)
+    public function update(Request $request, $id)
     {
-        $product = ProductVariants::findOrFail($id);
-        $product->product_id = $request->product_id;
-        $product->quantity = $request->quantity;
-        $product->color_id = $request->color_id;
-        $product->size_id = $request->size_id;
-        if ($request->hasFile(('image'))) {
-            if ($product->image) {
-                Storage::disk('public')->delete($product->image);
+        $productVariant = ProductVariants::findOrFail($id);
+    
+        $productVariant->fill($request->all());
+    
+        if ($request->hasFile('image')) {
+            if ($productVariant->image) {
+                Storage::disk('public')->delete($productVariant->image);
             }
-            $imgPath = $request->file('image')->store('imgProduct', 'public');
-            $product->image = $imgPath;
+            $productVariant->image = $request->file('image')->store('imgProduct', 'public');
         }
-        $product->save();
-        return redirect()->route('productVariant.index');
+    
+        $productVariant->save();
+    
+        return redirect()->route('product.show', $productVariant->product_id);
     }
     public function destroy($id)
     {
-        $product = ProductVariants::findOrFail($id);
+        $productVariant = ProductVariants::findOrFail($id);
     
-        if ($product->image) {
-            Storage::disk('public')->delete($product->image);
+        if ($productVariant->image) {
+            Storage::disk('public')->delete($productVariant->image);
         }
-        $product->delete();
         
-        return back();
+        $productId = $productVariant->product_id;
+        $productVariant->delete();
+        
+        return redirect()->route('product.show', $productId);
     }
+    
     
 }

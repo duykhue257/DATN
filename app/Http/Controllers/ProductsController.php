@@ -45,6 +45,17 @@ class ProductsController extends Controller
         return redirect()->route('product.index');
     }
 
+    public function show(int $id){
+        // Truy vấn biến thể sản phẩm theo ID sản phẩm
+        $products = ProductVariants::with('product', 'sizes', 'colors')
+                                    ->where('product_id', $id) // Lọc theo ID sản phẩm
+                                    ->latest()
+                                    ->get();
+                                    $productId = $id;
+                                    // dd($productId);
+        return view('admin.product.list_variant', compact('products','productId'));
+    }
+    
 
     public function edit(int $id)
     {

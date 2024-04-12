@@ -139,10 +139,10 @@
                                         @php
                                             $uniqueSizes = [];
                                         @endphp
-                                        @foreach ($product->sizes as $size)
+                                        {{-- @foreach ($product->sizes as $size)
                                             @if (!in_array($size->size, $uniqueSizes))
                                                 <label for="{{ $size->size }}-btn">
-                                                    <input class="size" type="radio" id="{{ $size->size }}-btn"
+                                                    <input  class="size" type="radio" id="{{ $size->size }}-btn"
                                                         value="{{ $size->id }}">
                                                     {{ $size->size }}
                                                 </label>
@@ -150,7 +150,19 @@
                                                     $uniqueSizes[] = $size->size;
                                                 @endphp
                                             @endif
-                                        @endforeach
+                                        @endforeach --}}
+                                        @foreach ($product->sizes as $size)
+                                        @if (!in_array($size->size, $uniqueSizes))
+                                            <label for="{{ $size->size }}-btn" data-color="{{ $size->color_id }}">
+                                                <input class="size" type="radio" id="{{ $size->size }}-btn" value="{{ $size->id }}" data-color="{{ $size->color_id }}">
+                                                {{ $size->size }}
+                                            </label>
+                                            @php
+                                                $uniqueSizes[] = $size->size;
+                                            @endphp
+                                        @endif
+                                    @endforeach
+                                    
                                     </div>
                                 </li>
 
@@ -331,7 +343,7 @@
 
             size.onclick = (event) => {
                 attribute.size = event.target.value
-                getVariant()
+                getVariant() 
             }
         });
 
@@ -354,9 +366,8 @@
                             this.addToCart()
                         }
                     }
-
                 } else {
-                    document.querySelector('#avalibale_quantity').innerText = "hết hàng"
+                    document.querySelector('#avalibale_quantity').innerText = "0"
                     const addToCart = document.querySelector('#addToCart')
                     addToCart.disabled = true
                     document.querySelector('#variant_id').value = null
@@ -365,5 +376,6 @@
             }
         }
        
+
     </script>
 @endsection

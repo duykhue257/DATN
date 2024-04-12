@@ -35,14 +35,16 @@
                                         {{-- @php
                                             dd($prd->price);
                                         @endphp --}}
-                                        <td>{{ $prd->description }}</td>
+                                        <td class="col-3">{{ $prd->description }}</td>
                                         <td>{{ $prd->name_cate }}</td>
-                                        <td>
+                                        <td >
                                             <form class="d-flex" action="{{ route('product.destroy', $prd->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <a class=" btn btn-primary px-2"
+                                                <a class=" btn btn-primary mx-2"
                                                     href="{{ route('product.edit', $prd->id) }}">Cập nhật</a>
+                                                <a class=" btn btn-primary mr-2"
+                                                    href="{{ route('product.show', $prd->id) }}">Chi tiết</a>
                                                 <button onclick="return confirm('are you sure?')" class="btn btn-danger"
                                                     type="submit">Xóa</button>
                                             </form>
