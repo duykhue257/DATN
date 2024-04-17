@@ -3961,9 +3961,17 @@ body {
 	margin-right: 70px;
   }
 
+
   #botton {
 	display: flex;
   }
+
+
+  
+  #botton {
+	display: flex;
+  }
+  
 
   #mark {
 	margin-right: 10px;
@@ -3984,6 +3992,21 @@ body {
 	margin-top: 0;
   }
 
+
+  
+  h1 {
+	font-weight: 300;
+  }
+  
+  a {
+	text-decoration: none;
+  }
+  
+  #mot {
+	margin-top: 0;
+  }
+  
+
   .information {
 	border: 1px solid black;
 	border-radius: 10px;
@@ -3991,6 +4014,13 @@ body {
 	margin-top: 30px;
   }
 
+
+  .suport {
+	display: flex;
+  }
+
+
+  
   .suport {
 	display: flex;
   }
@@ -4011,6 +4041,7 @@ body {
 	transition: background-color 0.3s;
   }
 
+
   .continue-shopping:hover {
 	background-color: #4c53af;
   }
@@ -4019,11 +4050,28 @@ body {
 	display: flex;
   }
 
+
+  
+  .continue-shopping:hover {
+	background-color: #4c53af;
+  }
+  
+  #right-child {
+	display: flex;
+  }
+  
+
   #p {
 	margin-left: 10px;
 	font-size: 17px;
   }
 
+  #product {
+	display: flex;
+  }
+
+
+  
   #product {
 	display: flex;
   }
@@ -4052,6 +4100,16 @@ body {
   #bill p:last-child {
 	text-align: right;
   }
+
+  
+  #bill p {
+	margin: 0;
+  }
+  
+  #bill p:last-child {
+	text-align: right;
+  }
+  
 
   .total-price {
 	font-weight: bold;
@@ -4093,4 +4151,8 @@ body {
 	  width: 100%;
 	  margin-right: 0;
 	}
+
   }
+
+  }
+
