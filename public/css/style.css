@@ -177,7 +177,7 @@ ol {
 .site-btn {
 	font-size: 14px;
 	color: #ffffff;
-	background: #ca1515;
+	/* background: #ca1515; */
 	font-weight: 600;
 	border: none;
 	text-transform: uppercase;
@@ -2281,7 +2281,7 @@ ol {
 
 .discount__content form {
 	position: relative;
-	width: 370px;
+	width: 350px;
 	display: inline-block;
 }
 

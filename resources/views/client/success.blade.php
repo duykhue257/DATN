@@ -14,8 +14,7 @@
                     <p><strong>Tên:</strong> Tuấn image</p>
                     <p><strong>Số điện thoại:</strong> 0862114048</p>
                     <p><strong>Địa chỉ:</strong> Hà Nội, Quận Bắc Từ Liêm</p>
-                    <p><strong>Thành phố:</strong> Hà Nội</p>
-                    <p><strong>Quốc gia:</strong> Vietnam</p>
+            
                     <p><strong>Phương thức thanh toán:</strong> Thanh toán khi giao hàng (COD)</p>
                 </div>
             </div>
