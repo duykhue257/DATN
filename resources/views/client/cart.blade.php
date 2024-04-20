@@ -34,15 +34,14 @@
                                         <th>TỔNG CỘNG</th>
                                         <th></th>
                                     </tr>
-                                    
+
                                 </thead>
                                 <tbody class="">
                                     @foreach ($cartItems as $item)
                                         <tr>
-                                            <td><input @if ($item->is_checked)
-                                                {{ 'checked' }}
-                                            @endif type="checkbox">
-                                                
+                                            <td><input @if ($item->is_checked) {{ 'checked' }} @endif
+                                                    type="checkbox">
+
                                             </td>
                                             <td class="cart__product__item">
                                                 <img src="{{ Storage::url($item->product_image) }}"
@@ -64,9 +63,9 @@
                                             </td>
                                             <td class="cart__quantity">
                                                 <div class="pro-qty">
-                                                    <input class="quantity" data-rowid="{{ $item->rowId }}" name="quantity" type="number"
-                                                        min="1" max="{{ $productVariant->quantity }}" onchange="updateQuantity(this)"
-                                                        value="{{ $item->qty }}">
+                                                    <input class="quantity" data-rowid="{{ $item->rowId }}" name="quantity"
+                                                        type="number" min="1" max="{{ $productVariant->quantity }}"
+                                                        onchange="updateQuantity(this)" value="{{ $item->qty }}">
                                                 </div>
                                             </td>
                                             <script>
@@ -157,16 +156,30 @@
             <div class="col-lg-6">
                 <div class="discount__content">
 
-                    <h6>NHẬP MÃ GIẢM GIÁ</h6>
+                    <h6>CHỌN MÃ GIẢM GIÁ (chỉ có thể áp dụng một mã)</h6>
+
                     <form id="applyDiscountForm" action="{{ route('apply.discount') }}" method="POST">
                         @csrf
-                        <input type="text" name="discount_code" id="discount_code"
-                            placeholder="Nhập mã giảm giá của bạn">
-                        <button type="submit" class="site-btn">apply</button>
+                        <input class="text-center" type="text" name="discount_code" id="discount_code" readonly>
+                        <button type="submit" class="site-btn btn btn-primary">dùng</button>
                     </form>
+
                     <div class="cancel-discount-btn">
-                        <button type="button" class="site-btn w-75 mt-4" onclick="cancelDiscount()">Hủy mã giảm giá</button>
+                        <button type="button" onclick="cancelDiscount()">Hủy mã giảm giá</button>
                     </div>
+
+                    <h6>MÃ CÓ THỂ DÙNG</h6><br>
+                    @foreach ($discount as $dis)
+                        <form action="#" class="discount-form">
+                            <input class="text-center discount-code" type="text" name="selected_discount_code"
+                                value="{{ $dis->code }}({{ $dis->percent }}%)" readonly>
+                            <button type="button" class="site-btn btn btn-success choose-discount"
+                                data-discount="{{ $dis->code }}">chọn</button>
+                        </form>
+                    @endforeach
+
+
+
 
                 </div>
             </div>
@@ -209,16 +222,30 @@
 
 @push('scripts')
     <script>
+        const chooseButtons = document.querySelectorAll('.choose-discount');
+        chooseButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Lấy giá trị mã giảm giá từ thuộc tính data
+                const discountCode = button.getAttribute('data-discount');
+
+                // Đặt giá trị của trường nhập ở form áp dụng mã
+                document.getElementById('discount_code').value = discountCode;
+
+                // Gửi form áp dụng mã
+                // document.getElementById('applyDiscountForm').submit();
+            });
+        });
+
         const variant = <?php echo json_encode($productVariant); ?>;
-        
+
         document.querySelectorAll('.quantity').forEach(element => {
             let defaultquantity = element.value
             element.onchange = () => {
                 // console.log(element.value)
-                if(element.value > variant.quantity){
+                if (element.value > variant.quantity) {
                     element.value = variant.quantity
                     alert('số lượng hàng vượt quá có sẵn')
-                }else{
+                } else {
                     updateQuantity(element)
                 }
             }
@@ -305,6 +332,7 @@
                 $('#total').text(newTotal.toLocaleString('en-US') + 'đ');
             }
         });
+
         function cancelDiscount() {
             $.ajax({
                 type: 'POST',
@@ -315,6 +343,7 @@
                 success: function(response) {
                     // Xóa thông tin giảm giá trên giao diện
                     $('#discountAmount').text('0đ');
+                    $('#selectedDiscount').val('');
 
                     // Cập nhật tổng cộng mới sau khi hủy giảm giá
                     var subtotalString = "{{ Cart::instance('cart')->subtotal() }}";
@@ -327,16 +356,14 @@
                     $('#total').text(newTotal.toLocaleString('en-US') + 'đ');
 
                     // Gửi giá trị total mới lên server để lưu vào session
-                    updateCartTotal(newTotal);
-
+                    // updateCartTotal(newTotal);
+                    // console.log(response.message);
                     // Hiển thị thông báo thành công
-                    // alert(response.message);
-                    showNotification(response.message, false);
+                    alert(response.message);
                 },
                 error: function(error) {
                     // Hiển thị thông báo lỗi
-                    // alert( error.responseJSON.message);
-                    showNotification(error.responseJSON.message, true);
+                    alert( error.responseJSON.message);
                 }
             });
         }

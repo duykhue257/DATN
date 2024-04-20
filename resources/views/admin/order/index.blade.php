@@ -18,6 +18,7 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>Mã đơn hàng</th>
                                     <th>Tên khách hàng</th>
                                     <th>sdt</th>
                                     <th>số lượng</th>
@@ -35,6 +36,7 @@
                                             @method('POST')
 
                                             <th>{{ $order->id }}</th>
+                                            <th>{{ $order->order_code }}</th>
                                             <td>{{ $order->name }}</td>
                                             <td>{{ $order->phone }}</td>
                                             <td>{{ count($order->detail_order) }} sản phẩm</td>

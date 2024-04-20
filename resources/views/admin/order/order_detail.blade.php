@@ -26,7 +26,7 @@
                                 <td>{{ $order->name }}</td>
                                 <td>{{ $order->note }},{{ $order->address }}</td>
                                 <td>{{ $order->phone }}</td>
-                                <td></td>
+                                <td>{{ $order->note }}</td>
                                 <td>{{ $order->payment->method }}</td>
                             </tbody>
                         </table>
@@ -94,7 +94,7 @@
                                 
                                 <tr>
                                     <th colspan="2">Tổng cộng: 
-                                        <span>{{ $order->total }}</span>
+                                        <span>{{ $order->total }}đ</span>
                                     </th>
                                 </tr>
                                 

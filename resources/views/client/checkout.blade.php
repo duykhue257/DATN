@@ -104,11 +104,11 @@
                             </div>
                             <div class="checkout__order__total">
                                 <ul>
-                                    <li class="">Tổng tạm tính. <span>{{ Cart::instance('cart')->subtotal() }}</span>
+                                    <li class="">Tổng tạm tính. <span>{{ Cart::instance('cart')->subtotal() }}đ</span>
                                     </li>
-                                    <li class="">Phí vận chuyển. <span>{{ Cart::instance('cart')->tax() }}</span>
+                                    <li class="">Phí vận chuyển. <span>- {{ Cart::instance('cart')->tax() }}đ</span>
                                     </li>
-                                    <li class="">Giảm giá <span>{{ $discountAmount }}</span></li>
+                                    <li class="">Giảm giá <span>- {{ $discountAmount }}đ</span></li>
                                     <li>
                                         Tổng cộng
                                         @if (session()->has('newTotal'))
@@ -117,11 +117,9 @@
                                             <!-- Sử dụng total mới từ session -->
                                             <input type="hidden" name="total" value="{{ session('newTotal') }}">
                                         @else
-                                            {{-- <span>{{ Cart::instance('cart')->total() }}đ</span> <!-- Nếu không, sử dụng total ban đầu từ Cart --> --}}
                                             <input type="hidden" name="total" value="{{ session('oldTotal') }}">
                                             <span>{{ number_format(session('oldTotal'), 0, ',', '.') }} đ</span>
-                                            {{-- <span>{{ Cart::instance('cart')->total() }}</span> --}}
-                                            {{-- <span>{{ number_format(Cart::instance('cart')->total(), 0, ',', '.') }}</span> --}}
+                                         
                                         @endif
                                     </li>
                                     <input type="hidden" name="order_code" value="{{ $orderNumber }}">
