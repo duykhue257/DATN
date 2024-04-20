@@ -126,6 +126,33 @@
                 </div>
             </div>
         </div>
+        <div id="notification" class="notification hidden">
+            <svg id='svgsuccess' class="hidden" width="64px" height="64px" viewBox="0 0 24 24" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+
+            <g id="SVGRepo_bgCarrier" stroke-width="0" />
+
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+
+            <g id="SVGRepo_iconCarrier">
+                <path d="M4 12.6111L8.92308 17.5L20 6.5" stroke="#47be37" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+          
+        </svg>
+   
+        <svg class="hidden" width="64px" height="64px" id="svgError" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+            <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+            
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+            
+            <g id="SVGRepo_iconCarrier"> <path d="M9 9L15 15" stroke="#ff0a0a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> <path d="M15 9L9 15" stroke="#ff0a0a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> <circle cx="12" cy="12" r="9" stroke="#ff0a0a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> </g>
+            
+            </svg>
+        <p id="notificationContent"></p>
+        </div>
+        
         <div class="row">
             <div class="col-lg-6">
                 <div class="discount__content">
@@ -138,7 +165,7 @@
                         <button type="submit" class="site-btn">apply</button>
                     </form>
                     <div class="cancel-discount-btn">
-                        <button type="button" onclick="cancelDiscount()">Hủy mã giảm giá</button>
+                        <button type="button" class="site-btn w-75 mt-4" onclick="cancelDiscount()">Hủy mã giảm giá</button>
                     </div>
 
                 </div>
@@ -251,13 +278,16 @@
                         $('#total').text(newTotal.toLocaleString('en-US') + 'đ');
 
                         // Hiển thị thông báo thành công
-                        alert('Áp dụng mã giảm giá thành công');
+                        // alert('Áp dụng mã giảm giá thành công');
+                        showNotification(response.message, false);
+                        
 
                     },
                     error: function(error) {
                         // Hiển thị thông báo lỗi
-                        alert('Có lỗi xảy ra: ' + error.responseJSON.message);
-                    }
+                        // alert('Có lỗi xảy ra: ' + error.responseJSON.message);
+                        showNotification(error.responseJSON.message, true);
+                        }
                 });
             });
         });
@@ -300,13 +330,32 @@
                     updateCartTotal(newTotal);
 
                     // Hiển thị thông báo thành công
-                    alert(response.message);
+                    // alert(response.message);
+                    showNotification(response.message, false);
                 },
                 error: function(error) {
                     // Hiển thị thông báo lỗi
-                    alert( error.responseJSON.message);
+                    // alert( error.responseJSON.message);
+                    showNotification(error.responseJSON.message, true);
                 }
             });
         }
+        // thong bao
+        function showNotification(message, isError) {
+    $('#notification').removeClass('hidden');
+    $('#notificationContent').text(message);
+    // $('#notificationContent').text(message);
+            if(isError){
+                $('#svgError').removeClass('hidden');
+            }else{
+                $('#svgsuccess').removeClass('hidden');
+            }
+    // Tự động ẩn hộp thông báo sau một khoảng thời gian
+    setTimeout(function() {
+        $('#notification').addClass('hidden');
+        $('#svgError').addClass('hidden');
+        $('#svgsuccess').addClass('hidden');
+    }, 3000); // 3000 miliseconds = 3 seconds
+}
     </script>
 @endpush

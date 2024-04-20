@@ -7,7 +7,7 @@
                     <div class="breadcrumb__links">
                         <a href="{{ route('homePage') }}"><i class="fa fa-home"></i> Trang chủ</a>
                         <a href="/shop">Sản phẩm </a>
-                        <span>{{ $product->name }}</span>
+                        <span class="">{{ $product->name }}</span>
                     </div>
                 </div>
             </div>

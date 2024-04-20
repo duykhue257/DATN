@@ -72,12 +72,13 @@
                             <div class="section-title">
                                 <h4>Màu sắc</h4>
                             </div>
-                            <div class="size__list color__list">
+                            <div class="colorList">
                                 @foreach ($colors as $cl)
                                     <label for="{{ $cl->color }}">
+                                        <input class="variant_color" type="radio" id="{{ $cl->color }}" onclick="toggleHover(this)">
                                         {{ $cl->color }}
-                                        <input type="checkbox" id="{{ $cl->color }}">
-                                        <span class="checkmark"></span>
+                                        
+                                        {{-- <span class="checkmark"></span> --}}
                                     </label>
                                 @endforeach
                             </div>
@@ -97,8 +98,8 @@
                                             <!-- Hiển thị hình ảnh sản phẩm -->
                                             <ul class="product__hover">
                                                 <li><a href="{{ $product->variants ? Storage::url($product->variants[0]->image) : '' }}"
-                                                        class="image-popup"><span class="arrow_expand"></span></a></li>
-                                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+                                                        class="image-popup"><span class="arrow_expand "></span></a></li>
+                                                <li><a href="#"><span class="icon_heart_alt "></span></a></li>
                                               
                                             </ul>
                                         </div>
@@ -114,7 +115,7 @@
                                         <div class="rating">
                                             <!-- Đánh giá sản phẩm -->
                                         </div>
-                                        <div class="product__price">{{ $product['price_reduced'] }}</div> <!-- Giá sản phẩm -->
+                                        <div class="product__price">{{ Number_format($product['price_reduced']) }}</div> <!-- Giá sản phẩm -->
                                     </div>
                                 </div>
                             </div>
