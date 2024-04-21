@@ -104,11 +104,13 @@
                             </div>
                             <div class="checkout__order__total">
                                 <ul>
-                                    <li class="">Tổng tạm tính. <span>{{ Cart::instance('cart')->subtotal() }}đ</span>
+                                    <li class="">Tổng tạm tính. <span>{{ str_replace(',', '.',Cart::instance('cart')->subtotal()) }}đ</span>
                                     </li>
-                                    <li class="">Phí vận chuyển. <span>- {{ Cart::instance('cart')->tax() }}đ</span>
+                                    <li class="">Phí vận chuyển. <span> {{ Cart::instance('cart')->tax() }}đ</span>
                                     </li>
-                                    <li class="">Giảm giá <span>- {{ $discountAmount }}đ</span></li>
+                                    <li class="">Giảm giá <span>- {{ number_format($discountAmount, 0, ',', '.') }}đ</span></li>
+
+
                                     <li>
                                         Tổng cộng
                                         @if (session()->has('newTotal'))

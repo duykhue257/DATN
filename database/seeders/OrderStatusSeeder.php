@@ -38,6 +38,10 @@ class OrderStatusSeeder extends Seeder
             [
                 'id'=>6,
                 'status'=>'giao hàng thất bại'
+            ],
+            [
+                'id'=>7,
+                'status'=>'đã hủy'
             ]
 
         ];

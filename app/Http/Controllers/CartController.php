@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ProductVariants;
 use App\Models\Products;
-use App\Models\Size;
-use App\Models\Color;
+
 use App\Models\Voucher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -29,17 +28,17 @@ class CartController extends Controller
         // dd($cartItems);
         // dd(Cart::instance('cart')->total());
         $subtotal = Cart::instance('cart')->subtotal();
-        $subtotal = str_replace(',', '', $subtotal); // Loại bỏ dấu phẩy
+        $subtotal = str_replace(',', '', $subtotal); 
         $subtotal = floatval($subtotal);
         // dd($cartItems['id']);
         $orderNumber = session('order_number');
         // dd($orderNumber);
-
+        $productVariant = null;
         foreach ($cartItems as $item) {
             // $sum += $item->price;
             $productVariant = ProductVariants::with('sizes', 'colors')->find($item->id);
             // dd($productVariant->name);
-            $productVariant->load('product'); // Load thông tin sản phẩm liên quan
+            $productVariant->load('product'); 
             // Gán thông tin sản phẩm vào mỗi item trong giỏ hàng
             $item->is_checked = true;
             $item->product_image = $productVariant->image;
@@ -56,7 +55,6 @@ class CartController extends Controller
     public function addToCart(Request $request)
     {
 
-
         $productId = $request->id;
         $variantId = $request->variant_id;
         //  dd($request->id);
@@ -70,7 +68,6 @@ class CartController extends Controller
         }
         // Tạo mã đơn hàng
         $orderNumber = uniqid();
-
 
         $cartItem = Cart::instance('cart')->add(
             $variantId,
@@ -144,7 +141,7 @@ class CartController extends Controller
             $subtotal = str_replace(',', '', $subtotal); // Loại bỏ dấu phẩy
             $subtotal = floatval($subtotal); // Chuyển đổi thành số
             // Tính toán giảm giá theo phần trăm hoặc số tiền cố định
-            $discountAmount = ($percent / 100) * $subtotal;
+            $discountAmount = intval(($percent / 100) * $subtotal);
 
             // Lưu thông tin giảm giá vào session
             $request->session()->put('discountAmount', $discountAmount);

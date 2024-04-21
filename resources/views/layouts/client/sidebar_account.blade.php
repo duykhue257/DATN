@@ -4,11 +4,11 @@
     </li>
 
     <li class="list-group-item">
-        <div class="py-2"><a class="" href="/account" style="color: black;">Thông tin tài khoản</a></div>
+        <div class="py-2"><a href="{{ route('account') }}" style="color: black;">Thông tin tài khoản</a></div>
         <div class="py-2"><a href="/address" style="color: black;">Địa chỉ giao hàng</a></div>
-        <div class="py-2"><a href="/order_history" style="color: black;">Lịch sử mua hàng</a></div>
-        <div class="py-2"><a href="/wishlist" style="color: black;">Sản phẩm yêu thích</a></div>
-        <div class="py-2"><a href="/promotion" style="color: black;">Ưu đãi của bạn</a></div>
+        <div class="py-2"><a href="{{ route('order_history') }}" style="color: black;">Lịch sử mua hàng</a></div>
+        {{-- <div class="py-2"><a href="/wishlist" style="color: black;">Sản phẩm yêu thích</a></div> --}}
+        {{-- <div class="py-2"><a href="/promotion" style="color: black;">Ưu đãi của bạn</a></div> --}}
     </li>
     <li class="list-group-item py-4"><a href="" style="color: black; font-weight: 500;">Đăng xuất</a></li>
 </ul>

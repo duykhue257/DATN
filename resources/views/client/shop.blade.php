@@ -106,7 +106,7 @@
 
 
                                     <div class="product__item__text">
-                                        <h6><a
+                                        <h6><a 
                                                 href="{{ route('detail_product') }}?id={{ $product->id }}">{{ $product->name }}</a>
                                         </h6>
 
@@ -114,7 +114,7 @@
                                         <div class="rating">
                                             <!-- Đánh giá sản phẩm -->
                                         </div>
-                                        <div class="product__price">{{ $product['price_reduced'] }}</div> <!-- Giá sản phẩm -->
+                                        <div class="product__price">{{ number_format($product['price_reduced'], 0, ',', '.')}}đ</div> <!-- Giá sản phẩm -->
                                     </div>
                                 </div>
                             </div>

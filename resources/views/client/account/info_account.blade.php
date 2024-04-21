@@ -13,11 +13,11 @@
                 <div>
                     <div class="d-flex">
                         <p class="mr-2">Email: </p>
-                        <p style="font-weight: 500;">admin@gmail.com</p>
+                        <p style="font-weight: 500;">{{  $user->email }}</p>
                     </div>
                     <div class="d-flex">
                         <p class="mr-2">Số điện thoại: </p>
-                        <p style="font-weight: 500;">0123456789</p>
+                        <p style="font-weight: 500;">{{  $user->phone }}</p>
                     </div>
                 </div>
 
@@ -76,7 +76,8 @@
                         <input type="text" class="form-control" id="inputNumber" placeholder="0123456789">
                     </div>
                     <div class="col-12 mb-4">
-                        <div><label for="inputSex" class="form-label">Giới tính</label></div>
+                        <div><label for="inputSex" class="form-label">Giới tính<span style="color: red;">
+                            *</span></label></div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
                                 value="option1">
@@ -89,7 +90,8 @@
                         </div>
                     </div>
                     <div class="col-12 mb-4">
-                        <label for="inputBirthDay" class="form-label">Sinh nhật</label>
+                        <label for="inputBirthDay" class="form-label">Sinh nhật<span style="color: red;">
+                            *</span></label>
                         <input type="date" class="form-control" id="inputBirthDay">
                     </div>
                     <div class="col-12">

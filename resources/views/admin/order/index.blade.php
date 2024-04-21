@@ -52,10 +52,10 @@
                                                         <option value="{{ $stt->id }}" @if ($stt->id < $firstOptionId) hidden @endif>{{ $stt->status }}</option>
                                                     @endforeach
                                                 </select>
-                                                <button class="btn btn-success" type="submit">Cập nhật trạng thái</button>
+                                                <button class="btn btn-success" type="submit">Cập nhật </button>
                                             </td>
                                             
-                                            <td>{{ $order->created_at->diffForHumans() }}</td>
+                                            <td>{{ $order->created_at }}</td>
 
                                             <td>
                                                 <a class=" btn btn-primary px-2" href="{{ route('order_detail',$order->id) }}">Chi Tiết</a>

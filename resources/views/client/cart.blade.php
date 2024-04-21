@@ -50,7 +50,9 @@
                                                     <h6>{{ $item->name }}</h6>
                                                 </div>
                                             </td>
-                                            <td class="cart__price">{{ Number_format($item->price) }}đ</td>
+                                            <td class="cart__price">
+                                                {{ str_replace(',', '.', number_format($item->price)) }}đ</td>
+
                                             <td class="cart__price">
                                                 <div class="cart__product__item__title ">
                                                     <h6>{{ $item->size }}</h6>
@@ -68,21 +70,11 @@
                                                         onchange="updateQuantity(this)" value="{{ $item->qty }}">
                                                 </div>
                                             </td>
-                                            <script>
-                                                function updateQuantity(input) {
-                                                    var rowId = $(input).data('rowid');
-                                                    var newQuantity = $(input).val();
-                                                    var price = parseFloat("{{ $item->product_price }}"); // Lấy giá của sản phẩm từ blade template
 
-                                                    // Tính toán giá mới
-                                                    var newTotal = price * newQuantity;
 
-                                                    // Cập nhật giá mới vào ô tương ứng
-                                                    $(input).closest('tr').find('.cart__total').text(newTotal.toFixed(2) + 'đ');
-                                                }
-                                            </script>
 
-                                            <td class="cart__total">{{ $item->subtotal() }}đ
+
+                                            <td class="cart__total">{{ str_replace(',', '.', $item->subtotal()) }}đ
                                                 {{-- @php
                                                     dd($item->subtotal());
                                                 @endphp --}}
@@ -104,15 +96,7 @@
                         </div>
                     </div>
                 </div>
-            @else
-                <div class="row mb-5">
-                    <div class="col-md-12 text-center ">
-                        <h2>Giỏ hàng trống !</h2>
-                        <h5>Thêm sản phẩm ngay</h5>
-                        <a href="/shop" class="btn btn-dark mt-5">Về trang sản phẩm</a>
-                    </div>
-                </div>
-        @endif
+            
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="cart__btn">
@@ -134,12 +118,14 @@
                     <form id="applyDiscountForm" action="{{ route('apply.discount') }}" method="POST">
                         @csrf
                         <input class="text-center" type="text" name="discount_code" id="discount_code" readonly>
-                        <button type="submit" class="site-btn btn btn-primary">dùng</button>
-                    </form>
+                        <button type="button" class="site-btn btn btn-danger" onclick="cancelDiscount()"><span style="white-space: nowrap;">&nbsp&nbspHủy&nbsp&nbsp</span></button>
 
-                    <div class="cancel-discount-btn">
+                        {{-- <button class="site-btn btn btn-danger" type="submit" onclick="cancelDiscount()">Hủy mã giảm giá</button> --}}
+                    </form><br>
+
+                    {{-- <div class="cancel-discount-btn">
                         <button class="btn btn-danger" type="button" onclick="cancelDiscount()">Hủy mã giảm giá</button>
-                    </div>
+                    </div> --}}
 
                     <h6>MÃ CÓ THỂ DÙNG</h6><br>
                     @foreach ($discount as $dis)
@@ -147,7 +133,7 @@
                             <input class="text-center discount-code" type="text" name="selected_discount_code"
                                 value="{{ $dis->code }}({{ $dis->percent }}%)" readonly>
                             <button type="button" class="site-btn btn btn-success choose-discount"
-                                data-discount="{{ $dis->code }}">chọn</button>
+                                data-discount="{{ $dis->code }}">&nbspdùng</button>
                         </form>
                     @endforeach
 
@@ -160,10 +146,13 @@
                 <div class="cart__total__procced">
                     <h6>TỔNG SỐ GIỎ HÀNG</h6>
                     <ul>
-                        <li>Tổng tạm tính: <span>{{ Cart::instance('cart')->subtotal() }}đ</span></li>
+                        <li>Tổng tạm tính: <span>{{ str_replace(',', '.', Cart::instance('cart')->subtotal()) }}đ</span>
+                        </li>
                         <li>Giảm giá: <span id="discountAmount">0đ</span></li>
-                        <li>Phí giao hàng: <span>{{ Cart::instance('cart')->tax() }}đ</span></li>
-                        <li>Tổng cộng: <span id="total">{{ Cart::instance('cart')->total() }}đ</span></li>
+                        <li>Phí giao hàng: <span>{{ str_replace(',', '.', Cart::instance('cart')->tax()) }}đ</span></li>
+                        <li>Tổng cộng: <span
+                                id="total">{{ str_replace(',', '.', Cart::instance('cart')->total()) }}đ</span></li>
+
                         <input type="hidden" id="checkoutTotalInput" name="checkoutTotalInput"
                             value="{{ Cart::instance('cart')->total() }}">
                     </ul>
@@ -174,6 +163,15 @@
             </div>
         </div>
         </div>
+        @else
+                <div class="row mb-5">
+                    <div class="col-md-12 text-center ">
+                        <h2>Giỏ hàng trống !</h2>
+                        <h5>Thêm sản phẩm ngay</h5>
+                        <a href="/shop" class="btn btn-dark mt-5">Về trang sản phẩm</a>
+                    </div>
+                </div>
+        @endif
     </section>
     <!-- Shop Cart Section End -->
     <form id="updateCartQty" action="{{ route('cart.update') }}" method="POST">
@@ -194,7 +192,36 @@
 @endsection
 
 @push('scripts')
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
     <script>
+        function updateQuantity(input) {
+            var rowId = $(input).data('rowid');
+            var newQuantity = $(input).val();
+            var data = {
+                rowId: rowId,
+                quantity: newQuantity
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '/update-cart-quantity',
+                data: data,
+                success: function(response) {
+                    // Cập nhật giá mới vào ô tương ứng
+                    $(input).closest('tr').find('.cart__total').text(response.newTotal.toFixed(2) + 'đ');
+                },
+                error: function() {
+                    console.log('Error updating cart quantity');
+                }
+            });
+        }
+
+        document.querySelectorAll('.quantity').forEach(element => {
+            element.onchange = () => {
+                updateQuantity(element);
+            };
+        });
+
         const chooseButtons = document.querySelectorAll('.choose-discount');
         chooseButtons.forEach(button => {
             button.addEventListener('click', () => {
@@ -204,8 +231,10 @@
                 // Đặt giá trị của trường nhập ở form áp dụng mã
                 document.getElementById('discount_code').value = discountCode;
 
-                // Gửi form áp dụng mã
+                // // Gửi form áp dụng mã
                 // document.getElementById('applyDiscountForm').submit();
+                
+                $('#applyDiscountForm').submit();
             });
         });
 
@@ -230,7 +259,6 @@
             $('#updateCartQty').submit();
         }
 
-
         function removeItemFromCart(rowId) {
             $('#rowId_D').val(rowId);
             $('#deleteFromCart').submit();
@@ -252,8 +280,9 @@
                     success: function(response) {
                         // Chuyển đổi số thành chuỗi với dấu phẩy ngăn cách hàng nghìn và không có số thập phân
                         var discountAmountFormatted = response.discountAmount.toLocaleString(
-                            'en-US');
+                            'vi-VN');
 
+                        // console.log(discountAmountFormatted);
                         // Cập nhật giá trên view với giá mới từ kết quả trả về
                         $('#discountAmount').text('-' + discountAmountFormatted + 'đ');
 
@@ -271,11 +300,12 @@
                         // Tính toán tổng cộng mới
                         var newTotal = subtotalNumber + taxNumber - discountNumber;
                         // Sau khi tính toán newTotal
+                        // console.log(newTotal);
                         $('#checkoutTotalInput').val(
                             newTotal); // Gán giá trị newTotal vào input ẩn
 
                         // Hiển thị tổng cộng mới trên giao diện
-                        $('#total').text(newTotal.toLocaleString('en-US') + 'đ');
+                        $('#total').text(newTotal.toLocaleString('vi-VN') + 'đ');
 
                         // Hiển thị thông báo thành công
                         alert('Áp dụng mã giảm giá thành công');
@@ -293,13 +323,13 @@
             // Kiểm tra session để hiển thị thông tin giảm giá khi trang được load lại
             var discountAmount = "{{ session('discountAmount') }}";
             if (discountAmount) {
-                var discountAmountFormatted = parseFloat(discountAmount).toLocaleString('en-US');
+                var discountAmountFormatted = parseFloat(discountAmount).toLocaleString('vi-VN');
                 $('#discountAmount').text('-' + discountAmountFormatted + 'đ');
 
                 // Cập nhật tổng cộng mới sau khi áp dụng giảm giá
                 var newTotal = parseFloat($('#checkoutTotalInput').val().replace(',', '')) - parseFloat(
                     discountAmount);
-                $('#total').text(newTotal.toLocaleString('en-US') + 'đ');
+                $('#total').text(newTotal.toLocaleString('vi-VN') + 'đ');
             }
         });
 
@@ -323,7 +353,7 @@
                     var taxNumber = parseFloat(taxString.replace(',', ''));
 
                     var newTotal = subtotalNumber + taxNumber;
-                    $('#total').text(newTotal.toLocaleString('en-US') + 'đ');
+                    $('#total').text(newTotal.toLocaleString('vi-VN') + 'đ');
 
                     // Gửi giá trị total mới lên server để lưu vào session
                     // updateCartTotal(newTotal);

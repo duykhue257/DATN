@@ -56,8 +56,8 @@
                             <i class="fa fa-star"></i>
                             <span>( 138 đánh giá )</span>
                         </div>
-                        <div class="product__details__price">{{ Number_format($product->price_reduced) }}
-                            đ<span>{{ Number_format($product->price) }} đ</span></div>
+                        <div class="product__details__price">{{ str_replace(',', '.', number_format($product->price_reduced)) }} đ<span>{{ str_replace(',', '.', number_format($product->price)) }} đ</span></div>
+
                         - Hình ảnh sản phẩm là ảnh thật, các hình hoàn toàn do shop tự thiết kế.</br>
                         - Kiểm tra cẩn thận trước khi gói hàng giao cho Quý Khách</br>
                         - Hàng có sẵn, giao hàng ngay khi nhận được đơn </br>

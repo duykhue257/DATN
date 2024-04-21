@@ -17,7 +17,7 @@ class CheckoutController extends Controller
         $newTotal = $request->session()->get('newTotal');
         $discountAmount = $request->session()->get('discountAmount');
         // $request->session()->get('discountAmount');
-
+// dd($discountAmount);
         if (!$newTotal) {
             $total = Cart::instance('cart')->total();
             $total = str_replace(',', '', $total); // Loại bỏ dấu phẩy
