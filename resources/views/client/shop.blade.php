@@ -75,7 +75,7 @@
                             <div class="colorList">
                                 @foreach ($colors as $cl)
                                     <label for="{{ $cl->color }}">
-                                        <input class="variant_color" type="radio" id="{{ $cl->color }}" onclick="toggleHover(this)">
+                                        <input class="variant_color" type="checkbox" id="{{ $cl->color }}" >
                                         {{ $cl->color }}
                                         
                                         {{-- <span class="checkmark"></span> --}}
@@ -107,15 +107,23 @@
 
 
                                     <div class="product__item__text">
-                                        <h6><a
+                                        <h6><a class="product_name"
                                                 href="{{ route('detail_product') }}?id={{ $product->id }}">{{ $product->name }}</a>
                                         </h6>
 
+                                        <div class="color_detail">
+                                            <ul>
+                                                <li><input ></li>
+                                                <li><input ></li>
+                                                <li><input ></li>
+                                                <li><input ></li>
+                                            </ul>
+                                        </div>
                                         <!-- Tên sản phẩm -->
                                         <div class="rating">
                                             <!-- Đánh giá sản phẩm -->
                                         </div>
-                                        <div class="product__price">{{ Number_format($product['price_reduced']) }}</div> <!-- Giá sản phẩm -->
+                                        <div class="product__price">{{ Number_format($product['price_reduced']) }} đ</div> <!-- Giá sản phẩm -->
                                     </div>
                                 </div>
                             </div>
