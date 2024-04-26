@@ -127,7 +127,7 @@ class PaymentController extends Controller
         
 
     }
-    public function vnpayReturn(CheckoutRequest $request)
+    public function vnpayReturn(Request $request)
     {
         $detailOrder = $request->session()->get('detail_order');
         // dd($detailOrder);
@@ -161,6 +161,7 @@ class PaymentController extends Controller
     
             // Thiết lập trạng thái của đơn hàng dựa trên phương thức thanh toán
             $newOrder->status_id = ($newOrder->payment_id == 1) ? 2 : 3;
+            $newOrder->is_payment = ($newOrder->payment_id == 1) ? 0 : 1;
             $newOrder->save();
     
             // Tạo các chi tiết đơn hàng

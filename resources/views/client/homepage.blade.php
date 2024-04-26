@@ -105,7 +105,7 @@
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                     </div>
-                                    <div class="product__price">{{ number_format($product->price_reduced) }}đ</div>
+                                    <div class="product__price">{{ number_format($product->price_reduced, 0, ',', '.') }}đ</div>
                                 </div>
                             </div>
                         </div>

@@ -75,9 +75,9 @@
                             <div class="colorList">
                                 @foreach ($colors as $cl)
                                     <label for="{{ $cl->color }}">
-                                        <input class="variant_color" type="checkbox" id="{{ $cl->color }}" >
+                                        <input class="variant_color" type="checkbox" id="{{ $cl->color }}">
                                         {{ $cl->color }}
-                                        
+
                                         {{-- <span class="checkmark"></span> --}}
                                     </label>
                                 @endforeach
@@ -100,30 +100,49 @@
                                                 <li><a href="{{ $product->variants ? Storage::url($product->variants[0]->image) : '' }}"
                                                         class="image-popup"><span class="arrow_expand "></span></a></li>
                                                 <li><a href="#"><span class="icon_heart_alt "></span></a></li>
-                                              
+
                                             </ul>
                                         </div>
                                     @endif
 
 
                                     <div class="product__item__text">
-                                        <h6><a class="product_name"
-                                                href="{{ route('detail_product') }}?id={{ $product->id }}">{{ $product->name }}</a>
-                                        </h6>
+
 
                                         <div class="color_detail">
                                             <ul>
-                                                <li><input ></li>
-                                                <li><input ></li>
-                                                <li><input ></li>
-                                                <li><input ></li>
+                                                @php
+                                                    $uniqueColors = $product->variants->pluck('colors')->unique('color');
+                                                @endphp
+                                                @foreach ($uniqueColors as $color)
+                                                    <li class="li" style="background-color: {{ $color->color }}"></li>
+                                                @endforeach
                                             </ul>
                                         </div>
+                                        
+                                        <div class="size_detail">
+                                            <ul>
+                                                @php
+                                                    $uniqueSizes = $product->variants->pluck('sizes')->unique('size');
+                                                @endphp
+                                                @foreach ($uniqueSizes as $size)
+                                                    <li>{{ $size->size }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                        
                                         <!-- Tên sản phẩm -->
+                                        <h6>
+                                            <a class="product_name"
+                                                href="{{ route('detail_product') }}?id={{ $product->id }}">{{ $product->name }}</a>
+                                        </h6>
+
+
                                         <div class="rating">
                                             <!-- Đánh giá sản phẩm -->
                                         </div>
-                                        <div class="product__price">{{ Number_format($product['price_reduced']) }} đ</div> <!-- Giá sản phẩm -->
+                                        <div class="product__price">{{ Number_format($product['price_reduced']) }} đ</div>
+                                        <!-- Giá sản phẩm -->
                                     </div>
                                 </div>
                             </div>

@@ -12,8 +12,7 @@
             <form action="">
                 <select class="form-select pl-1 pr-4" aria-label="Default select example">
                     <option value="1">Tất cả</option>
-                    <option value="2">Đã thanh toán</option>
-                    <option value="3">Đang giao</option>
+
                 </select>
             </form>
             <h6 class="pr-2">Đơn hàng: </h6>
@@ -21,30 +20,75 @@
 
         <table class="table">
             <thead>
-                <tr>
-                    <th scope="col" style="font-weight: 500; font-size: 14px">Đơn hàng#</th>
-                    <th scope="col" style="font-weight: 500; font-size: 14px">Sản phẩm</th>
-                    <th scope="col" style="font-weight: 500; font-size: 14px">Ngày</th>
+                <tr class="">
+                    <th scope="col" style="font-weight: 500; font-size: 14px">Mã đơn</th>
+                    <th scope="col" style="font-weight: 500; font-size: 14px">Tên sản phẩm</th>
+                    <th scope="col" style="font-weight: 500; font-size: 14px">Ngày mua</th>
                     <th scope="col" style="font-weight: 500; font-size: 14px">Số lượng</th>
-                    <th scope="col" style="font-weight: 500; font-size: 14px">Giá trị đơn hàng</th>
+                    <th scope="col" style="font-weight: 500; font-size: 14px">Màu sắc</th>
+                    <th scope="col" style="font-weight: 500; font-size: 14px">Kích cỡ</th>
+                    <th scope="col" style="font-weight: 500; font-size: 14px">Trạng thái</th>
                     <th scope="col" style="font-weight: 500; font-size: 14px">Tình trạng thanh toán</th>
+                    <th scope="col" style="font-weight: 500; font-size: 14px">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row" style="font-weight: 500;font-size: 12px;">A1BC2XZ</th>
-                    <td
-                        style="font-size: 12px; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                        <a href="/detail_product">Áo Blazer Nam Dài Form Rộng NPV OFFCIAL phong cách Hàn Quốc</a></td>
-                    <td style="font-size: 14px">1/1/2024</td>
-                    <td style="font-size: 14px">
-                        <fieldset disabled><input type="number" id="disabledTextInput"
-                                class="border border-0 w-25 text-center" placeholder="1">
-                    </td>
-                    <td style="font-size: 14px">100.000<span>đ</span></td>
-                    <td style="font-size: 14px">Đã thanh toán</td>
-                </tr>
+                @foreach ($orders as $order)
+                    <tr>
+                        <td style="font-weight: 500;font-size: 12px;">{{ $order->order_code }}</td>
+                        <td style="font-size: 12px;">
+                            @foreach ($order->detail_order as $detail)
+                                @foreach ($detail->variants as $variant)
+                                    <a
+                                        href="{{ route('detail_product', ['id' => $variant->product_id]) }}">{{ $detail->name }}</a><br>
+                                @endforeach
+                            @endforeach
+                        </td>
+
+
+
+                        <td style="font-size: 14px">{{ $order->created_at }}</td>
+                        <td style="font-size: 14px">
+                            @foreach ($order->detail_order as $detail)
+                                <fieldset disabled>
+                                    {{ $detail->quantity }}
+                                </fieldset><br>
+                            @endforeach
+                        </td>
+                        <td style="font-size: 14px">
+                            @foreach ($order->detail_order as $detail)
+                                @foreach ($detail->variants as $variant)
+                                    {{ $variant->colors->color }}<br>
+                                @endforeach
+                            @endforeach
+                        </td>
+                        <td style="font-size: 14px">
+                            @foreach ($order->detail_order as $detail)
+                                @foreach ($detail->variants as $variant)
+                                    {{ $variant->sizes->size }}<br>
+                                @endforeach
+                            @endforeach
+                        </td>
+                        <td style="font-size: 14px">{{ $order->status->status }}</td>
+                        <td style="font-size: 14px">{{ $order->payment->method }}</td>
+                        <td class="">
+                            <a class="btn btn-primary px-2" href="{{ route('orderDetailHome', $order->id) }}">Chi tiết</a>
+                            @if ($order->status_id == 1 || $order->status_id == 2)
+                                <form action="{{ route('orders.cancel', $order->id) }}" method="POST"
+                                    style="display: inline;">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger px-2"
+                                        onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này không?')">Hủy
+                                        đơn</button>
+                                </form>
+                            @endif
+                        </td>
+
+                    </tr>
+                @endforeach
             </tbody>
+
+
         </table>
     </section>
 @endsection

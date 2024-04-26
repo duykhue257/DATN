@@ -82,7 +82,9 @@ p {
 	line-height: 24px;
 	margin: 0 0 15px 0;
 }
-
+.hidden {
+    display: none;
+}
 .categories__text {
 	p {
 		color: white;
@@ -4292,7 +4294,7 @@ body {
     margin-right: 10px;
 }
 
-.color_detail li input {
+.color_detail .li {
     width: 18px; /* Điều chỉnh kích thước input */
     height: 18px; /* Điều chỉnh kích thước input */
     border-radius: 50%; /* Biến input thành hình tròn */
@@ -4300,7 +4302,7 @@ body {
 }
 
 /* Màu cho input */
-.color_detail li:nth-child(1) input {
+/* .color_detail li:nth-child(1) input {
     background-color: red;
 }
 
@@ -4314,7 +4316,7 @@ body {
 
 .color_detail li:nth-child(4) input {
     background-color: yellow;
-}
+} */
 
 
   

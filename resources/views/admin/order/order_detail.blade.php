@@ -24,7 +24,7 @@
 
                             <tbody>
                                 <td>{{ $order->name }}</td>
-                                <td>{{ $order->note }},{{ $order->address }}</td>
+                                <td>{{ $order->detail }},{{ $order->address }}</td>
                                 <td>{{ $order->phone }}</td>
                                 <td>{{ $order->note }}</td>
                                 <td>{{ $order->payment->method }}</td>
@@ -54,12 +54,12 @@
                                         <td>{{ $variant->product->name }}</td>
                                         <th>{{ $variant->colors->color }}, {{ $variant->sizes->size }}</th>
                                         <td>{{ $detail->quantity }}</td>
-                                        <td>{{ $variant->product->price_reduced }}<span>.đ</span></td>
+                                        <td>{{ number_format($variant->product->price_reduced, 0, ',', '.') }}<span> đ</span></td>
                                         @php
                                             $totalPrice += $variant->product->price_reduced * $detail->quantity; // Tính tổng tiền
                                         @endphp
                                     @endforeach
-                                    <td>{{ $totalPrice }}<span>.đ</span></td> <!-- Hiển thị tổng tiền -->
+                                    <td>{{ number_format($totalPrice, 0, ',', '.') }}<span> đ</span></td> <!-- Hiển thị tổng tiền -->
                                 </tr>
                                 
                                 @endforeach
@@ -70,7 +70,7 @@
                                     <th colspan="4" rowspan="3"></th>
                                     <th colspan="2">Tổng tạm tính: 
                                         @php
-                                            $totalTemp = 0; // Khởi tạo biến tổng tạm tính
+                                            $totalTemp = 0; 
                                         @endphp
                                         @foreach ($order->detail_order as $detail)
                                             @foreach ($detail->variants as $variant)
@@ -79,7 +79,7 @@
                                                 @endphp
                                             @endforeach
                                         @endforeach
-                                        {{ $totalTemp }}<span>.đ</span>
+                                        {{ number_format($totalTemp, 0, ',', '.') }}<span> đ</span>
                                     </th>
                                 </tr>
                                 
@@ -88,13 +88,13 @@
                                         @php
                                             $discount = $totalTemp - $order->total; // Tính giảm giá
                                         @endphp
-                                        {{ $discount }}<span>.đ</span>
+                                        {{ number_format($discount, 0, ',', '.') }}<span>.đ</span>
                                     </th>
                                 </tr>
                                 
                                 <tr>
                                     <th colspan="2">Tổng cộng: 
-                                        <span>{{ $order->total }}đ</span>
+                                        <span>{{ number_format($order->total, 0, ',', '.') }}đ</span>
                                     </th>
                                 </tr>
                                 

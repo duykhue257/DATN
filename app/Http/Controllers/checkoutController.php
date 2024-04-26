@@ -14,10 +14,13 @@ class CheckoutController extends Controller
     public function index(Request $request)
     {
         // Lấy total mới từ session nếu có
+        // $test = $request->session()->get('test');
+        // dd($test);
         $newTotal = $request->session()->get('newTotal');
+        // dd($newTotal);
         $discountAmount = $request->session()->get('discountAmount');
         // $request->session()->get('discountAmount');
-
+        // dd($discountAmount);
         if (!$newTotal) {
             $total = Cart::instance('cart')->total();
             $total = str_replace(',', '', $total); // Loại bỏ dấu phẩy
@@ -41,7 +44,7 @@ class CheckoutController extends Controller
         $cartItems = Cart::instance('cart')->content();
         $payments = Payment::all();
 
-        return view('client.checkout', compact('cartItems', 'payments', 'orderNumber', 'checkoutTotal','discountAmount'));
+        return view('client.checkout', compact('cartItems', 'payments', 'orderNumber', 'checkoutTotal'));
     }
 
     public function store(CheckoutRequest  $request)

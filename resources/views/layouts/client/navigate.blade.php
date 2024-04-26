@@ -48,9 +48,9 @@
                             {{ Auth::user()->name }}
                         @endif
                         <li><a href="/account"><i class="fa-regular fa-user"></i></a></li>
-                        <li><a href="/wishlist"><span class="icon_heart_alt"></span>
+                        {{-- <li><a href="/wishlist"><span class="icon_heart_alt"></span>
                                 <div class="tip">2</div>
-                            </a></li>
+                            </a></li> --}}
 
                         <li><a href="{{ route('cart.show') }}"><span class="icon_bag_alt"></span>
                                 <div class="tip"> {{Cart::instance('cart')->content()->count()}}</div>

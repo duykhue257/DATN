@@ -41,7 +41,7 @@
                                 </div>
                                 @error('phone')
                                     <span class="text-danger">{{ $message }}</span><br><br>
-                                @enderror 
+                                @enderror
                                 <div class="checkout__form__input">
                                     <p>Thị trấn/Thành phố <span>*</span></p>
                                     <select required class="form-control" id="province" name="province"></select>
@@ -58,7 +58,8 @@
                                 <div class="checkout__form__input">
                                     <p>Địa chỉ <span>*</span></p>
                                     <input type="text" name="detail"
-                                        placeholder="Số nhà, căn hộ, tòa nhà... ( tùy chọn )" value="{{ old('detail') }}"  required>
+                                        placeholder="Số nhà, căn hộ, tòa nhà... ( tùy chọn )" value="{{ old('detail') }}"
+                                        required>
                                 </div>
                             </div>
                             <input type="hidden" name="address" value="" id="address">
@@ -104,22 +105,25 @@
                             </div>
                             <div class="checkout__order__total">
                                 <ul>
-                                    <li class="">Tổng tạm tính. <span>{{ Cart::instance('cart')->subtotal() }}đ</span>
+                                    <li class="">Tổng tạm tính.
+                                        <span>{{ str_replace(',', '.', Cart::instance('cart')->subtotal()) }}đ</span>
                                     </li>
-                                    <li class="">Phí vận chuyển. <span>- {{ Cart::instance('cart')->tax() }}đ</span>
+                                    <li class="">Phí vận chuyển. <span> {{ Cart::instance('cart')->tax() }}đ</span>
                                     </li>
-                                    <li class="">Giảm giá <span>- {{ $discountAmount }}đ</span></li>
+                                    {{-- <li class="">Giảm giá <span>- {{ number_format($discountAmount, 0, ',', '.') }}đ</span></li> --}}
+                                    <li>Giảm giá <span id="discount"> </span></li>
+
                                     <li>
                                         Tổng cộng
                                         @if (session()->has('newTotal'))
                                             <!-- Kiểm tra xem total mới đã được lưu trong session hay không -->
-                                            <span>{{ number_format(session('newTotal'), 0, ',', '.') }} đ</span>
+                                            <span>{{ number_format(session('newTotal'), 0, ',', '.') }} đa</span>
                                             <!-- Sử dụng total mới từ session -->
                                             <input type="hidden" name="total" value="{{ session('newTotal') }}">
                                         @else
                                             <input type="hidden" name="total" value="{{ session('oldTotal') }}">
-                                            <span>{{ number_format(session('oldTotal'), 0, ',', '.') }} đ</span>
-                                         
+                                            <span id="total">{{ number_format(session('oldTotal'), 0, ',', '.') }}
+                                                đb</span>
                                         @endif
                                     </li>
                                     <input type="hidden" name="order_code" value="{{ $orderNumber }}">
@@ -169,6 +173,23 @@
 {{ asset('js/vietnamelocalselector.nonoop.js') }} --}}
 @push('scripts')
     <script>
+        var newTotal = sessionStorage.getItem('newtotal');
+        console.log(newTotal);
+        // $('#total').text(newTotal.toLocaleString('vi-VN') + 'đ');
+        $('#total').text(parseFloat(newTotal).toLocaleString('vi-VN') + 'đ');
+
+        var discount = sessionStorage.getItem('discount');
+        console.log(discount);
+        // $('#total').text(newTotal.toLocaleString('vi-VN') + 'đ');
+        if (discount == 0) {
+            $('#discount').text(discount + 'đ');
+        } else {
+            // $('#discountAmount').text('-' + discount + 'đ');
+            $('#discount').text('-'+parseFloat(discount).toLocaleString('vi-VN') + 'đ');
+            $('#discount').text('-'+parseFloat(discount).toLocaleString('vi-VN') + 'đ');
+        }
+      
+
         const address = {
             province: '',
             district: '',

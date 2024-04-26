@@ -30,8 +30,8 @@
                                     <tr>
                                         <th>{{ $prd->id }}</th>
                                         <td>{{ $prd->name }}</td>
-                                        <td>{{ $prd->price }}</td>
-                                        <td>{{ $prd->price_reduced }}</td>
+                                        <td>{{ number_format($prd->price, 0, ',', '.') }}</td>
+                                        <td>{{ number_format($prd->price_reduced, 0, ',', '.') }}</td>
                                         {{-- @php
                                             dd($prd->price);
                                         @endphp --}}

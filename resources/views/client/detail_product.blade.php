@@ -56,8 +56,10 @@
                             <i class="fa fa-star"></i>
                             <span>( 138 đánh giá )</span>
                         </div>
-                        <div class="product__details__price">{{ Number_format($product->price_reduced) }}
-                            đ<span>{{ Number_format($product->price) }} đ</span></div>
+                        <div class="product__details__price">
+                            {{ str_replace(',', '.', number_format($product->price_reduced)) }}
+                            đ<span>{{ str_replace(',', '.', number_format($product->price)) }} đ</span></div>
+
                         - Hình ảnh sản phẩm là ảnh thật, các hình hoàn toàn do shop tự thiết kế.</br>
                         - Kiểm tra cẩn thận trước khi gói hàng giao cho Quý Khách</br>
                         - Hàng có sẵn, giao hàng ngay khi nhận được đơn </br>
@@ -139,31 +141,22 @@
                                         @php
                                             $uniqueSizes = [];
                                         @endphp
-                                        {{-- @foreach ($product->sizes as $size)
+                                        @foreach ($product->variants->pluck('sizes') as $size)
                                             @if (!in_array($size->size, $uniqueSizes))
                                                 <label for="{{ $size->size }}-btn">
-                                                    <input  class="size" type="radio" id="{{ $size->size }}-btn"
-                                                        value="{{ $size->id }}">
+                                                    <input class="size" type="radio" id="{{ $size->size }}-btn"
+                                                        name="size" value="{{ $size->id }}"
+                                                        data-size-id="{{ $size->id }}">
                                                     {{ $size->size }}
                                                 </label>
                                                 @php
                                                     $uniqueSizes[] = $size->size;
                                                 @endphp
                                             @endif
-                                        @endforeach --}}
-                                        @foreach ($product->sizes as $size)
-                                        @if (!in_array($size->size, $uniqueSizes))
-                                            <label for="{{ $size->size }}-btn" data-color="{{ $size->color_id }}">
-                                                <input class="size" type="radio" id="{{ $size->size }}-btn" value="{{ $size->id }}" data-color="{{ $size->color_id }}">
-                                                {{ $size->size }}
-                                            </label>
-                                            @php
-                                                $uniqueSizes[] = $size->size;
-                                            @endphp
-                                        @endif
-                                    @endforeach
-                                    
+                                        @endforeach
                                     </div>
+
+
                                 </li>
 
                                 <li>
@@ -332,26 +325,49 @@
         const sizes = document.querySelectorAll('.size')
 
         colors.forEach(color => {
-
             color.onclick = (event) => {
                 attribute.color = event.target.value
-                getVariant()
+                const variant1 = product.variants.filter(p => p.color_id == attribute.color);
+                variant1.forEach(variant => {
+                    // console.log(variant.size_id);
+                    console.log(variant);
+                });
+                sizes.forEach(size => {
+                    const sizeId = size.getAttribute('data-size-id');
+
+                    if (sizeId) {
+                        const isValidSize = variant1.some(variant => variant.size_id == sizeId);
+                        if (!isValidSize) {
+                            size.parentNode.style.display = 'none';
+                        } else {
+                            size.parentNode.style.display = '';
+
+                        }
+
+                    }
+                 
+                });
+                getVariant();
             }
         });
 
         sizes.forEach(size => {
-
             size.onclick = (event) => {
-                attribute.size = event.target.value
-                getVariant() 
+                attribute.size = event.target.value;
+
+                // Gọi hàm getVariant() sau khi người dùng chọn một kích thước
+                getVariant();
             }
         });
+
+
 
         function getVariant() {
             // console.log(addToCart);
             // console.log(product.variants.find(p => p.color_id == attribute.color && p.size_id == attribute.size));
             if (attribute.color !== null && attribute.size !== null) {
                 const variant = product.variants.find(p => p.color_id == attribute.color && p.size_id == attribute.size)
+
                 if (variant) {
                     // console.log(variant);
                     document.querySelector('#avalibale_quantity').innerText = variant.quantity
@@ -375,7 +391,5 @@
                 }
             }
         }
-       
-
     </script>
 @endsection

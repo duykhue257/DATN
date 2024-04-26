@@ -6,8 +6,6 @@
                 <img src="img/LogoCM.png" alt="Dumemay">
             </div>
 
-            
-
             <div class="information">
                 <h1>Thông tin đơn hàng</h1>
                 <div id="order-details">
