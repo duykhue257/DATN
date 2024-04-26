@@ -10,7 +10,11 @@
         {{-- <div class="py-2"><a href="/wishlist" style="color: black;">Sản phẩm yêu thích</a></div> --}}
         {{-- <div class="py-2"><a href="/promotion" style="color: black;">Ưu đãi của bạn</a></div> --}}
     </li>
-    <li class="list-group-item py-4"><a href="" style="color: black; font-weight: 500;">Đăng xuất</a></li>
+    <form action="{{ route('logout') }}" method="POST">
+        @csrf
+        <li class="list-group-item py-4"><a href="" style="color: black; font-weight: 500;"><button
+                 class="list-group-item "   type="submit">Đăng xuất</button></a></li>
+    </form>
 </ul>
 
 <style>

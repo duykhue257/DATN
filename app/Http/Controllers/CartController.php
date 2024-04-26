@@ -25,10 +25,11 @@ class CartController extends Controller
             ->get();
         // dd($discount);
         $cartItems = Cart::instance('cart')->content();
-        // dd($cartItems);
+        $cartItemIds = $cartItems->pluck('id');
+        // dd($cartItemIds);
         // dd(Cart::instance('cart')->total());
         $subtotal = Cart::instance('cart')->subtotal();
-        $subtotal = str_replace(',', '', $subtotal); 
+        $subtotal = str_replace(',', '', $subtotal);
         $subtotal = floatval($subtotal);
         // dd($cartItems['id']);
         $orderNumber = session('order_number');
@@ -37,8 +38,9 @@ class CartController extends Controller
         foreach ($cartItems as $item) {
             // $sum += $item->price;
             $productVariant = ProductVariants::with('sizes', 'colors')->find($item->id);
-            // dd($productVariant->name);
-            $productVariant->load('product'); 
+            $item->variant_id = $productVariant->id;
+            // dd($productVariant->quantity);
+            $productVariant->load('product');
             // Gán thông tin sản phẩm vào mỗi item trong giỏ hàng
             $item->is_checked = true;
             $item->product_image = $productVariant->image;
@@ -48,8 +50,7 @@ class CartController extends Controller
             $item->color = $productVariant->colors->color;
             $item->quantity = (int)$item->qty;
         }
-
-        return view('client.cart', compact('cartItems', 'orderNumber', 'productVariant', 'discount'));
+        return view('client.cart', compact('cartItems', 'orderNumber', 'productVariant', 'discount', 'cartItemIds'));
     }
 
     public function addToCart(Request $request)
@@ -74,7 +75,7 @@ class CartController extends Controller
             $productVariant->image,
             $request->quantity,
             $product->price
-        )->associate('App\Models\ProductVariants'); // Liên kết với model ProductVariants
+        )->associate('App\Models\ProductVariants');
 
         // Lưu order_number vào session
         session(['order_number' => $orderNumber]);
@@ -91,8 +92,12 @@ class CartController extends Controller
 
     public function updateCart(Request $request)
     {
+        // $newTotalSum = $request->input('newTotalSum');
         $rowId = $request->input('rowId');
         $quantity = $request->input('quantity');
+        // $numProducts = $request->input('numProducts');
+        // $all = $request->all();
+        // $discountAmount = $request->session()->get('discountAmount', 0);
 
         $cartItem = Cart::instance('cart')->get($rowId);
 
@@ -101,9 +106,11 @@ class CartController extends Controller
             Cart::instance('cart')->update($rowId, $quantity);
 
             // Tính toán giá mới
-            $newPrice = $cartItem->price * $quantity;
-
-            return redirect()->route('cart.show');
+            $newsubtotal = $cartItem->price * $quantity;
+            
+            // $newPrice = $newsubtotal * $numProducts;
+            // $request->session()->put('newTotal', $newPrice);
+            return response()->json(['success' => true, 'newSubTotal' => $newsubtotal ]);
         }
 
         return response()->json(['success' => false]);
@@ -144,14 +151,15 @@ class CartController extends Controller
             $discountAmount = intval(($percent / 100) * $subtotal);
 
             // Lưu thông tin giảm giá vào session
-            $request->session()->put('discountAmount', $discountAmount);
+            // $request->session()->put('discountAmount', $discountAmount);
             $request->session()->put('discount_code', $discountCode);
             // Tính toán và lưu total mới vào session
-            $totalAfterDiscount = $subtotal - $discountAmount;
-            $request->session()->put('newTotal', $totalAfterDiscount);
+            // $totalAfterDiscount = $subtotal - $discountAmount;
+            // $request->session()->put('newTotal', $totalAfterDiscount);
 
             return response()->json([
                 'success' => true,
+                'percent' => $percent,
                 'discountAmount' => $discountAmount,
                 'message' => 'Áp dụng mã giảm giá thành công.'
             ]);
@@ -167,15 +175,15 @@ class CartController extends Controller
     public function cancelDiscount(Request $request)
     {
 
-        if ($request->session()->has('discountAmount') && $request->session()->has('discount_code')) {
+        if ($request->session()->has('discount_code')) {
             // Xóa session 'discountAmount' và 'discount_code'
-            $request->session()->forget(['discountAmount', 'discount_code']);
+            $request->session()->forget(['discount_code']);
 
             // Lấy tổng tạm tính ban đầu từ giỏ hàng
             $subtotal = str_replace(',', '', Cart::instance('cart')->subtotal());
 
             // Tính toán và lưu total mới vào session
-            $request->session()->put('newTotal', $subtotal);
+            // $request->session()->put('newTotal', $subtotal);
 
             return response()->json([
                 'success' => true,

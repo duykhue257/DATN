@@ -73,7 +73,7 @@
                         <td style="font-size: 14px">{{ $order->payment->method }}</td>
                         <td class="">
                             <a class="btn btn-primary px-2" href="{{ route('orderDetailHome', $order->id) }}">Chi tiết</a>
-                            @if ($order->status_id === 1)
+                            @if ($order->status_id == 1 || $order->status_id == 2)
                                 <form action="{{ route('orders.cancel', $order->id) }}" method="POST"
                                     style="display: inline;">
                                     @csrf

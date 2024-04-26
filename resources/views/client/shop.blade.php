@@ -72,12 +72,14 @@
                             <div class="section-title">
                                 <h4>Màu sắc</h4>
                             </div>
-                            <div class="size__list color__list">
+                            <div class="colorList">
                                 @foreach ($colors as $cl)
                                     <label for="{{ $cl->color }}">
+                                        <input class="variant_color" type="radio" id="{{ $cl->color }}"
+                                            onclick="toggleHover(this)">
                                         {{ $cl->color }}
-                                        <input type="checkbox" id="{{ $cl->color }}">
-                                        <span class="checkmark"></span>
+
+                                        {{-- <span class="checkmark"></span> --}}
                                     </label>
                                 @endforeach
                             </div>
@@ -97,16 +99,16 @@
                                             <!-- Hiển thị hình ảnh sản phẩm -->
                                             <ul class="product__hover">
                                                 <li><a href="{{ $product->variants ? Storage::url($product->variants[0]->image) : '' }}"
-                                                        class="image-popup"><span class="arrow_expand"></span></a></li>
-                                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                              
+                                                        class="image-popup"><span class="arrow_expand "></span></a></li>
+                                                <li><a href="#"><span class="icon_heart_alt "></span></a></li>
+
                                             </ul>
                                         </div>
                                     @endif
 
 
                                     <div class="product__item__text">
-                                        <h6><a 
+                                        <h6><a
                                                 href="{{ route('detail_product') }}?id={{ $product->id }}">{{ $product->name }}</a>
                                         </h6>
 
@@ -114,7 +116,32 @@
                                         <div class="rating">
                                             <!-- Đánh giá sản phẩm -->
                                         </div>
-                                        <div class="product__price">{{ number_format($product['price_reduced'], 0, ',', '.')}}đ</div> <!-- Giá sản phẩm -->
+                                        <div class="d-flex  justify-content-between ">
+                                            <div class="product__price ">
+                                                {{ number_format($product['price_reduced'], 0, ',', '.') }}đ</div>
+                                                
+                                            {{-- <div>
+                                                @foreach ($sizes as $sz)
+                                                    <label for="{{ $sz->size }}" class="">
+                                                        <input type="checkbox" class="checkmark" type="radio"
+                                                            id="{{ $sz->size }}" onclick="toggleHover(this)">
+                                               
+                                                    </label>
+                                                @endforeach
+                                            </div>
+                                            <div>
+                                                @foreach ($colors as $cl)
+                                                    <label for="{{ $cl->color }}" class="">
+                                                        <input class="variant_color" type="radio"
+                                                            id="{{ $cl->color }}" onclick="toggleHover(this)">
+                                                       
+                                                    </label>
+                                                @endforeach
+                                            </div> --}}
+
+
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>

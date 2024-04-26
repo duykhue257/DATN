@@ -82,7 +82,9 @@ p {
 	line-height: 24px;
 	margin: 0 0 15px 0;
 }
-
+.hidden {
+    display: none;
+}
 .categories__text {
 	p {
 		color: white;
@@ -1249,7 +1251,7 @@ ol {
 	left: 0;
 	width: 100%;
 	bottom: 30px;
-	text-align: center;
+	text-align: center;	
 }
 
 .product__hover li {
@@ -1559,23 +1561,22 @@ ol {
 	border-radius: 0;
 }
 
-.sidebar__sizes,
-.sidebar__color {
+.sidebar__sizes {
 	margin-bottom: 40px;
 }
 
 .sidebar__sizes .section-title,
-.sidebar__color .section-title {
+.section-title {
 	margin-bottom: 35px;
 }
 
 .sidebar__sizes .section-title h4,
-.sidebar__color .section-title h4 {
+.section-title h4 {
 	font-size: 18px;
 }
 
 .sidebar__sizes .size__list label,
-.sidebar__color .size__list label {
+.size__list label {
 	display: block;
 	padding-left: 20px;
 	font-size: 14px;
@@ -1586,24 +1587,24 @@ ol {
 }
 
 .sidebar__sizes .size__list label input,
-.sidebar__color .size__list label input {
+.size__list label input {
 	position: absolute;
 	visibility: hidden;
 }
 
 .sidebar__sizes .size__list label input:checked~.checkmark,
-.sidebar__color .size__list label input:checked~.checkmark {
+.size__list label input:checked~.checkmark {
 	border-color: #ca1515;
 }
 
 .sidebar__sizes .size__list label input:checked~.checkmark:after,
-.sidebar__color .size__list label input:checked~.checkmark:after {
+.size__list label input:checked~.checkmark:after {
 	border-color: #ca1515;
 	opacity: 1;
 }
 
 .sidebar__sizes .size__list label .checkmark,
-.sidebar__color .size__list label .checkmark {
+.size__list label .checkmark {
 	position: absolute;
 	left: 0;
 	top: 4px;
@@ -1614,7 +1615,7 @@ ol {
 }
 
 .sidebar__sizes .size__list label .checkmark:after,
-.sidebar__color .size__list label .checkmark:after {
+.size__list label .checkmark:after {
 	position: absolute;
 	left: 0px;
 	top: -2px;
@@ -1629,9 +1630,59 @@ ol {
 	content: "";
 }
 
-.sidebar__color .color__list label {
+.color__list label {
 	text-transform: capitalize;
 }
+/*color trang shop*/
+.variant_color {
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	outline: none;
+	border: 1px solid #ddd6d6; /* Màu đen cho border */
+	cursor: pointer;
+	display: inline-block; 
+  }
+
+  .colorList{
+	display: flex; /* Sử dụng flexbox để dọc phần tử */
+	flex-direction: column;
+  }
+  /* .variant_color:focus {
+	outline: 2px solid #0000ff;
+	outline-offset: -2px;
+  } */
+  
+  #black:hover {
+	background-color: #000000;
+  }
+  
+  #red:hover {
+	background-color: #CC0000;
+  }
+  #blue:hover {
+	background-color: #0033FF;
+  }
+  #yellow:hover {
+	background-color: #FFFF00;
+  }
+
+  #black:checked {
+	background-color: #000000;
+  }
+  #red:checked {
+	background-color: #CC0000;
+  }
+  #yellow:checked {
+	background-color: #FFFF00;
+  }
+  #blue:checked {
+	background-color: #0033FF;
+  }
+
 
 .pagination__option a {
 	display: inline-block;
@@ -1745,7 +1796,7 @@ ol {
 
 .product__details__text h3 {
 	color: #111111;
-	font-weight: 600;
+	font-weight: 400;
 	text-transform: uppercase;
 	margin-bottom: 12px;
 }
@@ -2024,6 +2075,68 @@ ol {
 	content: "";
 }
 
+/*Màu detail*/
+.product__details__widget ul li .color__btn label {
+	font-size: 14px;
+	
+	text-transform: uppercase;
+	cursor: pointer;
+	margin-right: 10px;
+	display: inline-block;
+	margin-bottom: 0;
+	font-weight: 500;
+	border: 1px solid #ffffff;
+    padding: 5px 10px;
+    border-radius: 15px;
+	
+
+	/* Áp dụng hiệu ứng chuyển đổi */
+	transition: color 0.5s ease;
+}
+
+.product__details__widget ul li .color__btn label:last-child {
+	margin-right: 0;
+}
+
+.product__details__widget ul li .color__btn label.active {
+	/* color: #eb0f0f; */
+	font-weight: 700;
+	color: #ffffff;
+}
+
+.product__details__widget ul li .color__btn label input {
+	position: absolute;
+	visibility: hidden;
+}
+
+  
+  .color__btn label input[type="radio"] {
+	/* Ẩn input radio */
+	display: none;
+  }
+  
+ 
+  
+  /* Định nghĩa màu nền cho từng nhãn dựa trên giá trị màu */
+  .color__btn label[for="red-btn"] {
+	background-color: rgb(225, 52, 52);
+	color:rgb(225, 52, 52) ;
+  }
+  
+  .color__btn label[for="yellow-btn"] {
+	background-color: #FFFF00;
+	color:#FFFF00;
+  }
+  
+  .color__btn label[for="blue-btn"] {
+	background-color: rgb(0,191,255);
+	color:rgb(0,191,255) ;
+  }
+  .color__btn label[for="black-btn"] {
+	background-color: #000000;
+	color: #000000;
+  }
+/*Size detail /////////////////////////////*/
 .product__details__widget ul li .size__btn label {
 	font-size: 14px;
 	color: #666666;
@@ -2032,6 +2145,10 @@ ol {
 	margin-right: 10px;
 	display: inline-block;
 	margin-bottom: 0;
+	font-weight: 500;
+	border: 1px solid #000;
+    padding: 5px 10px;
+    border-radius: 12px;
 }
 
 .product__details__widget ul li .size__btn label:last-child {
@@ -2039,7 +2156,9 @@ ol {
 }
 
 .product__details__widget ul li .size__btn label.active {
-	color: #ca1515;
+	/* color: #eb0f0f; */
+	background-color: #000;
+	color: #fff;
 }
 
 .product__details__widget ul li .size__btn label input {
@@ -2181,12 +2300,12 @@ ol {
 
 .shop__cart__table tbody tr .cart__product__item .cart__product__item__title {
 	overflow: hidden;
-	padding-top: 23px;
+	padding-top: 10px;
 }
 
 .shop__cart__table tbody tr .cart__product__item .cart__product__item__title h6 {
 	color: #111111;
-	font-weight: 600;
+	font-weight: 400;
 }
 
 .shop__cart__table tbody tr .cart__product__item .cart__product__item__title .rating i {
@@ -3869,8 +3988,9 @@ ol {
 }
 
 
-/*thong bao gio hang*/
+/*thong bao gio hang / trang detail*/
 .notification {
+	font-size: 20px;
     position: fixed;
     top: 50%;
     left: 50%;

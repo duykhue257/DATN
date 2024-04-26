@@ -37,8 +37,7 @@ class HomeController extends Controller
        
         $productId = $request->input('id') ?? $request->query('id');
         $product = Products::with('variants')->find($productId);
-        // dd($product->variants->pluck('colors'));
-        // return $product;
+    
         $categoryProducts = Products::where('category_id', 2)->with('variants')->get();
 
         $numbers = range(1, 4);
