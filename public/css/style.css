@@ -1330,6 +1330,7 @@ ol {
 .product__item__text h6 a {
 	font-size: 14px;
 	color: #111111;
+	font-weight: 500;
 }
 
 .product__item__text .rating {
@@ -1357,7 +1358,9 @@ ol {
 	color: #b1b0b0;
 	text-decoration: line-through;
 	margin-left: 4px;
+
 }
+
 
 /*---------------------
   Shop
@@ -1652,7 +1655,7 @@ ol {
 	flex-direction: column;
   }
   /* .variant_color:focus {
-	outline: 2px solid #0000ff;
+	outline: 2px solid #000000;
 	outline-offset: -2px;
   } */
   
@@ -4273,6 +4276,48 @@ body {
 	}
 
   }
+  /*detail_color trang shop */
+  /* CSS */
+.color_detail {
+    display: flex;
+	justify-content: center;
+}
+
+.color_detail ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.color_detail li {
+    margin-right: 10px;
+}
+
+.color_detail .li {
+    width: 18px; /* Điều chỉnh kích thước input */
+    height: 18px; /* Điều chỉnh kích thước input */
+    border-radius: 50%; /* Biến input thành hình tròn */
+    border: 1px solid #000000; /* Đường viền input */
+}
+
+/* Màu cho input */
+/* .color_detail li:nth-child(1) input {
+    background-color: red;
+}
+
+.color_detail li:nth-child(2) input {
+    background-color: #33CCFF;
+}
+
+.color_detail li:nth-child(3) input {
+    background-color: rgb(7, 7, 7);
+}
+
+.color_detail li:nth-child(4) input {
+    background-color: yellow;
+} */
+
 
   
 

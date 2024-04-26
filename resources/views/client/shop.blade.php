@@ -75,8 +75,7 @@
                             <div class="colorList">
                                 @foreach ($colors as $cl)
                                     <label for="{{ $cl->color }}">
-                                        <input class="variant_color" type="radio" id="{{ $cl->color }}"
-                                            onclick="toggleHover(this)">
+                                        <input class="variant_color" type="checkbox" id="{{ $cl->color }}">
                                         {{ $cl->color }}
 
                                         {{-- <span class="checkmark"></span> --}}
@@ -108,40 +107,42 @@
 
 
                                     <div class="product__item__text">
-                                        <h6><a
+
+
+                                        <div class="color_detail">
+                                            <ul>
+                                                @php
+                                                    $uniqueColors = $product->variants->pluck('colors')->unique('color');
+                                                @endphp
+                                                @foreach ($uniqueColors as $color)
+                                                    <li class="li" style="background-color: {{ $color->color }}"></li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                        
+                                        <div class="size_detail">
+                                            <ul>
+                                                @php
+                                                    $uniqueSizes = $product->variants->pluck('sizes')->unique('size');
+                                                @endphp
+                                                @foreach ($uniqueSizes as $size)
+                                                    <li>{{ $size->size }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                        
+                                        <!-- Tên sản phẩm -->
+                                        <h6>
+                                            <a class="product_name"
                                                 href="{{ route('detail_product') }}?id={{ $product->id }}">{{ $product->name }}</a>
                                         </h6>
 
-                                        <!-- Tên sản phẩm -->
+
                                         <div class="rating">
                                             <!-- Đánh giá sản phẩm -->
                                         </div>
-                                        <div class="d-flex  justify-content-between ">
-                                            <div class="product__price ">
-                                                {{ number_format($product['price_reduced'], 0, ',', '.') }}đ</div>
-                                                
-                                            {{-- <div>
-                                                @foreach ($sizes as $sz)
-                                                    <label for="{{ $sz->size }}" class="">
-                                                        <input type="checkbox" class="checkmark" type="radio"
-                                                            id="{{ $sz->size }}" onclick="toggleHover(this)">
-                                               
-                                                    </label>
-                                                @endforeach
-                                            </div>
-                                            <div>
-                                                @foreach ($colors as $cl)
-                                                    <label for="{{ $cl->color }}" class="">
-                                                        <input class="variant_color" type="radio"
-                                                            id="{{ $cl->color }}" onclick="toggleHover(this)">
-                                                       
-                                                    </label>
-                                                @endforeach
-                                            </div> --}}
-
-
-                                        </div>
-
+                                        <div class="product__price">{{ Number_format($product['price_reduced']) }} đ</div>
+                                        <!-- Giá sản phẩm -->
                                     </div>
                                 </div>
                             </div>
