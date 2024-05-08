@@ -101,8 +101,28 @@
                                 </svg>
                                 Thêm vào giỏ hàng thành công
                             </div>
+                            
                         </div>
-
+                        <div id="notificationError" class="notificationError hidden">
+                            <svg  width="64px" height="64px"  viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+    
+                            <g id="SVGRepo_bgCarrier" stroke-width="0" />
+    
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+    
+                            <g id="SVGRepo_iconCarrier">
+                                <path d="M9 9L15 15" stroke="#ff0a0a" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M15 9L9 15" stroke="#ff0a0a" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <circle cx="12" cy="12" r="9" stroke="#ff0a0a" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </g>
+    
+                        </svg>
+                           Vượt quá số lượng hiện có
+                        </div>
                         <div class="product__details__widget">
                             <ul>
                                 <li>
@@ -275,6 +295,14 @@
                 document.getElementById('notification').classList.add('hidden');
             }, 2000); // 3000 miliseconds = 3 seconds
         }
+        function showErrorMessage() {
+            document.getElementById('notificationError').classList.remove('hidden');
+
+            // Tự động ẩn hộp thông báo sau một khoảng thời gian
+            setTimeout(function() {
+                document.getElementById('notificationError').classList.add('hidden');
+            }, 2000); // 3000 miliseconds = 3 seconds
+        }
 
         function addToCart() {
             var formData = $('#addtocart').serialize();
@@ -377,7 +405,7 @@
 
                     document.querySelector('#addToCart').onclick = () => {
                         if (document.querySelector('#qty').value > variant.quantity) {
-                            alert('vượt quá số lượng hiện có')
+                            showErrorMessage();
                         } else {
                             this.addToCart()
                         }

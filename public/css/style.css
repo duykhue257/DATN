@@ -2326,6 +2326,7 @@ ol {
 
 .shop__cart__table tbody tr .cart__quantity {
 	width: 190px;
+	
 }
 
 .shop__cart__table tbody tr .cart__quantity .pro-qty {
@@ -2392,6 +2393,9 @@ ol {
 	font-size: 14px;
 	margin-right: 5px;
 }
+.quantity{
+	border: none;
+}
 
 .discount__content h6 {
 	color: #111111;
@@ -2415,7 +2419,8 @@ ol {
 	padding-left: 30px;
 	padding-right: 115px;
 	font-size: 14px;
-	color: #444444;
+	font-weight: 600;
+	color: red;
 }
 
 .discount__content form input::-webkit-input-placeholder {
@@ -3993,6 +3998,22 @@ ol {
 
 /*thong bao gio hang / trang detail*/
 .notification {
+	font-size: 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+	/* animation: showNotification 2s; Thời gian hiển thị là 5 giây */
+}
+.notificationError {
 	font-size: 20px;
     position: fixed;
     top: 50%;
