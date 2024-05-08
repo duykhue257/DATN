@@ -4,16 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Color;
 use Illuminate\Http\Request;
+use App\DataTables\ColorDataTable;
 
 class ColorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(ColorDataTable $dataTable)
     {
         $colors = Color::all();
-        return view('admin.color.index', compact('colors'));
+        /* return view('admin.color.index', compact('colors')); */
+        return $dataTable->render('admin.color.index', compact('colors'));
     }
 
 

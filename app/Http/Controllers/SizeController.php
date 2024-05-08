@@ -4,16 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Size;
 use Illuminate\Http\Request;
+use App\DataTables\SizeDataTable;
 
 class SizeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(SizeDataTable $dataTable)
     {
         $sizes = Size::all();
-        return view('admin.size.index', compact('sizes'));
+        /* return view('admin.size.index', compact('sizes')); */
+        return $dataTable->render('admin.size.index', compact('sizes'));
     }
 
 

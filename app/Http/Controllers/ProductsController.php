@@ -9,18 +9,20 @@ use App\Models\Category;
 // use App\Models\Size;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use App\DataTables\ProductsDataTable;
 
 class ProductsController extends Controller
 {
 
-    public function index()
+    public function index(ProductsDataTable $dataTable)
     {
         $products = Products::join('categories', 'products.category_id', '=', 'categories.id')
         ->select('products.*', 'categories.name_cate','products.id as id')
         ->latest()
         ->get();
         // $products = Products::latest()->get();
-        return view('admin.product.list_prd', compact('products'));
+        /* return view('admin.product.list_prd', compact('products')); */
+        return $dataTable->render('admin.product.list_prd', compact('products'));
     }
 
     public function create()
