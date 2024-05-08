@@ -184,9 +184,10 @@
         if (discount == 0) {
             $('#discount').text(discount + 'đ');
         } else {
-            // $('#discountAmount').text('-' + discount + 'đ');
-            $('#discount').text('-'+parseFloat(discount).toLocaleString('vi-VN') + 'đ');
-            $('#discount').text('-'+parseFloat(discount).toLocaleString('vi-VN') + 'đ');
+            $('#discount').text('-' + discount + 'đ');
+            // $('#discount').text(discount + 'đ');
+            // $('#discount').text('-' + parseFloat(discount).toLocaleString('vi-VN') + 'đ');
+          
         }
       
 

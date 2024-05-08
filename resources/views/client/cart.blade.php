@@ -39,6 +39,7 @@
                                 <tbody class="">
                                     @foreach ($cartItems as $item)
                                         <tr>
+                                            {{-- <p>{{ $item->quanty }}</p> --}}
                                             <td><input @if ($item->is_checked) {{ 'checked' }} @endif
                                                     type="checkbox">
 
@@ -66,7 +67,7 @@
                                             <td class="cart__quantity">
                                                 <div class="pro-qty">
                                                     <input class="quantity" data-rowid="{{ $item->rowId }}" name="quantity"
-                                                        type="number" min="1" max="{{ $productVariant->quantity }}"
+                                                        type="number" min="1" max="{{ $item->quanty }}"
                                                         onchange="updateQuantity(this)" value="{{ $item->qty }}">
 
                                                 </div>
@@ -245,19 +246,43 @@
         //  var numProducts = $('tbody').children('tr').length;
         // var percent;
         // console.log('percent :' + percent);
-        var discount = sessionStorage.getItem('discount');
-   
-        console.log(discount + 'count');
-        if (discount == 0) {
-            $('#discountAmount').text(discount + 'đ');
+        var discountStr = sessionStorage.getItem('discount');
+        var discount = parseFloat(discountStr);
+
+        if (!isNaN(discount)) {
+            console.log("Discount:", discount);
+            // Sử dụng giá trị discount ở đây nếu nó là một số hợp lệ
+            if (discount === 0) {
+                $('#discountAmount').text(discount + 'đ');
+            } else {
+                $('#discountAmount').text('-' + parseFloat(discount).toLocaleString('vi-VN') + 'đ');
+            }
         } else {
-            // $('#discountAmount').text('-' + discount + 'đ');
-            $('#discountAmount').text('-'+parseFloat(discount).toLocaleString('vi-VN') + 'đ');
+            console.log("Giá trị không hợp lệ trong sessionStorage.");
+            var discountText = $('#discountAmount').text();
+            var totalNumber = discountText.replace(/\D/g, '');
+            console.log(totalNumber);
+            sessionStorage.setItem('discount', totalNumber);
         }
+
         var total = sessionStorage.getItem('newtotal');
-        var formattedTotal = parseFloat(total).toLocaleString('vi-VN', {minimumFractionDigits: 0});
-        console.log('to :'+formattedTotal);
-        $('#total').text(formattedTotal.toLocaleString('vi-VN') + 'đ');
+        var totalNumber = parseFloat(total);
+
+        if (!isNaN(totalNumber)) {
+            var formattedTotal = totalNumber.toLocaleString('vi-VN', {
+                minimumFractionDigits: 0
+            });
+            $('#total').text(formattedTotal + 'đ');
+            console.log('Tổng: ' + formattedTotal);
+        } else {
+            console.log('Giá trị không hợp lệ trong sessionStorage.');
+            var totalText = $('#total').text();
+            var totalNumber = totalText.replace(/\D/g, '');
+            console.log(totalNumber);
+            sessionStorage.setItem('newtotal', totalNumber);
+        }
+
+
 
         function updateQuantity(qty) {
             var rowId = $(qty).data('rowid');
@@ -309,16 +334,21 @@
                         // var discount = $('#discountAmount').text();
                         // var subtotalNumber = discount.replace(/\D/g, '');
                         // console.log(discount + 'cccoc');
-                        console.log('sum :'+newTotalSum);
+                        console.log('sum :' + newTotalSum);
                         var percent = sessionStorage.getItem('percent');
                         var discountAmountNumber = parseInt(newTotalSum * (percent / 100));
-                      
-                        console.log(discountAmountNumber+'mount');
-                        sessionStorage.setItem('discount', discountAmountNumber);
-                        // console.log('abc :' + discount);
-                        // $('#discountAmount').text('-' + discountAmountNumber.toLocaleString('vi-VN').replace(',',
-                        //     '.') + 'đ');
-                            $('#discountAmount').text('-'+parseFloat(discountAmountNumber).toLocaleString('vi-VN') + 'đ');
+                        var discountAmount = discountAmountNumber / 1000;
+                        console.log(discountAmount + 'mount');
+                        sessionStorage.setItem('discount', discountAmount);
+
+                        if (discountAmountNumber == 0) {
+                            $('#discountAmount').text(parseFloat(discountAmountNumber).toLocaleString(
+                                'vi-VN') + 'đ');
+                        } else {
+                            $('#discountAmount').text('-' + parseFloat(discountAmountNumber).toLocaleString(
+                                'vi-VN') + 'đ');
+                        }
+
 
                         // console.log('voucher' + discountAmount);
                         // console.log('newTotalSum' + newTotalSum);
@@ -371,20 +401,33 @@
             });
         });
 
-        const variant = <?php echo json_encode($productVariant); ?>;
+        const variant = <?php echo json_encode($cartItems); ?>;
 
         document.querySelectorAll('.quantity').forEach(element => {
-            let defaultquantity = element.value
+            let defaultquantity = element.value;
+            let rowId = element.dataset.rowid; 
+            let maxQuantity = parseFloat(element.getAttribute('max'));
+
+            console.log('defaultquantity' + defaultquantity);
+            console.log('maxQuantity' + maxQuantity);
+            let originalValue = element.value;
+
             element.onchange = () => {
-                // console.log(element.value)
-                if (element.value > variant.quantity) {
-                    element.value = variant.quantity
-                    alert('số lượng hàng vượt quá có sẵn')
-                } else {
-                    updateQuantity(element)
+                if (element.value > maxQuantity) {
+                    element.value = maxQuantity;
+                    if(element.value == maxQuantity){
+                        updateQuantity(element);
+                    }
+                    alert('Số lượng hàng vượt quá có sẵn');
+                }else if(element.value == 0){
+                    element.value = originalValue;
+                    alert('Số lượng không hợp lệ');
+                }else {
+                    updateQuantity(element);
                 }
-            }
+            };
         });
+
 
 
 
@@ -521,6 +564,9 @@
                     console.log(newTotal);
                     $('#total').text(newTotal.toLocaleString('vi-VN') + 'đ');
                     sessionStorage.setItem('newtotal', newTotal);
+                    var percent = 0;
+                    sessionStorage.setItem('percent', percent);
+
                     // Gửi giá trị total mới lên server để lưu vào session
                     // updateCartTotal(newTotal);
                     // console.log(response.message);

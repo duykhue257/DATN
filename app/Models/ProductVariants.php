@@ -18,10 +18,7 @@ class ProductVariants extends Model
         return $this->belongsToMany(Order::class);
     }
 
-    public function bills()
-    {
-        return $this->belongsToMany(Bill::class);
-    }
+
     public function product()
     {
         return $this->belongsTo(Products::class, 'product_id');

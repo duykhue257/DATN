@@ -35,7 +35,14 @@
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <h6 class="m-0 font-weight-bold text-primary">Doanh thu</h6>
+                                <select name="" id="doanhThu">
+                                    <option value="day">Ngày</option>
+                                    <option value="week">Tuần</option>
+                                    <option value="month">Tháng</option>
+                                    <option value="year">Năm</option>
+                                </select>
                             </div>
+
                             <div class="card-body">
                                 <div class="chart-area">
                                     <canvas id="myAreaChart"></canvas>
@@ -77,7 +84,10 @@
                             
                             </div>
                         </div>
+                    
                     </div>
+
+                    
                 </div>
 
             </div>
@@ -110,3 +120,5 @@
     </div>
 </div>
 @endsection
+
+

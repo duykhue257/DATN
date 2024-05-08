@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Egulias\EmailValidator\Parser\Comment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,7 +21,10 @@ class Products extends Model
     {
         return $this->hasMany(ProductVariants::class, 'product_id');
     }
-
+    public function comments()
+    {
+        return $this->hasMany(Comments::class, 'product_id');
+    }
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
@@ -31,10 +35,7 @@ class Products extends Model
         return $this->belongsToMany(Order::class);
     }
 
-    public function bills()
-    {
-        return $this->belongsToMany(Bill::class);
-    }
+   
     public function sizes()
     {
         return $this->belongsToMany(Size::class, 'product_variants', 'product_id', 'size_id')->withTimestamps();
