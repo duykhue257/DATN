@@ -106,10 +106,10 @@
                                     @endif
 
 
-                                    <div class="product__item__text">
+                                    <div class="product__item__text ">
 
-
-                                        <div class="color_detail">
+                                    <div class="hidden">
+                                        <div class="color_detail ">
                                             <ul>
                                                 @php
                                                     $uniqueColors = $product->variants->pluck('colors')->unique('color');
@@ -120,7 +120,7 @@
                                             </ul>
                                         </div>
                                         
-                                        <div class="size_detail">
+                                        <div class="size_detail ">
                                             <ul>
                                                 @php
                                                     $uniqueSizes = $product->variants->pluck('sizes')->unique('size');
@@ -130,6 +130,8 @@
                                                 @endforeach
                                             </ul>
                                         </div>
+                                    </div>
+                                       
                                         
                                         <!-- Tên sản phẩm -->
                                         <h6>
