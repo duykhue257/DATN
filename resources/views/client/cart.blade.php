@@ -69,7 +69,6 @@
                                                     <input class="quantity" data-rowid="{{ $item->rowId }}" name="quantity"
                                                         type="number" min="1" max="{{ $item->quanty }}"
                                                         onchange="updateQuantity(this)" value="{{ $item->qty }}">
-
                                                 </div>
                                             </td>
 
@@ -145,7 +144,26 @@
                     </svg>
                     <p id="notificationContent"></p>
                 </div>
+                <div id="notificationError" class="notificationError hidden">
+                    <svg  width="64px" height="64px"  viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
 
+                    <g id="SVGRepo_bgCarrier" stroke-width="0" />
+
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+
+                    <g id="SVGRepo_iconCarrier">
+                        <path d="M9 9L15 15" stroke="#ff0a0a" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M15 9L9 15" stroke="#ff0a0a" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <circle cx="12" cy="12" r="9" stroke="#ff0a0a" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </g>
+
+                </svg>
+                   Bạn đang nhập quá số lượng hiện có
+                </div>
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="discount__content">
@@ -169,10 +187,11 @@
                             <h6>MÃ CÓ THỂ DÙNG</h6><br>
                             @foreach ($discount as $dis)
                                 <form action="#" class="discount-form">
-                                    <input class="text-center discount-code" type="text" name="selected_discount_code"
+                                    <input class="text-center discount-code border-1 rounded-lg input-hover" type="text" name="selected_discount_code"
                                         value="{{ $dis->code }}({{ $dis->percent }}%)" readonly>
-                                    <button type="button" class="site-btn btn btn-success choose-discount"
-                                        data-discount="{{ $dis->code }}">&nbspdùng</button>
+                                    <button type="button" class="button_voucher site-btn choose-discount"
+                                        data-discount="{{ $dis->code }}">&nbspdùng
+                                    </button>
                                 </form>
                             @endforeach
 
@@ -217,6 +236,29 @@
             </div>
         @endif
     </section>
+    <style>
+        .input-hover{
+            font-size: 20px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            background-color: black;
+            color: #ffffff;
+            margin: 7px 0px;
+        }
+        /* .input-hover:hover {
+            background-color: #ffffff;  
+        } */
+        .button_voucher{
+            background-color: #000;
+            border: none;
+            color: white;
+            margin: 7px 0px;
+        }
+        .button_voucher:hover{
+            color: red;
+        }
+    </style>
+    
     <!-- Shop Cart Section End -->
     <form id="updateCartQty" action="{{ route('cart.update') }}" method="POST">
         @csrf
@@ -431,6 +473,7 @@
 
 
 
+
         function removeItemFromCart(rowId) {
             $('#rowId_D').val(rowId);
             $('#deleteFromCart').submit();
@@ -596,5 +639,14 @@
                 $('#svgsuccess').addClass('hidden');
             }, 3000); // 3000 miliseconds = 3 seconds
         }
+        function showErrorMessage() {
+            document.getElementById('notificationError').classList.remove('hidden');
+
+            // Tự động ẩn hộp thông báo sau một khoảng thời gian
+            setTimeout(function() {
+                document.getElementById('notificationError').classList.add('hidden');
+            }, 2600); // 3000 miliseconds = 3 seconds
+        }
     </script>
 @endpush
+

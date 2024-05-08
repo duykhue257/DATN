@@ -1,7 +1,7 @@
 @extends('layouts.client.layout_account')
 @section('title', 'Địa chỉ giao hàng')
 @section('content')
-<section>
+<section class="border shadow rounded-custom py-2 px-4">
     <div class="pt-4 ">
         <h6 style="font-weight: 500;">Địa chỉ giao hàng</h6>
         <p>Quản lý thông tin địa chỉ giao hàng</p>
@@ -34,3 +34,9 @@
     </a>
 </section>
 @endsection
+
+<style>
+    .rounded-custom{
+        border-radius: 20px;
+    }
+</style>

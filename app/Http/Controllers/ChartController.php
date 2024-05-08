@@ -39,6 +39,7 @@ class ChartController extends Controller
     {
         // return $request->all();
         $type = $request->type;
+        
         $result = [];
         switch ($type) {
             case 'day':
@@ -116,5 +117,9 @@ class ChartController extends Controller
                 break;
         }
         return $result;
+    }
+
+    public function donHang(){
+
     }
 }

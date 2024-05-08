@@ -1,7 +1,7 @@
 @extends('layouts.client.layout_account')
 @section('title', 'Lịch sử mua hàng')
 @section('content')
-    <section>
+    <section class="border shadow rounded-custom py-2 px-4">
         <div class="pt-4">
             <h6 style="font-weight: 500;">Lịch sử mua hàng</h6>
             <p>Bạn có thể xem lịch sử mua hàng và trạng thái đơn hàng trực tuyến của ClassicMan tại đây.</p>
@@ -92,3 +92,9 @@
         </table>
     </section>
 @endsection
+
+{{-- <style>
+    .rounded-custom{
+        border-radius: 20px;
+    }
+</style> --}}
