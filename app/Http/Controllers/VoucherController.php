@@ -6,18 +6,20 @@ use App\Models\Order;
 use App\Models\Voucher;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use App\DataTables\VoucherDataTable;
 
 class VoucherController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(VoucherDataTable $dataTable)
     {
         //
         $voucher = Voucher::all();
         // dd($voucher);
-        return view('admin.voucher.index', compact('voucher'));
+        /* return view('admin.voucher.index', compact('voucher')); */
+        return $dataTable->render('admin.voucher.index', compact('voucher'));
     }
 
     /**

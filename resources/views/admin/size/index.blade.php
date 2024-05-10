@@ -12,33 +12,11 @@
                        href="{{ route('size.create') }}">Thêm mới</a></button>
                   <br><br>
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Kích cỡ</th> 
-                                    <th>Hành động</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                @foreach ($sizes as $ct)
-                                    <tr>
-                                        <td>{{ $ct->id }}</td>
-                                        <td>{{ $ct->size }}</td>
-                                        <td>
-                                            <form action="{{ route('size.destroy', $ct->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <a class="btn btn-primary"
-                                                    href="{{ route('size.edit', $ct->id) }}">sửa</a>
-                                                <button onclick="return confirm('are you sure?')" class="btn btn-danger" type="submit">xóa</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        <div class="card">
+                            <div class="card-body">
+                                {{ $dataTable->table() }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -47,3 +25,7 @@
     </div>
     <!-- /.row (main row) -->
 @endsection
+
+@push('scripts')
+    {{ $dataTable->scripts() }}
+@endpush

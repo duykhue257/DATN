@@ -93,6 +93,7 @@
                 <div class="container-fluid">
                     @yield('body')
                 </div>
+                @stack('scripts')
                 <!-- /.container-fluid -->
 
             </div>

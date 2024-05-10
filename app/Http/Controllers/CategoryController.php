@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\DataTables\CategoryDataTable;
 // use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
@@ -12,11 +13,12 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(CategoryDataTable $dataTable)
     {
         //
         $categoris = Category::all();
-        return view('admin.category.list_cate', compact('categoris'));
+        /* return view('admin.category.list_cate', compact('categoris')); */
+        return $dataTable->render('admin.category.list_cate', compact('categoris'));
     }
 
     /**
