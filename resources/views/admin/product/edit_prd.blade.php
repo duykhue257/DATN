@@ -39,7 +39,7 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Tên loại</label>
-                                <select id="category_id" name="category_id" class="form-select">
+                                <select id="category_id" name="category_id" class="form-select form-control">
                                     <option hidden value="{{$product->category_id }}">{{$product->category->name_cate }}</option>
                                     @foreach ($categories as $ct)
                                         <option value="{{ $ct->id }}">{{ $ct->name_cate }} </option>

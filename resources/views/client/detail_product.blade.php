@@ -25,7 +25,7 @@
                         <div class="product__details__pic__left product__thumb nice-scroll">
                             @foreach ($product->variants as $index => $variant)
                                 <a class="pt" href="#product-{{ $numbers[$index] }}">
-                                    <img class="variant-image" src="{{ Storage::url($variant->image) }}" alt=""
+                                    <img class="variant-image " src="{{ Storage::url($variant->image) }}" alt=""
                                         data-variant-id="{{ $variant->id }}">
                                 </a>
                             @endforeach
@@ -33,7 +33,7 @@
                         <div class="product__details__slider__content">
                             <div class="product__details__pic__slider owl-carousel">
                                 @foreach ($product->variants as $index => $variant)
-                                    <img data-hash="product-{{ $numbers[$index] }}" class="product__big__img"
+                                    <img data-hash="product-{{ $numbers[$index] }}" class="product__big__img "
                                         src="{{ Storage::url($variant->image) }}" alt=""
                                         data-variant-id="{{ $variant->id }}">
                                 @endforeach
@@ -231,7 +231,7 @@
                     @if ($Prd_type->id != $product->id)
                         <div class="col-lg-3 col-md-4 col-sm-6">
                             <div class="product__item">
-                                <div class="product__item__pic set-bg"
+                                <div class="product__item__pic set-bg "
                                     @if (isset($Prd_type->variants[0]->image)) data-setbg="{{ Storage::url($Prd_type->variants[0]->image) }}" @endif>
                                     <ul class="product__hover">
                                         @if (isset($Prd_type->variants[0]->image))

@@ -143,7 +143,7 @@
                                         <div class="rating">
                                             <!-- Đánh giá sản phẩm -->
                                         </div>
-                                        <div class="product__price">{{ Number_format($product['price_reduced']) }} đ</div>
+                                        <div class="product__price">{{ number_format($product['price_reduced'], 0, ',', '.') }} đ</div>
                                         <!-- Giá sản phẩm -->
                                     </div>
                                 </div>

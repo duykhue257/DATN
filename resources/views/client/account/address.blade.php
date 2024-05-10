@@ -33,10 +33,10 @@
         <button type="submit" class="btn btn-dark btn-block mb-4">THÊM ĐỊA CHỈ MỚI</button>
     </a>
 </section>
-@endsection
-
 <style>
     .rounded-custom{
         border-radius: 20px;
     }
 </style>
+@endsection
+

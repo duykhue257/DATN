@@ -107,10 +107,9 @@
     </div>
     </div>
 </section>
-   
-@endsection
 <style>
     .rounded-custom{
         border-radius: 20px;
     }
 </style>
+@endsection

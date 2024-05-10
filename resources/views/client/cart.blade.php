@@ -590,7 +590,7 @@
                 $('#notification').addClass('hidden');
                 $('#svgError').addClass('hidden');
                 $('#svgsuccess').addClass('hidden');
-            }, 3000); // 3000 miliseconds = 3 seconds
+            }, 2600); // 3000 miliseconds = 3 seconds
         }
         function showErrorMessage() {
             document.getElementById('notificationError').classList.remove('hidden');

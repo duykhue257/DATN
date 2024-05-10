@@ -37,7 +37,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="color_id" class="form-label">Color</label>
-                                <select id="color_id" name="color_id" class="form-select">
+                                <select id="color_id" name="color_id" class="form-select form-control">
                                     @foreach ($color as $cl)
                                         <option value="{{ $cl->id }}">{{ $cl->color }} </option>
                                     @endforeach
@@ -45,7 +45,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="size_id" class="form-label">size</label>
-                                <select id="size_id" name="size_id" class="form-select">
+                                <select id="size_id" name="size_id" class="form-select form-control">
                                     @foreach ($size as $sz)
                                         <option value="{{ $sz->id }}">{{ $sz->size }} </option>
                                     @endforeach

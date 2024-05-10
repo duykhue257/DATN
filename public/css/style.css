@@ -1194,7 +1194,12 @@ ol {
 .filter__controls li:last-child {
 	margin-right: 0;
 }
-
+.product__big__img{
+	border-radius: 12px;
+}
+.variant-image{
+	border-radius: 14px;
+}
 .product__item {
 	margin-bottom: 35px;
 }
@@ -1216,6 +1221,7 @@ ol {
 	height: 360px;
 	position: relative;
 	overflow: hidden;
+	border-radius: 14px;
 }
 
 .product__item__pic .label {
@@ -2088,7 +2094,7 @@ ol {
 	display: inline-block;
 	margin-bottom: 0;
 	font-weight: 500;
-	border: 1px solid #ffffff;
+	border: none;
     padding: 5px 10px;
     border-radius: 15px;
 	
@@ -2104,7 +2110,8 @@ ol {
 .product__details__widget ul li .color__btn label.active {
 	/* color: #eb0f0f; */
 	font-weight: 700;
-	color: #ffffff;
+	color: #000000;
+	border: 1px solid #000000;
 }
 
 .product__details__widget ul li .color__btn label input {
@@ -2121,24 +2128,29 @@ ol {
  
   
   /* Định nghĩa màu nền cho từng nhãn dựa trên giá trị màu */
-  .color__btn label[for="red-btn"] {
+  /* .color__btn label[for="RED-btn"] {
 	background-color: rgb(225, 52, 52);
 	color:rgb(225, 52, 52) ;
   }
   
-  .color__btn label[for="yellow-btn"] {
+  .color__btn label[for="YELLOW-btn"] {
 	background-color: #FFFF00;
 	color:#FFFF00;
   }
   
-  .color__btn label[for="blue-btn"] {
+  .color__btn label[for="BLUE-btn"] {
 	background-color: rgb(0,191,255);
 	color:rgb(0,191,255) ;
   }
-  .color__btn label[for="black-btn"] {
+  .color__btn label[for="BLACK-btn"] {
 	background-color: #000000;
 	color: #000000;
   }
+  .color__btn label[for="WHITE-btn"] {
+	background-color: #ffffff;
+	color: #ffffff;
+  }
+   */
 /*Size detail /////////////////////////////*/
 .product__details__widget ul li .size__btn label {
 	font-size: 14px;
