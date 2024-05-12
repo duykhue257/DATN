@@ -39,7 +39,7 @@ Route::get('/home', [App\Http\Controllers\client\HomeController::class, 'home'])
 Route::get('/blog', function () {
    return view('client.blog');
 });
-Route::match(['POST', 'GET'], '/shop', [HomeController::class, 'shop']);
+Route::match(['POST', 'GET'], '/shop', [HomeController::class, 'shop'])->name('shop');
 Route::get('/detail_product', [HomeController::class, 'ProductDetail'])->name('detail_product');
 
 Route::get('/contact', function () {
