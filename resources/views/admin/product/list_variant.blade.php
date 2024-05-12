@@ -5,11 +5,11 @@
          <div class="container-fluid">
              <div class="card shadow mb-4">
                  <div class="card-header py-3">
-                     <h6 class="m-0 font-weight-bold text-primary">Sản phẩm biến thể</h6>
+                     <h6 class="m-0 font-weight-bold text-dark">Sản phẩm biến thể</h6>
                  </div>
 
                  <div class="card-body">
-                     <button class="btn btn-primary"><a class="text-white text-decoration-none"
+                     <button class="btn btn-success"><a class="text-white text-decoration-none"
                              href="{{ route('productVariant.create',$productId) }}">Thêm mới</a></button>
                             
                         <br><br>
@@ -45,10 +45,10 @@
                                              <form action="{{ route('productVariant.destroy', $prd->id) }}" method="POST">
                                                  @csrf
                                                  @method('DELETE')
-                                                 <a class="btn btn-primary"
+                                                 <a class="btn btn-warning"
                                                      href="{{ route('productVariant.edit', $prd->id) }}">Cập Nhật</a>
                                                  <button onclick="return confirm('are you sure?')" class="btn btn-danger"
-                                                     type="submit">Xóa</button>
+                                                     type="submit"><i class="fa-solid fa-trash"></i></button>
                                              </form>
                                          </td>
                                      </tr>

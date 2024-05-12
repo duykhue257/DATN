@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-success">Thêm Sản phẩm biến thể</h6>
+                <h6 class="m-0 font-weight-bold text-warning">Cập nhật sản phẩm</h6>
             </div>
             <div class="card-body">
                 <div class="">
@@ -46,7 +46,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-success">Cập nhật</button>
+                            <button type="submit" class="btn btn-warning">Cập nhật</button>
                             <button class="btn btn-primary"><a class="text-white text-decoration-none"
                                     href="{{ route('product.index') }}">Danh sách sản phẩm</a></button>
 

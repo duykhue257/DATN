@@ -158,7 +158,7 @@
 
                             </div>
 
-                            <button type="submit" class="site-btn">Thanh Toán</button>
+                            <button type="submit" class="site-btn btn-danger">Thanh Toán</button>
                         </div>
                     </div>
                 </div>

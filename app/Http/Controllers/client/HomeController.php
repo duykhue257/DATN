@@ -40,7 +40,7 @@ class HomeController extends Controller
     
         $categoryProducts = Products::where('category_id', 2)->with('variants')->get();
 
-        $numbers = range(1, 4);
+        $numbers = range(1, 6);
         
         return view('client.detail_product', compact('product', 'categoryProducts', 'numbers'));
     }

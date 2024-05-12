@@ -47,7 +47,7 @@
 
 
 
-                        <td style="font-size: 12px;;">{{ $order->created_at }}</td>
+                        <td style="font-size: 12px; width: 95px;">{{ $order->created_at }}</td>
                         {{-- <td style="font-size: 12px;;">
                             @foreach ($order->detail_order as $detail)
                                 <fieldset disabled>
@@ -69,8 +69,8 @@
                                 @endforeach
                             @endforeach
                         </td> --}}
-                        <td style="font-size: 12px;;">{{ $order->status->status }}</td>
-                        <td style="font-size: 12px;;">{{ $order->payment->method }}</td>
+                        <td style="font-size: 12px;">{{ $order->status->status }}</td>
+                        <td style="font-size: 12px;">{{ $order->payment->method }}</td>
                         <td class="">
                             <a class="btn btn-dark px-2" href="{{ route('orderDetailHome', $order->id) }}"><i class="fa-solid fa-circle-info"></i></a>
                             
@@ -79,7 +79,7 @@
                                     style="display: inline;">
                                     @csrf
                                     <button type="submit" class="btn btn-danger"
-                                        onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này không?')"><i class="fa-solid fa-trash"></i></button>
+                                        onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này không?')">Hủy</button>
                                 </form>
                             @endif
                         </td>

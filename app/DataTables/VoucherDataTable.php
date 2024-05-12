@@ -27,8 +27,8 @@ class VoucherDataTable extends DataTable
                 <form class="d-flex" action="'. route('voucher.destroy', $voucher->id) .'" method="POST">
                     <input type="hidden" name="_token" value="' . csrf_token() . '">
                     <input type="hidden" name="_method" value="DELETE">
-                    <a class=" btn btn-primary px-2" href="'. route('voucher.edit',$voucher->id) .'">sửa</a>
-                    <button class="btn btn-danger px-2" type="submit">xóa</button>
+                    <a class=" btn btn-warning px-2" href="'. route('voucher.edit',$voucher->id) .'">sửa</a>
+                    <button class="btn btn-danger px-2" type="submit"><i class="fa-solid fa-trash"></i></button>
                 </form>
                 ';
             })

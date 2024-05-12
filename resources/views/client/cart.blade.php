@@ -287,19 +287,43 @@
         //  var numProducts = $('tbody').children('tr').length;
         // var percent;
         // console.log('percent :' + percent);
-        var discount = sessionStorage.getItem('discount');
-   
-        console.log(discount + 'count');
-        if (discount == 0) {
-            $('#discountAmount').text(discount + 'đ');
+        var discountStr = sessionStorage.getItem('discount');
+        var discount = parseFloat(discountStr);
+
+        if (!isNaN(discount)) {
+            console.log("Discount:", discount);
+            // Sử dụng giá trị discount ở đây nếu nó là một số hợp lệ
+            if (discount === 0) {
+                $('#discountAmount').text(discount + 'đ');
+            } else {
+                $('#discountAmount').text('-' + parseFloat(discount).toLocaleString('vi-VN') + 'đ');
+            }
         } else {
-            // $('#discountAmount').text('-' + discount + 'đ');
-            $('#discountAmount').text('-'+parseFloat(discount).toLocaleString('vi-VN') + 'đ');
+            console.log("Giá trị không hợp lệ trong sessionStorage.");
+            var discountText = $('#discountAmount').text();
+            var totalNumber = discountText.replace(/\D/g, '');
+            console.log(totalNumber);
+            sessionStorage.setItem('discount', totalNumber);
         }
+
         var total = sessionStorage.getItem('newtotal');
-        var formattedTotal = parseFloat(total).toLocaleString('vi-VN', {minimumFractionDigits: 0});
-        console.log('to :'+formattedTotal);
-        $('#total').text(formattedTotal.toLocaleString('vi-VN') + 'đ');
+        var totalNumber = parseFloat(total);
+
+        if (!isNaN(totalNumber)) {
+            var formattedTotal = totalNumber.toLocaleString('vi-VN', {
+                minimumFractionDigits: 0
+            });
+            $('#total').text(formattedTotal + 'đ');
+            console.log('Tổng: ' + formattedTotal);
+        } else {
+            console.log('Giá trị không hợp lệ trong sessionStorage.');
+            var totalText = $('#total').text();
+            var totalNumber = totalText.replace(/\D/g, '');
+            console.log(totalNumber);
+            sessionStorage.setItem('newtotal', totalNumber);
+        }
+
+
 
         function updateQuantity(qty) {
             var rowId = $(qty).data('rowid');
@@ -332,7 +356,7 @@
                                 '"]');
                             var newTotalString = cartTotalElement.text().replace('đ', '').replace('.',
                                 '').trim();
-                            var subTotal = parseFloat(newTotalString);
+var subTotal = parseFloat(newTotalString);
                             if (!isNaN(subTotal)) {
                                 newTotalSum += subTotal;
                             }
@@ -351,16 +375,21 @@
                         // var discount = $('#discountAmount').text();
                         // var subtotalNumber = discount.replace(/\D/g, '');
                         // console.log(discount + 'cccoc');
-                        console.log('sum :'+newTotalSum);
+                        console.log('sum :' + newTotalSum);
                         var percent = sessionStorage.getItem('percent');
                         var discountAmountNumber = parseInt(newTotalSum * (percent / 100));
-                      
-                        console.log(discountAmountNumber+'mount');
-                        sessionStorage.setItem('discount', discountAmountNumber);
-                        // console.log('abc :' + discount);
-                        // $('#discountAmount').text('-' + discountAmountNumber.toLocaleString('vi-VN').replace(',',
-                        //     '.') + 'đ');
-                            $('#discountAmount').text('-'+parseFloat(discountAmountNumber).toLocaleString('vi-VN') + 'đ');
+                        var discountAmount = discountAmountNumber / 1000;
+                        console.log(discountAmount + 'mount');
+                        sessionStorage.setItem('discount', discountAmount);
+
+                        if (discountAmountNumber == 0) {
+                            $('#discountAmount').text(parseFloat(discountAmountNumber).toLocaleString(
+                                'vi-VN') + 'đ');
+                        } else {
+                            $('#discountAmount').text('-' + parseFloat(discountAmountNumber).toLocaleString(
+                                'vi-VN') + 'đ');
+                        }
+
 
                         // console.log('voucher' + discountAmount);
                         // console.log('newTotalSum' + newTotalSum);
@@ -378,7 +407,7 @@
                         // Cập nhật thất bại
                         console.log('Cập nhật số lượng thất bại!');
                         // Hiển thị thông báo lỗi nếu cần
-                    }
+}
                 },
                 error: function(xhr, status, error) {
                     // Xử lý lỗi nếu có
@@ -387,7 +416,6 @@
                 }
             });
         }
-
 
         // function updateQuantity(qty) {
         //     $('#rowId').val($(qty).data('rowid'));

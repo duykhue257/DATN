@@ -27,9 +27,9 @@ class ProductsDataTable extends DataTable
                 <form class="d-flex" action="' . route('product.destroy', $prd->id) . '" method="POST">
                     <input type="hidden" name="_token" value="' . csrf_token() . '">
                     <input type="hidden" name="_method" value="DELETE">
-                    <a class="btn btn-primary mx-2" href="' . route('product.edit', $prd->id) . '">Cập nhật</a>
-                    <a class="btn btn-primary mr-2" href="' . route('product.show', $prd->id) . '">Chi tiết</a>
-                    <button onclick="return confirm(\'are you sure?\')" class="btn btn-danger" type="submit">Xóa</button>
+                    <a class="btn btn-warning mx-2" href="' . route('product.edit', $prd->id) . '">Cập nhật</a>
+                    <a class="btn btn-dark items-center mr-2" href="' . route('product.show', $prd->id) . '"><i class="fa-solid fa-circle-info mt-3"></i></a>
+                    <button onclick="return confirm(\'are you sure?\')" class="btn btn-danger" type="submit"><i class="fa-solid fa-trash"></i></button>
                 </form>
                 ';
             })

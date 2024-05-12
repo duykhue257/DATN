@@ -6,11 +6,11 @@
         <div class="container-fluid">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Sản phẩm</h6>
+                    <h6 class="m-0 font-weight-bold text-dark">Danh sách đơn hàng</h6>
                 </div>
 
                 <div class="card-body">
-                    <button class="btn btn-primary"><a class="text-white text-decoration-none" href="">Thêm
+                    <button class="btn btn-success"><a class="text-white text-decoration-none" href="">Thêm
                             mới</a></button>
                     <br><br>
                     <div class="table-responsive">
@@ -58,7 +58,7 @@
                                             <td>{{ $order->created_at }}</td>
 
                                             <td>
-                                                <a class=" btn btn-primary px-2" href="{{ route('order_detail',$order->id) }}">Chi Tiết</a>
+                                                <a class=" btn btn-dark flex px-2" href="{{ route('order_detail',$order->id) }}">chi tiết</a>
                                            
                                             </td>
 
