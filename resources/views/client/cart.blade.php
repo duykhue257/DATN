@@ -39,6 +39,7 @@
                                 <tbody class="">
                                     @foreach ($cartItems as $item)
                                         <tr>
+                                            {{-- <p>{{ $item->quanty }}</p> --}}
                                             <td><input @if ($item->is_checked) {{ 'checked' }} @endif
                                                     type="checkbox">
 
@@ -64,9 +65,9 @@
                                                 </div>
                                             </td>
                                             <td class="cart__quantity">
-                                                <div class="qty_pro">
-                                                    <input class="quantity " data-rowid="{{ $item->rowId }}" name="quantity"
-                                                        type="number" min="1" max="{{ $productVariant->quantity }}"
+                                                <div class="pro-qty">
+                                                    <input class="quantity" data-rowid="{{ $item->rowId }}" name="quantity"
+                                                        type="number" min="1" max="{{ $item->quanty }}"
                                                         onchange="updateQuantity(this)" value="{{ $item->qty }}">
                                                 </div>
                                             </td>
@@ -441,20 +442,34 @@ var subTotal = parseFloat(newTotalString);
             });
         });
 
-        const variant = <?php echo json_encode($productVariant); ?>;
+        const variant = <?php echo json_encode($cartItems); ?>;
 
         document.querySelectorAll('.quantity').forEach(element => {
-            let defaultquantity = element.value
+            let defaultquantity = element.value;
+            let rowId = element.dataset.rowid; 
+            let maxQuantity = parseFloat(element.getAttribute('max'));
+
+            console.log('defaultquantity' + defaultquantity);
+            console.log('maxQuantity' + maxQuantity);
+            let originalValue = element.value;
+
             element.onchange = () => {
-                // console.log(element.value)
-                if (element.value > variant.quantity) {
-                    element.value = variant.quantity
-                    showErrorMessage();
-                } else {
-                    updateQuantity(element)
+                if (element.value > maxQuantity) {
+                    element.value = maxQuantity;
+                    if(element.value == maxQuantity){
+                        updateQuantity(element);
+                    }
+                    alert('Số lượng hàng vượt quá có sẵn');
+                }else if(element.value == 0){
+                    element.value = originalValue;
+                    alert('Số lượng không hợp lệ');
+                }else {
+                    updateQuantity(element);
                 }
-            }
+            };
         });
+
+
 
 
 
@@ -591,6 +606,9 @@ var subTotal = parseFloat(newTotalString);
                     console.log(newTotal);
                     $('#total').text(newTotal.toLocaleString('vi-VN') + 'đ');
                     sessionStorage.setItem('newtotal', newTotal);
+                    var percent = 0;
+                    sessionStorage.setItem('percent', percent);
+
                     // Gửi giá trị total mới lên server để lưu vào session
                     // updateCartTotal(newTotal);
                     // console.log(response.message);

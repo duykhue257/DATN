@@ -28,84 +28,198 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 }
 
 // Bar Chart Example
-var ctx = document.getElementById("myBarChart");
-var myBarChart = new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels: ["January", "February", "March", "April", "May", "June"],
-    datasets: [{
-      label: "Revenue",
-      backgroundColor: "#4e73df",
-      hoverBackgroundColor: "#2e59d9",
-      borderColor: "#4e73df",
-      data: [4215, 5312, 6251, 7841, 9821, 14984],
-    }],
-  },
-  options: {
-    maintainAspectRatio: false,
-    layout: {
-      padding: {
-        left: 10,
-        right: 25,
-        top: 25,
-        bottom: 0
-      }
-    },
-    scales: {
-      xAxes: [{
-        time: {
-          unit: 'month'
-        },
-        gridLines: {
-          display: false,
-          drawBorder: false
-        },
-        ticks: {
-          maxTicksLimit: 6
-        },
-        maxBarThickness: 25,
+// var ctx = document.getElementById("myBarChart");
+// var myBarChart = new Chart(ctx, {
+//   type: 'bar',
+//   data: {
+//     labels: ["January", "February", "March", "April", "May", "June"],
+//     datasets: [{
+//       label: "Revenue",
+//       backgroundColor: "#4e73df",
+//       hoverBackgroundColor: "#2e59d9",
+//       borderColor: "#4e73df",
+//       data: [4215, 5312, 6251, 7841, 9821, 14984],
+//     }],
+//   },
+//   options: {
+//     maintainAspectRatio: false,
+//     layout: {
+//       padding: {
+//         left: 10,
+//         right: 25,
+//         top: 25,
+//         bottom: 0
+//       }
+//     },
+//     scales: {
+//       xAxes: [{
+//         time: {
+//           unit: 'month'
+//         },
+//         gridLines: {
+//           display: false,
+//           drawBorder: false
+//         },
+//         ticks: {
+//           maxTicksLimit: 6
+//         },
+//         maxBarThickness: 25,
+//       }],
+//       yAxes: [{
+//         ticks: {
+//           min: 0,
+//           max: 15000,
+//           maxTicksLimit: 5,
+//           padding: 10,
+//           // Include a dollar sign in the ticks
+//           callback: function(value, index, values) {
+//             return '$' + number_format(value);
+//           }
+//         },
+//         gridLines: {
+//           color: "rgb(234, 236, 244)",
+//           zeroLineColor: "rgb(234, 236, 244)",
+//           drawBorder: false,
+//           borderDash: [2],
+//           zeroLineBorderDash: [2]
+//         }
+//       }],
+//     },
+//     legend: {
+//       display: false
+//     },
+//     tooltips: {
+//       titleMarginBottom: 10,
+//       titleFontColor: '#6e707e',
+//       titleFontSize: 14,
+//       backgroundColor: "rgb(255,255,255)",
+//       bodyFontColor: "#858796",
+//       borderColor: '#dddfeb',
+//       borderWidth: 1,
+//       xPadding: 15,
+//       yPadding: 15,
+//       displayColors: false,
+//       caretPadding: 10,
+//       callbacks: {
+//         label: function(tooltipItem, chart) {
+//           var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+//           return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+//         }
+//       }
+//     },
+//   }
+// });
+var ctx1 = document.getElementById("myBarChart");
+function renderDonHang(data = [],label = []){
+  
+  // console.log(data.data);
+
+  
+  var myBarChart = new Chart(ctx1, {
+    type: 'bar',
+    data: {
+      labels: label,
+      datasets: [{
+        label: "số lượng: ",
+        backgroundColor: "#4e73df",
+        hoverBackgroundColor: "#2e59d9",
+        borderColor: "#4e73df",
+        data: data,
       }],
-      yAxes: [{
-        ticks: {
-          min: 0,
-          max: 15000,
-          maxTicksLimit: 5,
-          padding: 10,
-          // Include a dollar sign in the ticks
-          callback: function(value, index, values) {
-            return '$' + number_format(value);
+    },
+    options: {
+      events: ['click'],
+      maintainAspectRatio: false,
+      layout: {
+        padding: {
+          left: 10,
+          right: 25,
+          top: 25,
+          bottom: 0
+        }
+      },
+      scales: {
+        xAxes: [{
+          time: {
+            unit: 'month'
+          },
+          gridLines: {
+            display: false,
+            drawBorder: false
+          },
+          ticks: {
+            // maxTicksLimit: 6
+          },
+          maxBarThickness: 25,
+        }],
+        yAxes: [{
+          // ticks: {
+          //   min: 0,
+          //   max: 15000,
+          //   maxTicksLimit: 5,
+          //   padding: 10,
+          //   // Include a dollar sign in the ticks
+          //   callback: function(value, index, values) {
+          //     return number_format(value)+'d';
+          //   }
+          // },
+          gridLines: {
+            color: "rgb(234, 236, 244)",
+            zeroLineColor: "rgb(234, 236, 244)",
+            drawBorder: false,
+            borderDash: [2],
+            zeroLineBorderDash: [2]
           }
-        },
-        gridLines: {
-          color: "rgb(234, 236, 244)",
-          zeroLineColor: "rgb(234, 236, 244)",
-          drawBorder: false,
-          borderDash: [2],
-          zeroLineBorderDash: [2]
+        }],
+      },
+      legend: {
+        display: false
+      },
+      tooltips: {
+        enable : true,
+        titleMarginBottom: 10,
+        titleFontColor: '#6e707e',
+        titleFontSize: 14,
+        backgroundColor: "rgb(255,255,255)",
+        bodyFontColor: "#858796",
+        borderColor: '#dddfeb',
+        borderWidth: 1,
+        xPadding: 15,
+        yPadding: 15,
+        displayColors: false,
+        caretPadding: 10,
+        callbacks: {
+          label: function(tooltipItem, chart) {
+            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+            return datasetLabel + number_format(tooltipItem.yLabel) ;
+          }
         }
-      }],
+      },
+    }
+  });    
+
+}
+
+function getDonHang(type = "day") {
+  // console.log(type);
+  fetch('/donHang', {
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+      "Content-Type": "application/json",
     },
-    legend: {
-      display: false
-    },
-    tooltips: {
-      titleMarginBottom: 10,
-      titleFontColor: '#6e707e',
-      titleFontSize: 14,
-      backgroundColor: "rgb(255,255,255)",
-      bodyFontColor: "#858796",
-      borderColor: '#dddfeb',
-      borderWidth: 1,
-      xPadding: 15,
-      yPadding: 15,
-      displayColors: false,
-      caretPadding: 10,
-      callbacks: {
-        label: function(tooltipItem, chart) {
-          var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-          return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
-        }
-      }
-    },
-  }
-});
+    body: JSON.stringify({ type }),
+    method: 'POST'
+  }).then((res) => res.json())
+    .then(data => {
+    
+      renderDonHang(data.data,data.label);
+      console.log(ctx1);
+      if(ctx1)
+        ctx1.set(null);
+    })
+}
+getDonHang('day')
+document.querySelector('#donHang').addEventListener("change", function (e) {
+  // console.log(e.target.value);
+  getDonHang(e.target.value);
+})

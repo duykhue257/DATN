@@ -38,7 +38,9 @@ class CartController extends Controller
         foreach ($cartItems as $item) {
             // $sum += $item->price;
             $productVariant = ProductVariants::with('sizes', 'colors')->find($item->id);
+         
             $item->variant_id = $productVariant->id;
+            $item->quanty  = $productVariant->quantity;
             // dd($productVariant->quantity);
             $productVariant->load('product');
             // Gán thông tin sản phẩm vào mỗi item trong giỏ hàng
@@ -50,6 +52,7 @@ class CartController extends Controller
             $item->color = $productVariant->colors->color;
             $item->quantity = (int)$item->qty;
         }
+        
         return view('client.cart', compact('cartItems', 'orderNumber', 'productVariant', 'discount', 'cartItemIds'));
     }
 

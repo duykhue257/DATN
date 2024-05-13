@@ -144,7 +144,8 @@
                                             @if (!in_array($color->color, $uniqueColors))
                                                 <label for="{{ $color->color }}-btn">
                                                     <input class="color" type="radio" id="{{ $color->color }}-btn"
-                                                        name="color" value="{{ $color->id }}">
+                                                        name="color" value="{{ $color->id }}"
+                                                        data-color-id="{{ $color->id }}">
                                                     {{ $color->color }}
                                                 </label>
                                                 @php
@@ -195,7 +196,8 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">Đánh giá ( 2 )</a>
+                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">Đánh giá (
+                                    {{ $commentCount }} )</a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -206,17 +208,70 @@
                             </div>
 
                             <div class="tab-pane" id="tabs-3" role="tabpanel">
-                                <h6>Đánh giá ( 2 )</h6>
-                                <p> - Có thể hơi dày và cồng kềnh khi mặc trong những ngày hè nóng bức.</br>
-                                    - Giá thành có thể cao hơn so với một số loại áo khoác khác.</p>
-                                <p>Áo khoác dài cổ Vest, form rộng, chất Flannel cao cấp là một
-                                    lựa chọn tuyệt vời cho những ai đang tìm kiếm một chiếc áo
-                                    khoác vừa thời trang, vừa ấm áp. Áo có thiết kế đa năng, phù
-                                    hợp với nhiều phong cách thời trang và có thể kết hợp với
-                                    nhiều loại trang phục khác nhau. Tuy nhiên, áo có thể hơi dày
-                                    và cồng kềnh khi mặc trong những ngày hè nóng bức, và giá
-                                    thành có thể cao hơn so với một số loại áo khoác khác.</p>
+                                <h6>Đánh giá ( {{ $commentCount }} )</h6>
+                                <div class="px-2">
+                                    @if ($comments->count() > 0)
+                                        @foreach ($firstFiveComments as $comment)
+                                            <div class="py-2">
+                                                {{-- @if (Auth::user()->role = 0)
+                                                    <img src="img/administrator-avatar-icon-vector-32095490.jpg"
+                                                    alt="" style="width: 30px; height: 30px;">
+                                                @else --}}
+                                                    <img src="img/tải xuống.jpg" alt=""
+                                                        style="width: 20px; height: 20px;">
+                                                {{-- @endif --}}
+
+                                                {{-- <img src="img/tải xuống.jpg" alt=""> --}}
+                                                <small>{{ $comment->user->name }}({{ $comment->created_at->format('d/m/Y')}})</small>
+                                                <p class="px-3">{{ $comment->content }}</p>
+                                            </div>
+                                        @endforeach
+                                        @if ($comments->count() > 5)
+                                             <button id="showMoreComments">Hiển thị thêm</button>
+                                        @endif
+                                       
+                                        <div id="remainingComments" style="display: none;">
+                                            @foreach ($remainingComments as $comment)
+                                                <div class="py-2">
+                                                    {{-- @if (Auth::user()->role = 0)
+                               
+                                                        <img src="img/administrator-avatar-icon-vector-32095490.jpg"
+                                                            alt="" style="width: 30px; height: 30px;">
+                                                    {{-- @else --}} 
+                                                    
+                                                        <img src="img/tải xuống.jpg" alt=""
+                                                            style="width: 20px; height: 20px;">
+
+                                                 
+                                                    {{-- @endif --}}
+                                                    <small>{{ $comment->user->name }}({{ $comment->created_at->format('d/m/Y') }})</small>
+                                                    <p class="px-3">{{ $comment->content }}</p>
+
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @else
+                                        <p>Chưa có nhận xét nào cho sản phẩm này.</p>
+                                    @endif
+                                    <form action="{{ route('comments.create') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        @if (Auth::check())
+                                            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                                        @endif
+                                        <textarea name="content" rows="3"></textarea>
+                                        <button type="submit"
+                                            @if (!Auth::check()) disabled title="Vui lòng đăng nhập để đăng nhận xét" @endif>Submit</button>
+                                    </form>
+
+                                    @if (!Auth::check())
+                                        <p>Vui lòng <a href="{{ route('login') }}">đăng nhập</a> để đăng nhận xét.</p>
+                                    @endif
+                                </div>
+
                             </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -271,6 +326,11 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        document.getElementById('showMoreComments').addEventListener('click', function() {
+            document.getElementById('remainingComments').style.display = 'block';
+            this.style.display = 'none'; // Ẩn nút "Hiển thị thêm" sau khi nhấp vào
+        });
+
         $(document).ready(function() {
             // Lắng nghe sự kiện khi ảnh biến thể được chọn
             $('.variant-image').on('click', function() {
@@ -373,12 +433,37 @@
                         }
 
                     }
-                 
+
                 });
                 getVariant();
             }
         });
+        // sizes.forEach(size => {
+        //     size.onclick = (event) => {
+        //         attribute.size = event.target.value
+        //         const variant1 = product.variants.filter(p => p.size_id == attribute.size);
+        //         variant1.forEach(variant => {
+        //             // console.log(variant.size_id);
+        //             console.log(variant);
+        //         });
+        //         colors.forEach(color => {
+        //             const colorId = color.getAttribute('data-color-id');
 
+        //             if (colorId) {
+        //                 const isValidColor = variant1.some(variant => variant.color_id == colorId);
+        //                 if (!isValidColor) {
+        //                     color.parentNode.style.display = 'none';
+        //                 } else {
+        //                     color.parentNode.style.display = '';
+
+        //                 }
+
+        //             }
+
+        //         });
+        //         getVariant();
+        //     }
+        // });
         sizes.forEach(size => {
             size.onclick = (event) => {
                 attribute.size = event.target.value;
@@ -392,7 +477,7 @@
 
         function getVariant() {
             // console.log(addToCart);
-            // console.log(product.variants.find(p => p.color_id == attribute.color && p.size_id == attribute.size));
+            // console.log(product.variants.find(p => p.size_id == attribute.color && p.size_id == attribute.size));
             if (attribute.color !== null && attribute.size !== null) {
                 const variant = product.variants.find(p => p.color_id == attribute.color && p.size_id == attribute.size)
 

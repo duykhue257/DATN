@@ -12,6 +12,7 @@ use App\Http\Controllers\ChartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\client\HomeController;
 use App\Http\Controllers\ColorController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductsController;
@@ -144,6 +145,8 @@ Route::post('/update-cart-total', 'CartController@updateCartTotal')->name('updat
 
 
 
+//comment
+Route::post('/comments', [HomeController::class, 'createComment'])->name('comments.create');
 
 //checkout
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
@@ -162,6 +165,10 @@ Route::get('/thanks', function () {
 })->name('thanks');
 
 Route::get('/chart', [ChartController::class,'viewChart'])->name('chart');
+
+Route::get('/getchart', [ChartController::class,'chart'])->name('getchart');
+Route::post('/doanhthu', [ChartController::class,'doanhThu'])->name('doanhThu');
+Route::post('/donHang', [ChartController::class,'donHang'])->name('donHang');
 // Route::get('/succer', function () {
 //    return view('client.success');
 // });

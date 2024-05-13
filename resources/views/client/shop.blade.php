@@ -126,36 +126,31 @@
 
                                     <div class="product__item__text ">
 
-                                        <div class="hidden">
-                                            <div class="color_detail ">
-                                                <ul>
-                                                    @php
-                                                        $uniqueColors = $product->variants
-                                                            ->pluck('colors')
-                                                            ->unique('color');
-                                                    @endphp
-                                                    @foreach ($uniqueColors as $color)
-                                                        <li class="li" style="background-color: {{ $color->color }}">
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-
-                                            <div class="size_detail ">
-                                                <ul>
-                                                    @php
-                                                        $uniqueSizes = $product->variants
-                                                            ->pluck('sizes')
-                                                            ->unique('size');
-                                                    @endphp
-                                                    @foreach ($uniqueSizes as $size)
-                                                        <li>{{ $size->size }}</li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
+                                    <div class="">
+                                        <div class="color_detail ">
+                                            <ul>
+                                                @php
+                                                    $uniqueColors = $product->variants->pluck('colors')->unique('color');
+                                                @endphp
+                                                @foreach ($uniqueColors as $color)
+                                                    <li class="li" style="background-color: {{ $color->color }}"></li>
+                                                @endforeach
+                                            </ul>
                                         </div>
-
-
+                                        
+                                        <div class="size_detail hidden">
+                                            <ul>
+                                                @php
+                                                    $uniqueSizes = $product->variants->pluck('sizes')->unique('size');
+                                                @endphp
+                                                @foreach ($uniqueSizes as $size)
+                                                    <li>{{ $size->size }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    </div>
+                                       
+                                        
                                         <!-- Tên sản phẩm -->
                                         <h6>
                                             <a class="product_name"
