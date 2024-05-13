@@ -168,6 +168,7 @@ Route::get('/chart', [ChartController::class,'viewChart'])->name('chart');
 
 Route::get('/getchart', [ChartController::class,'chart'])->name('getchart');
 Route::post('/doanhthu', [ChartController::class,'doanhThu'])->name('doanhThu');
+Route::post('/donHang', [ChartController::class,'donHang'])->name('donHang');
 // Route::get('/succer', function () {
 //    return view('client.success');
 // });

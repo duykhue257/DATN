@@ -1,126 +1,191 @@
 @extends('layouts.layout_admin')
 @section('body')
-<div id="wrapper">
+    <div id="wrapper">
 
-    <!-- Sidebar -->
-   
-    <!-- End of Sidebar -->
+        <!-- Sidebar -->
 
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
+        <!-- End of Sidebar -->
 
-        <!-- Main Content -->
-        <div id="content">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Topbar -->
-        
-            <!-- End of Topbar -->
+            <!-- Main Content -->
+            <div id="content">
 
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
+                <!-- Topbar -->
 
-                <!-- Page Heading -->
-                <h1 class="h3 mb-2 text-gray-800">THỐNG KÊ</h1>
-                {{-- <p class="mb-4">Chart.js is a third party plugin that is used to generate the charts in this theme.
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">THỐNG KÊ</h1>
+                    {{-- <p class="mb-4">Chart.js is a third party plugin that is used to generate the charts in this theme.
                     The charts below have been customized - for further customization options, please visit the <a
                         target="_blank" href="https://www.chartjs.org/docs/latest/">official Chart.js
                         documentation</a>.</p> --}}
 
-                <!-- Content Row -->
-                <div class="row">
+                    <!-- Content Row -->
+                    <div class="row">
 
-                    <div class="col-xl-8 col-lg-7">
+                        <div class="col-xl-8 col-lg-7">
 
-                        <!-- Area Chart -->
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Doanh thu</h6>
-                                <select name="" id="doanhThu">
-                                    <option value="day">Ngày</option>
-                                    <option value="week">Tuần</option>
-                                    <option value="month">Tháng</option>
-                                    <option value="year">Năm</option>
-                                </select>
+                            <!-- Area Chart -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Doanh thu</h6>
+                                    <select name="" id="doanhThu">
+                                        <option value="day">Ngày</option>
+                                        <option value="week">Tuần</option>
+                                        <option value="month">Tháng</option>
+                                        <option value="year">Năm</option>
+                                    </select>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <canvas id="myAreaChart"></canvas>
+                                    </div>
+                                    <hr>
+
+                                </div>
                             </div>
 
-                            <div class="card-body">
-                                <div class="chart-area">
-                                    <canvas id="myAreaChart"></canvas>
+                            <!-- Bar Chart -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Số lượng đơn hàng</h6>
+                                    <select name="" id="donHang">
+                                        <option value="day">Ngày</option>
+                                        <option value="week">Tuần</option>
+                                        <option value="month">Tháng</option>
+                                        <option value="year">Năm</option>
+                                    </select>
                                 </div>
-                                <hr>
-                              
+                                <div class="card-body">
+                                    <div class="chart-bar">
+                                        <canvas id="myBarChart"></canvas>
+                                    </div>
+                                    <hr>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <!-- Donut Chart -->
+                        <div class="col-xl-4 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Tổng quan</h6>
+                                </div>
+                                <!-- Card Body -->
+
+                                <div class="card-body ">
+                                    <div class="h-100 pt-4">
+                                        <div class="d-flex gap-2">
+                                            <p>Sản phẩm </p>
+                                            <p>: {{ $ProductQty }}</p>
+                                        </div>
+                                        <div class="d-flex gap-2 flex-column">
+                                            <p>Sản phẩm bán chạy</p>
+                                            <table border="">
+                                                <thead>
+                                                    <th>STT</th>
+                                                    <th>Sản phẩm</th>
+                                                    <th>Đã bán</th>
+                                                </thead>
+                                                <tbody>
+                                                    @forelse ($ProductBestSeller as $index => $prd)
+                                                        <tr>
+                                                            <td>{{ $index + 1 }}</td>
+                                                            <td>{{ $prd->name }}</td>
+                                                            <td>{{ $prd->Total }}</td>
+                                                        </tr>
+                                                    @empty
+                                                        <p>Không có dữ liệu</p>
+                                                    @endforelse
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="d-flex gap-2 flex-column">
+                                            <p>Top khách hàng</p>
+                                            <table border="">
+                                                <thead>
+                                                    <th>STT</th>
+                                                    <th>Khách hàng</th>
+                                                    <th>Đơn hàng</th>
+                                                </thead>
+                                                <tbody>
+                                                    @forelse ($TopUser as $index => $prd)
+                                                        <tr>
+                                                            <td>{{ $index + 1 }}</td>
+                                                            <td>{{ $prd->user->name }}</td>
+                                                            <td>{{ $prd->UserCount }}</td>
+                                                        </tr>
+                                                    @empty
+                                                        <p>Không có dữ liệu</p>
+                                                    @endforelse
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        {{-- <canvas id="myPieChart"></canvas> --}}
+                                    </div>
+                                    <hr>
+
+                                </div>
+                            </div>
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Loại sản phẩm</h6>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="chart-pie pt-4">
+                                        <canvas id="myPieChart"></canvas>
+                                    </div>
+                                    <hr>
+
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Bar Chart -->
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Số lượng đơn hàng</h6>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-bar">
-                                    <canvas id="myBarChart"></canvas>
-                                </div>
-                                <hr>
-                               
-                            </div>
-                        </div>
 
                     </div>
 
-                    <!-- Donut Chart -->
-                    <div class="col-xl-4 col-lg-5">
-                        <div class="card shadow mb-4">
-                            <!-- Card Header - Dropdown -->
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Loại sản phẩm</h6>
-                            </div>
-                            <!-- Card Body -->
-                            <div class="card-body">
-                                <div class="chart-pie pt-4">
-                                    <canvas id="myPieChart"></canvas>
-                                </div>
-                                <hr>
-                            
-                            </div>
-                        </div>
-                    
-                    </div>
-
-                    
                 </div>
+            </div>
+        </div>
 
+
+    </div>
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
             </div>
         </div>
     </div>
-   
-
-</div>
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
-
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 @endsection
-
-

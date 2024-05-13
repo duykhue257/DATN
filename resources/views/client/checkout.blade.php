@@ -12,6 +12,8 @@
             </div>
         </div>
     </div>
+
+    
     <!-- Breadcrumb End -->
     <!-- Checkout Section Begin -->
     <section class="checkout spad">
@@ -20,6 +22,12 @@
                 <div class="col-lg-12">
                     <h6 class="coupon__link"><span class="icon_tag_alt"></span> <a href="#"> Có phiếu giảm giá?</a>
                         Nhấn vào đây để nhập mã của bạn.</h6>
+                        <div>
+                            @if ($errors->has('ordererror'))
+                                <div style="color: red; text-align:center" class="error">{{ $errors->first('ordererror') }}</div>
+                            @endif
+                            {{-- <div style="color: red; text-align:center" class="error">hjasgdhjashjkd</div> --}}
+                        </div>
                 </div>
             </div>
             <form id="checkout-form" action="" method="POST" class="checkout__form">
@@ -158,7 +166,7 @@
 
                             </div>
 
-                            <button type="submit" class="site-btn">Thanh Toán</button>
+                            <button type="submit" class="site-btn btn-danger">Thanh Toán</button>
                         </div>
                     </div>
                 </div>
@@ -187,9 +195,9 @@
             $('#discount').text('-' + discount + 'đ');
             // $('#discount').text(discount + 'đ');
             // $('#discount').text('-' + parseFloat(discount).toLocaleString('vi-VN') + 'đ');
-          
+
         }
-      
+
 
         const address = {
             province: '',

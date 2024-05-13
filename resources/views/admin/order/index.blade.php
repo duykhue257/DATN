@@ -30,7 +30,8 @@
                             <tbody>
                                 @foreach ($orders as $order)
                                     <tr>
-                                        <form class="order-form" action="{{ route('admin.update_order_status', ['order' => $order->id]) }}"
+                                        <form class="order-form"
+                                            action="{{ route('admin.update_order_status', ['order' => $order->id]) }}"
                                             method="POST">
                                             @csrf
                                             @method('POST')
@@ -47,19 +48,23 @@
                                                     @php
                                                         $firstOptionId = $order->status->id; // Lưu id của option đầu tiên
                                                     @endphp
-                                                    <option hidden value="{{ $firstOptionId }}">{{ $order->status->status }}</option>
+                                                    <option hidden value="{{ $firstOptionId }}">{{ $order->status->status }}
+                                                    </option>
                                                     @foreach ($status as $stt)
-                                                        <option value="{{ $stt->id }}" @if ($stt->id < $firstOptionId) hidden @endif>{{ $stt->status }}</option>
+                                                        <option value="{{ $stt->id }}"
+                                                            @if ($stt->id < $firstOptionId) hidden @endif>
+                                                            {{ $stt->status }}</option>
                                                     @endforeach
                                                 </select>
                                                 <button class="btn btn-success" type="submit">Cập nhật </button>
                                             </td>
-                                            
+
                                             <td>{{ $order->created_at }}</td>
 
                                             <td>
-                                                <a class=" btn btn-primary px-2" href="{{ route('order_detail',$order->id) }}">Chi Tiết</a>
-                                           
+                                                <a class=" btn btn-primary px-2"
+                                                    href="{{ route('order_detail', $order->id) }}">Chi Tiết</a>
+
                                             </td>
 
                                         </form>
@@ -76,34 +81,32 @@
     <!-- /.row (main row) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        @if(Session::has('success'))
-        alert('{{ Session::get('success') }}');
-    @endif
+        @if (Session::has('success'))
+            alert('{{ Session::get('success') }}');
+        @endif
 
-    $(document).ready(function() {
-        $('.order-form').submit(function(event) {
-            event.preventDefault(); // Ngăn chặn hành động mặc định của form
+        $(document).ready(function() {
+            $('.order-form').submit(function(event) {
+                event.preventDefault(); // Ngăn chặn hành động mặc định của form
 
-            var form = $(this); // Chọn form được submit
-            var formData = form.serialize(); // Lấy dữ liệu từ form
+                var form = $(this); // Chọn form được submit
+                var formData = form.serialize(); // Lấy dữ liệu từ form
 
-            $.ajax({
-                type: form.attr('method'),
-                url: form.attr('action'),
-                data: formData,
-                success: function(response) {
-                    // Xử lý phản hồi từ server, có thể cập nhật giao diện tương ứng
-                    alert('Cập nhật trạng thái đơn hàng thành công!');
-                },
-                error: function(xhr, status, error) {
-                    // Xử lý lỗi nếu có
-                    console.error(error);
-                    alert('Đã xảy ra lỗi khi cập nhật trạng thái đơn hàng.');
-                }
+                $.ajax({
+                    type: form.attr('method'),
+                    url: form.attr('action'),
+                    data: formData,
+                    success: function(response) {
+                        // Xử lý phản hồi từ server, có thể cập nhật giao diện tương ứng
+                        alert('Cập nhật trạng thái đơn hàng thành công!');
+                    },
+                    error: function(xhr, status, error) {
+                        // Xử lý lỗi nếu có
+                        console.error(error);
+                        alert('Đã xảy ra lỗi khi cập nhật trạng thái đơn hàng.');
+                    }
+                });
             });
         });
-    });
     </script>
-    
-    
 @endsection

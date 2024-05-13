@@ -1,4 +1,6 @@
 // Set new default font family and font color to mimic Bootstrap's default styling
+
+Chart.defaults.global.maintainAspectRatio= true;
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
 
@@ -118,7 +120,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 // });
 
 function getDoanhThu(type = "day") {
-  console.log(type);
+  // console.log(type);
   fetch('/doanhthu', {
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -129,12 +131,15 @@ function getDoanhThu(type = "day") {
   }).then((res) => res.json())
     .then(data => {
 
-      console.log(data?.label ?? []);
+      // console.log(data?.label ?? []);
       const newData = data?.data ? data : []
 
-      var ctx = document.getElementById("myAreaChart");
+      var ctx2 = document.getElementById("myAreaChart");
       // ctx.innerHTML = null
-      var myLineChart = new Chart(ctx, {
+   
+        // myLineChart.destroy();
+      
+      var myLineChart = new Chart(ctx2, {
         options: {
           events: [],
           onHover: function () {
@@ -161,6 +166,7 @@ function getDoanhThu(type = "day") {
           }],
         },
         options: {
+          events: ['click'],
           maintainAspectRatio: false,
           layout: {
             padding: {
@@ -180,12 +186,12 @@ function getDoanhThu(type = "day") {
                 drawBorder: false
               },
               ticks: {
-                maxTicksLimit: 7
+                // maxTicksLimit: 7
               }
             }],
             yAxes: [{
               ticks: {
-                maxTicksLimit: 5,
+                // maxTicksLimit: 5,
                 padding: 10,
                 // Include a dollar sign in the ticks
                 callback: function (value, index, values) {
@@ -221,13 +227,13 @@ function getDoanhThu(type = "day") {
             callbacks: {
               label: function (tooltipItem, chart) {
                 var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+                return   number_format(tooltipItem.yLabel)+ "đ";
               }
             }
           }
         }
       });
-
+// console.log(myLineChart);
     })
 }
 getDoanhThu('day')

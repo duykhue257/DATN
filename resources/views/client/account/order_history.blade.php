@@ -91,10 +91,11 @@
 
         </table>
     </section>
-@endsection
-
-{{-- <style>
+    <style>
     .rounded-custom{
         border-radius: 20px;
     }
-</style> --}}
+</style>
+@endsection
+
+

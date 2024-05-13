@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\ProductVariants;
+
+use function Laravel\Prompts\alert;
+use function Laravel\Prompts\error;
 
 class CheckoutController extends Controller
 {
@@ -53,11 +57,7 @@ class CheckoutController extends Controller
         $total = intval($request->total);
         $order = $request->only('user_id', 'order_code', 'name', 'phone', 'province', 'district', 'ward', 'detail', 'shipping_by', 'note', 'address');
         $paymentId = $request->payment;
-        // check phone
-        // $phoneIsValid = $this->checkPhoneNumber($order['phone']);
-        // if (!$phoneIsValid) {
-        //     return response()->json(['error' => 'Số điện thoại không hợp lệ.'], 400);
-        // }
+    
 
         $paymentMethod = Payment::find($paymentId);
         if ($paymentMethod) {
@@ -67,7 +67,15 @@ class CheckoutController extends Controller
         $order['total'] = $total;
         // Xác định status_id dựa trên payment_id
         $order['status_id'] = $paymentId == 1 ? 2 : 3;
-
+        if ($request->detail_order) {
+            foreach ($request->detail_order as $detail) {
+                $variant = ProductVariants::find($detail['product_variant_id']);
+                if($variant->quantity < $detail['quantity']){
+                    // alert('sản phẩm không đủ số lượng');
+                    // return back()->with(['errors' => 'sản phẩm không đủ số lượng']);
+                    return redirect()->back()->withErrors(['ordererror' => 'số lượng không đủ']);
+                }
+            }}
         // Tạo đơn hàng mới và lưu vào cơ sở dữ liệu
         $newOrder = Order::create($order);
         // dd($newOrder);
@@ -76,6 +84,13 @@ class CheckoutController extends Controller
             foreach ($request->detail_order as $detail) {
                 $detail['order_id'] = $newOrder->id;
                 OrderDetail::create($detail);
+                $variant = ProductVariants::find($detail['product_variant_id']);
+                // dd($variant);
+                
+                if($variant){
+                        $variant->quantity = $variant->quantity - $detail['quantity'];
+                $variant->save();
+                }
             }
         }
 

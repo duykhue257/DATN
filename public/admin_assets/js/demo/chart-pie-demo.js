@@ -43,8 +43,8 @@ function getChartData() {
     .then(data => {
       // console.log(data);
 
-      var ctx = document.getElementById("myPieChart");
-      var myPieChart = new Chart(ctx, {
+      var ctx3 = document.getElementById("myPieChart");
+      var myPieChart = new Chart(ctx3, {
         type: 'doughnut',
         data: {
           labels: data[0],
