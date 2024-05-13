@@ -357,7 +357,7 @@
                                 '"]');
                             var newTotalString = cartTotalElement.text().replace('đ', '').replace('.',
                                 '').trim();
-                            var subTotal = parseFloat(newTotalString);
+var subTotal = parseFloat(newTotalString);
                             if (!isNaN(subTotal)) {
                                 newTotalSum += subTotal;
                             }
@@ -408,7 +408,7 @@
                         // Cập nhật thất bại
                         console.log('Cập nhật số lượng thất bại!');
                         // Hiển thị thông báo lỗi nếu cần
-                    }
+}
                 },
                 error: function(xhr, status, error) {
                     // Xử lý lỗi nếu có
@@ -417,7 +417,6 @@
                 }
             });
         }
-
 
         // function updateQuantity(qty) {
         //     $('#rowId').val($(qty).data('rowid'));
@@ -637,7 +636,7 @@
                 $('#notification').addClass('hidden');
                 $('#svgError').addClass('hidden');
                 $('#svgsuccess').addClass('hidden');
-            }, 3000); // 3000 miliseconds = 3 seconds
+            }, 2600); // 3000 miliseconds = 3 seconds
         }
         function showErrorMessage() {
             document.getElementById('notificationError').classList.remove('hidden');

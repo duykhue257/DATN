@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-success">Thêm Sản phẩm biến thể</h6>
+                <h6 class="m-0 font-weight-bold text-success">Thêm Sản phẩm</h6>
             </div>
             <div class="card-body">
                 <div class="">
@@ -38,7 +38,7 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Tên loại</label>
-                                <select id="category_id" name="category_id" class="form-select">
+                                <select id="category_id" name="category_id" class="form-select form-control">
                                     @foreach ($categories as $ct)
                                         <option value="{{ $ct->id }}">{{ $ct->name_cate }} </option>
                                     @endforeach

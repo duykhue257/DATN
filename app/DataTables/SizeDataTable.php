@@ -27,9 +27,9 @@ class SizeDataTable extends DataTable
                 <form action="'. route('size.destroy', $ct->id) .'" method="POST">
                     <input type="hidden" name="_token" value="' . csrf_token() . '">
                     <input type="hidden" name="_method" value="DELETE">
-                    <a class="btn btn-primary"
+                    <a class="btn btn-warning"
                         href="'. route('size.edit', $ct->id) .'">sửa</a>
-                    <button onclick="return confirm(\'are you sure?\')" class="btn btn-danger" type="submit">xóa</button>
+                    <button onclick="return confirm(\'are you sure?\')" class="btn btn-danger" type="submit"><i class="fa-solid fa-trash"></i></button>
                 </form>
                 ';
             })

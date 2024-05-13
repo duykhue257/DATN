@@ -15,7 +15,7 @@
                             @method('PUT')
                             <div class="mb-3">
                                 <label for="name" class="form-label">Name</label>
-                                <select id="product_id" name="product_id" class="form-select">
+                                <select id="product_id" name="product_id" class="form-select form-control ">
                                     <option hidden  value="{{ $product->product->id }}">{{ $product->product->name }} </option>
                                     @foreach ($products as $prd)
                                         <option value="{{ $prd->id }}">{{ $prd->name }} </option>
@@ -26,7 +26,7 @@
                             <div class="mb-3">
                                 <label for="color" class="form-label">Color</label>
                              
-                                <select id="color_id" name="color_id" class="form-select">
+                                <select id="color_id" name="color_id" class="form-select form-control ">
                                     <option hidden value="{{ $product->colors->id }}">{{ $product->colors->color }} </option>
                                     @foreach ($colors as $cl)
                                         <option value="{{ $cl->id }}">{{ $cl->color }} </option>
@@ -38,7 +38,7 @@
                                 <label class="form-label">Size</label>
                                 <div class="col-sm-9">
                                    
-                                    <select id="size_id" name="size_id" class="form-select">
+                                    <select id="size_id" name="size_id" class="form-select form-control  ">
                                         <option hidden value="{{ $product->sizes->id }}">{{ $product->sizes->size }} </option>
                                         @foreach ($sizes as $sz)
                                             <option value="{{ $sz->id }}">{{ $sz->size }} </option>

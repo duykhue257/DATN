@@ -27,7 +27,7 @@ class AdminDataTable extends DataTable
             <form action="'. route('account.destroy') .'" method="POST">
                 <input type="hidden" name="_token" value="' . csrf_token() . '">
                 <input type="hidden" name="_method" value="DELETE">
-                <button class="btn btn-danger" type="submit">Xóa</button>
+                <button class="btn btn-danger" type="submit"><i class="fa-solid fa-trash"></i></button>
             </form>
             ';
         })

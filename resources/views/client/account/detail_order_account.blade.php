@@ -1,12 +1,11 @@
 @extends('layouts.client.layout_account')
 @section('content')
+<section class="border shadow rounded-custom py-2 px-4">
     <div class="">
         <div class="">
             <div class="">
                 <h1>Thông tin đơn hàng</h1>
-
-
-
+                   <hr>
                 <div id="order-details">
                     <p><strong>Mã đơn hàng:</strong> {{ $orders->order_code }}</p>
                     <p><strong>Tên người nhận:</strong> {{ $orders->name }}</p>
@@ -32,17 +31,16 @@
                 @foreach ($detail->variants as $variant)
                     <div id="right-child">
                         <div>
-                            <img style="max-width: 100px" src="{{ $variant->image ? Storage::url($variant->image) : '' }}"
+                            <img style="max-width: 100px; border-radius: 10px;" src="{{ $variant->image ? Storage::url($variant->image) : '' }}"
                                 alt="">
                         </div>
                         <div id="product">
-                            <p id="p">Tên sản phẩm:{{ $variant->product->name }}<br>
-                                <span>Kích cỡ:{{ $variant->sizes->size }} </span><br>
-                                <span>Màu:{{ $variant->colors->color }}</span><br>
-                                <span>số lượng:{{ $detail->quantity }}</span>
-                            </p>
-
+                            <p id="p"><span class="text_pro">Tên sản phẩm:{{ $variant->product->name }}</span> <br>
+                            <span class="text_pro">Kích cỡ:</span> <span class="text_pro1">{{ $variant->sizes->size }} </span><br>
+                            <span class="text_pro">Màu:</span> <span>{{ $variant->colors->color }}</span><br>
+                            <span class="text_pro">Số lượng:</span> <span>{{ $detail->quantity }} </span>
                             {{-- <p id="price">{{ $detail->price }}</p> --}}
+                        </p>
                         </div>
                         <p></p>
                     </div><br>
@@ -63,7 +61,7 @@
             <div class="total-all">
                 <div class="-total">
                     <p>Tổng tiền thanh toán:
-                        <span class="total-total">{{ intval($orders->total) }} VNĐ</span>
+                        <span class="total-total">{{ number_format(intval($orders->total), 0, ',', '.') }} VNĐ</span>
                     </p>
 
                 </div>
@@ -73,6 +71,24 @@
         </div>
 
     </div>
-    <a href="{{ route('order_history') }}" class="btn btn-success">trở về</a>
+    <a href="{{ route('order_history') }}" class="btn btn-dark ">Trở về</a>
     </div>
+</section>
+<style>
+    .rounded-custom{
+        border-radius: 20px;
+    }
+    #p {
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        color: #333333;
+        line-height: 1.5;
+        
+    }
+    .text_pro{
+        font-weight: 600;
+        margin-right: 5px;
+    }
+
+</style>
 @endsection

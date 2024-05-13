@@ -10,11 +10,12 @@ use Illuminate\Http\Request;
 use App\Models\Products;
 use App\Models\ProductVariants;
 use App\Models\Size;
+use Illuminate\Pagination\Paginator;
 use Cart;
 class HomeController extends Controller
 {
     //
-    public function home()
+public function home()
 {
     $products = Products::with(['category', 'variants'])->get();
     // dd($products->name_cate);
@@ -25,16 +26,32 @@ class HomeController extends Controller
     
     
     
-    public function shop( Request $request){
-        $categories = Category::all();
-        $colors = Color::all();
-        $sizes = Size::all();
-        $product= ProductVariants::find($request->id);
-        $products = Products::with('variants')->get();
-        // dd($products);
-        return view('client.shop', compact('products','colors','sizes','categories'));
+public function shop( Request $request){
+    $categories = Category::all();
+    $colors = Color::all();
+    $sizes = Size::all();
+    $product= ProductVariants::find($request->id);
+    $productsQuery = Products::with('variants');
+    // dd($productsQuery);
+
+    // Sắp xếp sản phẩm theo giá (giảm dần hoặc tăng dần)
+    $sort = $request->input('sort');
+    if ($sort == 'desc_price') {
+    $productsQuery->orderBy('price', 'desc');
+    } elseif ($sort == 'asc_price') {
+        $productsQuery->orderBy('price', 'asc');
     }
-    public function ProductDetail(Request $request) {
+
+    //Phân trang và đếm
+    $products = $productsQuery->paginate(9);
+    $totalProducts = $products->total();
+
+    Paginator::useBootstrap();
+
+    return view('client.shop', compact('products','colors','sizes','categories'));
+}
+
+public function ProductDetail(Request $request) {
        
         $productId = $request->input('id') ?? $request->query('id');
         
@@ -45,7 +62,7 @@ class HomeController extends Controller
         $remainingComments = $comments->slice(5);
         $categoryProducts = Products::where('category_id', 2)->with('variants')->get();
 
-        $numbers = range(1, 4);
+    $numbers = range(1, 6);
         
         return view('client.detail_product', compact('firstFiveComments','remainingComments','product', 'categoryProducts', 'numbers','comments','commentCount'));
     }
@@ -63,13 +80,11 @@ class HomeController extends Controller
         return redirect()->back()->with('success', 'Comment added successfully.');
     }
 
-    public function showHome(){
-        $categories = Category::all();
-        // dd($category);
-        return view('client.homepage',compact('categories'));
+public function showHome(){
+    $categories = Category::all();
+    // dd($category);
+    return view('client.homepage',compact('categories'));
    
-    }
-    
-    
+} 
     
 }

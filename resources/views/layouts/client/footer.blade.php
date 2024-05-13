@@ -46,7 +46,7 @@
                     <h6>NEWSLETTER</h6>
                     <form action="#">
                         <input type="text" placeholder="Email">
-                        <button type="submit" class="site-btn">Subscribe</button>
+                        <button type="submit" class="site-btn btn-danger">Subscribe</button>
                     </form>
                     <div class="footer__social">
                         <a href="#"><i class="fa fa-facebook"></i></a>

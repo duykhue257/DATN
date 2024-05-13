@@ -86,6 +86,24 @@
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9">
+
+                    <div class="row">
+                        <div class="col"></div>
+                        <div class="col"><span class="mr-1"
+                                style="font-weight: 500">{{ $products->total() }}</span><span>sản phẩm</span></div>
+                        <div class="col">
+                            <label for="sort">Sắp xếp:</label>
+                            <select class="form-select p-1" id="sortBySelect" aria-label="Default select example">
+                                <option value="default" {{ Request::input('sort') == 'default' ? 'selected' : '' }}>Mặc định
+                                </option>
+                                <option value="asc_price" {{ Request::input('sort') == 'asc_price' ? 'selected' : '' }}>Giá
+                                    tăng dần</option>
+                                <option value="desc_price" {{ Request::input('sort') == 'desc_price' ? 'selected' : '' }}>
+                                    Giá giảm dần</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="row">
                         @foreach ($products as $product)
                             <div class="col-lg-4 col-md-6">
@@ -143,17 +161,68 @@
                                         <div class="rating">
                                             <!-- Đánh giá sản phẩm -->
                                         </div>
-                                        <div class="product__price">{{ Number_format($product['price_reduced']) }} đ</div>
+                                        <div class="product__price">
+                                            {{ number_format($product['price_reduced'], 0, ',', '.') }} đ</div>
                                         <!-- Giá sản phẩm -->
                                     </div>
                                 </div>
                             </div>
                         @endforeach
                     </div>
+                    <div class="pagination">
+                        {{ $products->links() }}
+                    </div>
+                    <style>
+                        .pagination {
+                            display: flex;
+                            justify-content: center;
+                            margin-top: 20px;
+                        }
 
+                        .pagination .page-item {
+                            margin: 0 3px;
+                            list-style: none;
+                        }
+
+                        .pagination .page-link {
+                            padding: 5px 10px;
+                            border: 1px solid #ccc;
+                            border-radius: 3px;
+                            color: #333;
+                            text-decoration: none;
+                        }
+
+                        .pagination .page-link:hover {
+                            background-color: #f0f0f0;
+                        }
+
+                        .pagination .page-item.active .page-link {
+                            background-color: white;
+                            color: black;
+                            border-color: red;
+                        }
+                    </style>
                 </div>
             </div>
         </div>
     </section>
     <!-- Shop Section End -->
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#sortBySelect').change(function() {
+                var sortBy = $(this).val();
+                window.location.href = '{{ route('shop') }}?sort=' + sortBy;
+            });
+        });
+
+        $('.pagination a').on('click', function(event) {
+            event.preventDefault();
+            var page = $(this).attr('href').split('page=')[1];
+            var url = '{{ route('shop') }}?sort={{ Request::input('sort') }}&page=' + page;
+            window.location.href = url;
+        });
+    </script>
+@endpush

@@ -27,9 +27,9 @@ class CategoryDataTable extends DataTable
                 <form action="'. route('category.destroy', $ct->id) .'" method="POST">
                     <input type="hidden" name="_token" value="' . csrf_token() . '">
                     <input type="hidden" name="_method" value="DELETE">
-                    <a class="btn btn-primary"
+                    <a class="btn btn-warning"
                         href="'. route('category.edit', $ct->id) .'">Sửa</a>
-                    <button onclick="return confirm(\'are you sure?\')" class="btn btn-danger" type="submit">Xóa</button>
+                    <button onclick="return confirm(\'are you sure?\')" class="btn btn-danger" type="submit"><i class="fa-solid fa-trash"></i></button>
                 </form>
                 ';
             })
