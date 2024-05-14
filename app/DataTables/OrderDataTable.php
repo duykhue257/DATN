@@ -22,7 +22,33 @@ class OrderDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'order.action')
+            ->addColumn('action', function ($order){
+                return '
+                    <a class=" btn btn-dark flex px-2" href="'.  route('order_detail',$order->id) .'"><i class="fa-solid fa-circle-info" title="Thông tin chi tiểt"></i></a>
+                ';
+            })
+            ->addColumn('count', function ($order) {
+                return count($order->detail_order);
+            })
+            /* ->addColumn('status', function ($order, $status) {
+                $firstOptionId = $order->status->id;
+                $firstOptionStatus = htmlspecialchars($order->status->status);
+    
+                $options = '<select name="status_id">';
+                $options .= '<option hidden value="' . $firstOptionId . '">' . $firstOptionStatus . '</option>';
+                
+                foreach ($status as $stt) {
+                    $sttId = htmlspecialchars($stt->id);
+                    $sttStatus = htmlspecialchars($stt->status);
+    
+                    $options .= '<option value="' . $sttId . '" ' . ($sttId < $firstOptionId ? 'hidden' : '') . '>' . $sttStatus . '</option>';
+                }
+    
+                $options .= '</select>';
+                $options .= '<button class="btn btn-success" type="submit"><i class="fa-solid fa-check" title="Cập nhật"></i></button>';
+    
+                return $options;
+            }) */
             ->setRowId('id');
     }
 
@@ -46,6 +72,14 @@ class OrderDataTable extends DataTable
                     //->dom('Bfrtip')
                     ->orderBy(1)
                     ->selectStyleSingle()
+                    ->language([
+                        'search' => 'Tìm kiếm:',
+                        'zeroRecords' => 'Không tìm thấy bản ghi phù hợp',
+                        'info' => 'Hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ bản ghi',
+                        'infoEmpty' => 'Hiển thị từ 0 đến 0 trong tổng số 0 bản ghi',
+                        'infoFiltered' => '(được lọc từ tổng số _MAX_ bản ghi)',
+                        'lengthMenu' => 'Hiển thị _MENU_ bản ghi mỗi trang',
+                    ])
                     ->buttons([
                         Button::make('excel'),
                         Button::make('csv'),
@@ -61,16 +95,15 @@ class OrderDataTable extends DataTable
      */
     public function getColumns(): array
     {
-        return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+        return [           
             Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::make('order_code')->title('Mã đơn hàng'),
+            Column::make('name')->title('Tên khách hàng'),
+            Column::make('phone')->title('Số điện thoại'),
+            Column::make('count')->title('Số lượng'),
+            Column::make('status')->title('Trạng thái'),
+            Column::make('created_at')->title('	thời gian đặt hàng'),
+            Column::computed('action')->title('Hành động')
         ];
     }
 

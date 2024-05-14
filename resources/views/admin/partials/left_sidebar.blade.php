@@ -138,7 +138,7 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#voucherUtilies"
                 aria-expanded="true" aria-controls="voucherUtilies">
-                <i class="fa-solid fa-basket-shopping"></i>
+                <i class="fa-solid fa-ticket"></i>
                 <span>Mã Giảm Giá</span>
             </a>
             <div id="voucherUtilies" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">

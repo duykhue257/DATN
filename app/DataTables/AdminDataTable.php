@@ -27,7 +27,7 @@ class AdminDataTable extends DataTable
             <form action="'. route('account.destroy') .'" method="POST">
                 <input type="hidden" name="_token" value="' . csrf_token() . '">
                 <input type="hidden" name="_method" value="DELETE">
-                <button class="btn btn-danger" type="submit"><i class="fa-solid fa-trash"></i></button>
+                <button class="btn btn-danger" type="submit"><i class="fa-solid fa-trash" title="Xóa"></i></button>
             </form>
             ';
         })
@@ -54,6 +54,14 @@ class AdminDataTable extends DataTable
                     //->dom('Bfrtip')
                     ->orderBy(1)
                     ->selectStyleSingle()
+                    ->language([
+                        'search' => 'Tìm kiếm:',
+                        'zeroRecords' => 'Không tìm thấy bản ghi phù hợp',
+                        'info' => 'Hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ bản ghi',
+                        'infoEmpty' => 'Hiển thị từ 0 đến 0 trong tổng số 0 bản ghi',
+                        'infoFiltered' => '(được lọc từ tổng số _MAX_ bản ghi)',
+                        'lengthMenu' => 'Hiển thị _MENU_ bản ghi mỗi trang',
+                    ])
                     ->buttons([
                         Button::make('excel'),
                         Button::make('csv'),
@@ -73,7 +81,7 @@ class AdminDataTable extends DataTable
             Column::make('id'),
             Column::make('name')->title('Tên tài khoản'),
             Column::make('email')->title('Email'),
-            Column::computed('action'),
+            Column::computed('action')->title('Hành động'),
         ];
     }
 

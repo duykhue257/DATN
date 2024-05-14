@@ -28,8 +28,8 @@ class SizeDataTable extends DataTable
                     <input type="hidden" name="_token" value="' . csrf_token() . '">
                     <input type="hidden" name="_method" value="DELETE">
                     <a class="btn btn-warning"
-                        href="'. route('size.edit', $ct->id) .'">sửa</a>
-                    <button onclick="return confirm(\'are you sure?\')" class="btn btn-danger" type="submit"><i class="fa-solid fa-trash"></i></button>
+                        href="'. route('size.edit', $ct->id) .'"><i class="fa-solid fa-wrench" title="Cập nhật"></i></a>
+                    <button onclick="return confirm(\'are you sure?\')" class="btn btn-danger" type="submit"><i class="fa-solid fa-trash" title="Xóa"></i></button>
                 </form>
                 ';
             })
@@ -56,6 +56,14 @@ class SizeDataTable extends DataTable
                     //->dom('Bfrtip')
                     ->orderBy(0, 'asc')
                     ->selectStyleSingle()
+                    ->language([
+                        'search' => 'Tìm kiếm:',
+                        'zeroRecords' => 'Không tìm thấy bản ghi phù hợp',
+                        'info' => 'Hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ bản ghi',
+                        'infoEmpty' => 'Hiển thị từ 0 đến 0 trong tổng số 0 bản ghi',
+                        'infoFiltered' => '(được lọc từ tổng số _MAX_ bản ghi)',
+                        'lengthMenu' => 'Hiển thị _MENU_ bản ghi mỗi trang',
+                    ])
                     ->buttons([
                         Button::make('excel'),
                         Button::make('csv'),
@@ -74,7 +82,7 @@ class SizeDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('size')->title('Kích cỡ'),
-            Column::computed('action')
+            Column::computed('action')->title('Hành động')
         ];
     }
 

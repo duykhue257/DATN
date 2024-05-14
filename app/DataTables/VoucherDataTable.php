@@ -27,8 +27,8 @@ class VoucherDataTable extends DataTable
                 <form class="d-flex" action="'. route('voucher.destroy', $voucher->id) .'" method="POST">
                     <input type="hidden" name="_token" value="' . csrf_token() . '">
                     <input type="hidden" name="_method" value="DELETE">
-                    <a class=" btn btn-warning px-2" href="'. route('voucher.edit',$voucher->id) .'">sửa</a>
-                    <button class="btn btn-danger px-2" type="submit"><i class="fa-solid fa-trash"></i></button>
+                    <a class=" btn btn-warning px-2 mr-2" href="'. route('voucher.edit',$voucher->id) .'"><i class="fa-solid fa-wrench" title="Cập nhật"></i></a>
+                    <button class="btn btn-danger px-2" type="submit"><i class="fa-solid fa-trash" title="Xóa"></i></button>
                 </form>
                 ';
             })
@@ -55,6 +55,14 @@ class VoucherDataTable extends DataTable
                     //->dom('Bfrtip')
                     ->orderBy(0, 'asc')
                     ->selectStyleSingle()
+                    ->language([
+                        'search' => 'Tìm kiếm:',
+                        'zeroRecords' => 'Không tìm thấy bản ghi phù hợp',
+                        'info' => 'Hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ bản ghi',
+                        'infoEmpty' => 'Hiển thị từ 0 đến 0 trong tổng số 0 bản ghi',
+                        'infoFiltered' => '(được lọc từ tổng số _MAX_ bản ghi)',
+                        'lengthMenu' => 'Hiển thị _MENU_ bản ghi mỗi trang',
+                    ])
                     ->buttons([
                         Button::make('excel'),
                         Button::make('csv'),
@@ -78,7 +86,7 @@ class VoucherDataTable extends DataTable
             Column::make('start_at')->title('Ngày bắt đầu'),
             Column::make('end_at')->title('Ngày kết thúc'),
             Column::make('quantity')->title('Số lượng'),
-            Column::computed('action')
+            Column::computed('action')->title('Hành động'),
         ];
     }
 
