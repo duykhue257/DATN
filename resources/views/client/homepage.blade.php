@@ -80,24 +80,19 @@
             </div>
             <div class="row property__gallery">
                 @foreach ($products as $product)
-                    @if ($product->category)
-                        <div class="col-lg-3 col-md-4 col-sm-6 mix  {{ $product->category->name_cate }}">
+                    @if ($product->category && $product->variants->isNotEmpty())
+                        <div class="col-lg-3 col-md-4 col-sm-6 mix {{ $product->category->name_cate }}">
                             <div class="product__item">
-                                @if ($product->variants->isNotEmpty())
-                                    <div class="product__item__pic set-bg"
-                                        data-setbg="{{ $product->variants ? Storage::url($product->variants[0]->image) : '' }}">
-                                        <div class="label "></div>
-                                        <ul class="product__hover">
-                                            <li><a href="{{ $product->variants ? Storage::url($product->variants[0]->image) : '' }}"
-                                                    class="image-popup"><span class="arrow_expand"></span></a></li>
-                                            <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                            {{-- <li><a href="#"><span class="icon_bag_alt"></span></a></li> --}}
-                                        </ul>
-                                    </div>
-                                @endif
+                                <div class="product__item__pic set-bg" data-setbg="{{ Storage::url($product->variants[0]->image) }}">
+                                    <div class="label"></div>
+                                    <ul class="product__hover">
+                                        <li><a href="{{ Storage::url($product->variants[0]->image) }}" class="image-popup"><span class="arrow_expand"></span></a></li>
+                                        <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+                                        {{-- <li><a href="#"><span class="icon_bag_alt"></span></a></li> --}}
+                                    </ul>
+                                </div>
                                 <div class="product__item__text">
-                                    <h6><a href="{{ route('detail_product', ['id' => $product->id]) }}">{{ $product->name }}</a>
-                                    </h6>
+                                    <h6><a href="{{ route('detail_product', ['id' => $product->id]) }}">{{ $product->name }}</a></h6>
                                     <div class="rating">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
@@ -112,6 +107,7 @@
                     @endif
                 @endforeach
             </div>
+            
         </div>
         
         
@@ -153,177 +149,7 @@
     <!-- Banner Section End -->
 
     <!-- Trend Section Begin -->
-    <section class="trend spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-6">
-                    <div class="trend__content">
-                        <div class="section-title">
-                            <h4>Hot Trend</h4>
-                        </div>
-                        <div class="trend__item">
-                            <div class="trend__item__pic">
-                                <img src="img/trend/ht-1.jpg" alt="">
-                            </div>
-                            <div class="trend__item__text">
-                                <h6>Áo Sweater The Bad God Signature Monogram</h6>
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div class="product__price">200.000đ</div>
-                            </div>
-                        </div>
-                        <div class="trend__item">
-                            <div class="trend__item__pic">
-                                <img src="img/trend/ht-2.jpg" alt="">
-                            </div>
-                            <div class="trend__item__text">
-                                <h6>Áo Khoác Bomber Varsity Jacket The Bad God Iconic Leather</h6>
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div class="product__price">650.000đ</div>
-                            </div>
-                        </div>
-                        <div class="trend__item">
-                            <div class="trend__item__pic">
-                                <img src="img/trend/ht-3.jpg" alt="">
-                            </div>
-                            <div class="trend__item__text">
-                                <h6>Áo Bomber Varsity Jacket The Bad God B Flow</h6>
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div class="product__price">479.000đ</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-6">
-                    <div class="trend__content">
-                        <div class="section-title">
-                            <h4>Best seller</h4>
-                        </div>
-                        <div class="trend__item">
-                            <div class="trend__item__pic">
-                                <img src="img/trend/bs-1.jpg" alt="">
-                            </div>
-                            <div class="trend__item__text">
-                                <h6>Áo polo Mỏng Dáng Rộng Phong Cách Mỹ Cổ Điển</h6>
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div class="product__price">123.000đ</div>
-                            </div>
-                        </div>
-                        <div class="trend__item">
-                            <div class="trend__item__pic">
-                                <img src="img/trend/bs-2.jpg" alt="">
-                            </div>
-                            <div class="trend__item__text">
-                                <h6>Áo Thun polo Dệt Kim Tay Ngắn <br />Phong Cách Nhật Bản</h6>
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div class="product__price">132.000đ</div>
-                            </div>
-                        </div>
-                        <div class="trend__item">
-                            <div class="trend__item__pic">
-                                <img src="img/trend/bs-3.jpg" alt="">
-                            </div>
-                            <div class="trend__item__text">
-                                <h6>Áo Sơ Mi Nam Ngắn Tay Phong Cách retro</h6>
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div class="product__price">155.000đ</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-6">
-                    <div class="trend__content">
-                        <div class="section-title">
-                            <h4>Feature</h4>
-                        </div>
-                        <div class="trend__item">
-                            <div class="trend__item__pic">
-                                <img src="img/trend/f-1.jpg" alt="">
-                            </div>
-                            <div class="trend__item__text">
-                                <h6>Áo Thun Raglan SAIGONESE Cotton Phối Line Unisex 4 Màu</h6>
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div class="product__price">159.000đ</div>
-                            </div>
-                        </div>
-                        <div class="trend__item">
-                            <div class="trend__item__pic">
-                                <img src="img/trend/f-2.jpg" alt="">
-                            </div>
-                            <div class="trend__item__text">
-                                <h6>Áo Thun Phông Nam Local Brand Form Rộng Something AT Urban</h6>
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div class="product__price">159.599đ</div>
-                            </div>
-                        </div>
-                        <div class="trend__item">
-                            <div class="trend__item__pic">
-                                <img src="img/trend/f-3.jpg" alt="">
-                            </div>
-                            <div class="trend__item__text">
-                                <h6>Áo Thun Nam Cổ Lọ 6 Phân Tay Dài</h6>
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div class="product__price">165.000đ</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+   
     <!-- Trend Section End -->
 
     <!-- Discount Section Begin -->

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\ProductVariansDataTable;
 use App\Models\Products;
 use App\Models\ProductVariants;
 use App\Models\Category;
@@ -17,9 +18,9 @@ class ProductsController extends Controller
     public function index(ProductsDataTable $dataTable)
     {
         $products = Products::join('categories', 'products.category_id', '=', 'categories.id')
-        ->select('products.*', 'categories.name_cate','products.id as id')
-        ->latest()
-        ->get();
+            ->select('products.*', 'categories.name_cate', 'products.id as id')
+            ->latest()
+            ->get();
         // $products = Products::latest()->get();
         /* return view('admin.product.list_prd', compact('products')); */
         return $dataTable->render('admin.product.list_prd', compact('products'));
@@ -47,23 +48,27 @@ class ProductsController extends Controller
         return redirect()->route('product.index');
     }
 
-    public function show(int $id){
+
+    public function show(int $id, ProductVariansDataTable $dataTable)
+    {
+//    dd($dataTable);
         // Truy vấn biến thể sản phẩm theo ID sản phẩm
         $products = ProductVariants::with('product', 'sizes', 'colors')
-                                    ->where('product_id', $id) // Lọc theo ID sản phẩm
-                                    ->latest()
-                                    ->get();
-                                    $productId = $id;
-                                    // dd($productId);
-        return view('admin.product.list_variant', compact('products','productId'));
+            ->where('product_id', $id) // Lọc theo ID sản phẩm
+            ->latest()
+            ->get();
+        $productId = $id;
+        // dd($products);
+        /* return view('admin.product.list_variant', compact('products','productId')); */
+        return $dataTable->with('id',$productId)->render('admin.product.list_variant', compact('products', 'productId'));
     }
-    
+
 
     public function edit(int $id)
     {
         $categories = Category::all();
         $product = Products::with('category')->find($id);
-        return view('admin.product.edit_prd', compact('product','categories'));
+        return view('admin.product.edit_prd', compact('product', 'categories'));
     }
 
     public function update(Request $request, Products $product)
