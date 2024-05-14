@@ -37,9 +37,9 @@ public function shop( Request $request){
     // Sắp xếp sản phẩm theo giá (giảm dần hoặc tăng dần)
     $sort = $request->input('sort');
     if ($sort == 'desc_price') {
-    $productsQuery->orderBy('price', 'desc');
+    $productsQuery->orderBy('price_reduced', 'desc');
     } elseif ($sort == 'asc_price') {
-        $productsQuery->orderBy('price', 'asc');
+        $productsQuery->orderBy('price_reduced', 'asc');
     }
 
     //Phân trang và đếm

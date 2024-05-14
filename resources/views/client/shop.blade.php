@@ -41,7 +41,7 @@
                                 <h4>Shop by price</h4>
                             </div>
                             <div class="filter-range-wrap">
-                                <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
+                                <div id="price-range-slider" class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
                                     data-min="0" data-max="9000000"></div>
                                 <div class="range-slider">
                                     <div class="price-input">
@@ -51,8 +51,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="#">Lọc</a>
+                            <a href="#" id="filter-btn">Lọc</a>
                         </div>
+                        
                         <div class="sidebar__sizes">
                             <div class="section-title">
                                 <h4>Kích cỡ</h4>
@@ -106,69 +107,60 @@
 
                     <div class="row">
                         @foreach ($products as $product)
-                            <div class="col-lg-4 col-md-6">
-                                <div class="product__item">
-
-                                    @if ($product->variants->isNotEmpty())
-                                        <div class="product__item__pic set-bg"
-                                            data-setbg="{{ $product->variants ? Storage::url($product->variants[0]->image) : '' }}">
-
-                                            <!-- Hiển thị hình ảnh sản phẩm -->
+                            @if ($product->category && $product->variants->isNotEmpty())
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="product__item">
+                                        <div class="product__item__pic set-bg" data-setbg="{{ Storage::url($product->variants[0]->image) }}">
                                             <ul class="product__hover">
-                                                <li><a href="{{ $product->variants ? Storage::url($product->variants[0]->image) : '' }}"
-                                                        class="image-popup"><span class="arrow_expand "></span></a></li>
-                                                <li><a href="#"><span class="icon_heart_alt "></span></a></li>
-
+                                                <li><a href="{{ Storage::url($product->variants[0]->image) }}" class="image-popup"><span class="arrow_expand"></span></a></li>
+                                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
                                             </ul>
                                         </div>
-                                    @endif
-
-
-                                    <div class="product__item__text ">
-
-                                    <div class="">
-                                        <div class="color_detail ">
-                                            <ul>
-                                                @php
-                                                    $uniqueColors = $product->variants->pluck('colors')->unique('color');
-                                                @endphp
-                                                @foreach ($uniqueColors as $color)
-                                                    <li class="li" style="background-color: {{ $color->color }}"></li>
-                                                @endforeach
-                                            </ul>
+                    
+                                        <div class="product__item__text">
+                                            <div class="hidden">
+                                                <div class="color_detail">
+                                                    <ul>
+                                                        @php
+                                                            $uniqueColors = $product->variants->pluck('colors')->unique('color');
+                                                        @endphp
+                                                        @foreach ($uniqueColors as $color)
+                                                            <li class="li" style="background-color: {{ $color->color }}"></li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                    
+                                                <div class="size_detail">
+                                                    <ul>
+                                                        @php
+                                                            $uniqueSizes = $product->variants->pluck('sizes')->unique('size');
+                                                        @endphp
+                                                        @foreach ($uniqueSizes as $size)
+                                                            <li>{{ $size->size }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            </div>
+                    
+                                            <!-- Tên sản phẩm -->
+                                            <h6>
+                                                <a class="product_name" href="{{ route('detail_product', ['id' => $product->id]) }}">{{ $product->name }}</a>
+                                            </h6>
+                    
+                                            <div class="rating">
+                                                <!-- Đánh giá sản phẩm -->
+                                            </div>
+                                            <div class="product__price">
+                                                {{ number_format($product->price_reduced, 0, ',', '.') }} đ
+                                            </div>
+                                            <!-- Giá sản phẩm -->
                                         </div>
-                                        
-                                        <div class="size_detail hidden">
-                                            <ul>
-                                                @php
-                                                    $uniqueSizes = $product->variants->pluck('sizes')->unique('size');
-                                                @endphp
-                                                @foreach ($uniqueSizes as $size)
-                                                    <li>{{ $size->size }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                    </div>
-                                       
-                                        
-                                        <!-- Tên sản phẩm -->
-                                        <h6>
-                                            <a class="product_name"
-                                                href="{{ route('detail_product') }}?id={{ $product->id }}">{{ $product->name }}</a>
-                                        </h6>
-
-
-                                        <div class="rating">
-                                            <!-- Đánh giá sản phẩm -->
-                                        </div>
-                                        <div class="product__price">
-                                            {{ number_format($product['price_reduced'], 0, ',', '.') }} đ</div>
-                                        <!-- Giá sản phẩm -->
                                     </div>
                                 </div>
-                            </div>
+                            @endif
                         @endforeach
                     </div>
+                    
                     <div class="pagination">
                         {{ $products->links() }}
                     </div>
@@ -208,9 +200,35 @@
     </section>
     <!-- Shop Section End -->
 @endsection
-
 @push('scripts')
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <script>
+$(function() {
+    $("#price-range-slider").slider({
+        range: true,
+        min: 0,
+        max: 9000000,
+        values: [0, 9000000],
+        slide: function(event, ui) {
+            $("#minamount").val(ui.values[0]);
+            $("#maxamount").val(ui.values[1]);
+        }
+    });
+    $("#minamount").val($("#price-range-slider").slider("values", 0));
+    $("#maxamount").val($("#price-range-slider").slider("values", 1));
+
+    $("#filter-btn").on("click", function(e) {
+        e.preventDefault();
+        var minPrice = $("#minamount").val();
+        var maxPrice = $("#maxamount").val();
+        // Gửi yêu cầu lọc tới máy chủ với minPrice và maxPrice
+        // Xử lý kết quả trả về và cập nhật giao diện người dùng
+    });
+});
+
+
         $(document).ready(function() {
             $('#sortBySelect').change(function() {
                 var sortBy = $(this).val();
