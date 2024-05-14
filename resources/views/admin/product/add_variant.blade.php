@@ -65,7 +65,7 @@
                             </div>
                             <button type="submit" class="btn btn-success">Thêm</button>
                             <button class="btn btn-primary"><a class="text-white text-decoration-none"
-                                    href="{{ route('productVariant.index') }}">List</a></button>
+                                    href="{{ route('product.show',$product->id) }}">List</a></button>
 
                         </form>
                     </div>
