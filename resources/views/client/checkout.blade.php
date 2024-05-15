@@ -295,7 +295,6 @@
                     .ward;
             }
         })
-
         document.addEventListener('DOMContentLoaded', function() {
             var checkoutForm = document.getElementById('checkout-form');
             var paymentRadios = document.querySelectorAll('input[name="payment"]');
@@ -310,5 +309,22 @@
                 });
             });
         });
+        document.addEventListener('DOMContentLoaded', function() {
+        var placeOrderBtn = document.querySelector('.site-btn');
+
+        placeOrderBtn.addEventListener('click', function(event) {
+            var paymentMethods = document.querySelectorAll('input[name="payment"]');
+            var isChecked = false;
+            for (var i = 0; i < paymentMethods.length; i++) {
+                if (paymentMethods[i].checked) {
+                    isChecked = true;
+                    break;
+                }
+            }
+            if (!isChecked) {
+                alert('Vui lòng chọn một phương thức thanh toán trước khi tiếp tục!');
+            }
+        });
+    });
     </script>
 @endpush
