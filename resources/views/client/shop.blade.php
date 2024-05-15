@@ -88,13 +88,13 @@
                 </div>
                 <div class="col-lg-9 col-md-9">
 
-                    <div class="row">
-                        <div class="col"></div>
+                    <div class="row mb-3">
+                       
                         <div class="col"><span class="mr-1"
-                                style="font-weight: 500">{{ $products->total() }}</span><span>sản phẩm</span></div>
-                        <div class="col">
-                            <label for="sort">Sắp xếp:</label>
-                            <select class="form-select p-1" id="sortBySelect" aria-label="Default select example">
+                                style="font-weight: 500">{{ $products->total() }}</span><span>Sản phẩm</span></div>
+                        <div class="col d-flex align-items-center">
+                            <label for="sort ">Sắp xếp:</label>
+                            <select class="custom-select w-75 ml-4"  id="sortBySelect" aria-label="Default select example">
                                 <option value="default" {{ Request::input('sort') == 'default' ? 'selected' : '' }}>Mặc định
                                 </option>
                                 <option value="asc_price" {{ Request::input('sort') == 'asc_price' ? 'selected' : '' }}>Giá

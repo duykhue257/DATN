@@ -10,9 +10,9 @@
                 </div>
 
                 <div class="card-body">
-                    <button class="btn btn-success"><a class="text-white text-decoration-none" href="">Thêm
+                    {{-- <button class="btn btn-success"><a class="text-white text-decoration-none" href="">Thêm
                             mới</a></button>
-                    <br><br>
+                    <br><br> --}}
                     <div class="table-responsive">
                         <table class="table table-bordered" id="order" width="100%" cellspacing="0">
                             <thead>

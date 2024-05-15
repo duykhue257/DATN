@@ -39,7 +39,7 @@
                         <td style="font-size: 12px;">
                             @foreach ($order->detail_order as $detail)
                                 @foreach ($detail->variants as $variant)
-                                    <a
+                                    <a class="text-dark fw-bold"
                                         href="{{ route('detail_product', ['id' => $variant->product_id]) }}">{{ $detail->name }}</a><br>
                                 @endforeach
                             @endforeach

@@ -196,7 +196,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">Đánh giá (
+                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">Bình luận (
                                     {{ $commentCount }} )</a>
                             </li>
                         </ul>
@@ -208,50 +208,57 @@
                             </div>
 
                             <div class="tab-pane" id="tabs-3" role="tabpanel">
-                                <h6>Đánh giá ( {{ $commentCount }} )</h6>
+                                <h6>Bình luận( {{ $commentCount }} )</h6>
                                 <div class="px-2">
                                     @if ($comments->count() > 0)
                                         @foreach ($firstFiveComments as $comment)
-                                            <div class="py-2">
+                                            <div class="py-2 my-3 d-flex">
                                                 {{-- @if (Auth::user()->role = 0)
                                                     <img src="img/administrator-avatar-icon-vector-32095490.jpg"
                                                     alt="" style="width: 30px; height: 30px;">
                                                 @else --}}
-                                                    <img src="img/tải xuống.jpg" alt=""
-                                                        style="width: 20px; height: 20px;">
+                                                   
                                                 {{-- @endif --}}
 
                                                 {{-- <img src="img/tải xuống.jpg" alt=""> --}}
-                                                <small>{{ $comment->user->name }}({{ $comment->created_at->format('d/m/Y')}})</small>
-                                                <p class="px-3">{{ $comment->content }}</p>
+                                                <img src="img/tải xuống.jpg" alt=""
+                                                style="width: 50px; height: 50px; border-radius: 10px;">
+                                                <div>
+                                                    <small class="name_cmt">{{ $comment->user->name }} <span class="ml-2">({{ $comment->created_at->format('d/m/Y')}})</span></small>
+                                                    <p class="text_comment">{{ $comment->content }}</p>
+                                                </div>
+                                                
                                             </div>
                                         @endforeach
                                         @if ($comments->count() > 5)
-                                             <button id="showMoreComments">Hiển thị thêm</button>
+                                             <p class="More_cmt" id="showMoreComments">Hiển thị thêm <i class="fa-solid fa-angles-right"></i></p>
                                         @endif
                                        
                                         <div id="remainingComments" style="display: none;">
                                             @foreach ($remainingComments as $comment)
-                                                <div class="py-2">
+                                                <div class="py-2 d-flex my-3">
                                                     {{-- @if (Auth::user()->role = 0)
                                
                                                         <img src="img/administrator-avatar-icon-vector-32095490.jpg"
                                                             alt="" style="width: 30px; height: 30px;">
                                                     {{-- @else --}} 
-                                                    
-                                                        <img src="img/tải xuống.jpg" alt=""
-                                                            style="width: 20px; height: 20px;">
-
-                                                 
                                                     {{-- @endif --}}
+                                                    {{-- <img src="img/tải xuống.jpg" alt=""
+                                                            style="width: 20px; height: 20px;">
                                                     <small>{{ $comment->user->name }}({{ $comment->created_at->format('d/m/Y') }})</small>
-                                                    <p class="px-3">{{ $comment->content }}</p>
+                                                    <p class="px-3">{{ $comment->content }}</p> --}}
+                                                    <img src="img/tải xuống.jpg" alt=""
+                                                style="width: 50px; height: 50px; border-radius: 10px;">
+                                                <div>
+                                                    <small class="name_cmt">{{ $comment->user->name }} <span class="ml-2">({{ $comment->created_at->format('d/m/Y')}})</span></small>
+                                                    <p class="text_comment">{{ $comment->content }}</p>
+                                                </div>
 
                                                 </div>
                                             @endforeach
                                         </div>
                                     @else
-                                        <p>Chưa có nhận xét nào cho sản phẩm này.</p>
+                                        <p class="notification_cmt">Chưa có nhận xét nào cho sản phẩm này!</p>
                                     @endif
                                     <form action="{{ route('comments.create') }}" method="POST">
                                         @csrf
@@ -259,13 +266,17 @@
                                         @if (Auth::check())
                                             <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                                         @endif
-                                        <textarea name="content" rows="3"></textarea>
-                                        <button type="submit"
-                                            @if (!Auth::check()) disabled title="Vui lòng đăng nhập để đăng nhận xét" @endif>Submit</button>
+                                        {{-- <textarea class="" name="content" rows="3"></textarea> --}}
+                                        <input class="input_cmt " name="content" type="text" placeholder="Nhập bình luận của bạn vào đây">
+                                        <button type="submit" class="btn btn-danger"
+                                            @if (!Auth::check()) disabled title="Vui lòng đăng nhập để đăng nhận xét" 
+                                            @endif>
+                                            Bình luận
+                                        </button>
                                     </form>
 
                                     @if (!Auth::check())
-                                        <p>Vui lòng <a href="{{ route('login') }}">đăng nhập</a> để đăng nhận xét.</p>
+                                        <p class="notification_signin">Vui lòng <a class="signin_cmt" href="{{ route('login') }}">đăng nhập</a> để đăng nhận xét.</p>
                                     @endif
                                 </div>
 
@@ -322,7 +333,55 @@
 
             </div>
         </div>
+        
     </section>
+
+    <style>
+        .name_cmt{
+            font-weight: 700;
+            margin-left: 15px;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        .text_comment{
+            margin-left: 15px;
+            font-weight: 500;
+            font-size: 18px;
+        }
+        .notification_cmt{
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            
+        }
+        .notification_signin{
+            font-size: 20px;
+            font-weight: 400;
+            margin-top: 10px;
+        }
+        .input_cmt {
+            border-radius: 10px;
+            padding: 6px 0px;
+            width: 290px;
+            margin-top: 40px;
+        }
+        .signin_cmt{
+            color: #e9250b;
+
+        }
+        .signin_cmt:hover{
+            /* color: #d2d609; */
+            color: #000 
+        }
+        .More_cmt{
+            font-weight: 600;
+            font-size: 19px;
+            margin-top: 10px;
+        }
+        .More_cmt:hover{
+            color: #000;
+        }
+    </style>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>

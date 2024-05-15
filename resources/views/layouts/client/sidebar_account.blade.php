@@ -6,7 +6,7 @@
     <li class="list-group ">
         <div class="py-2 px-2 item_sidebar"><i class="fa-solid fa-user-tie"></i><a class="" href="{{ route('account') }}" >Thông tin tài khoản</a><i class=""></i></div>
         <!-- <div class="py-2 px-2 my-2 item_sidebar"><i class="fa-solid fa-book"></i><a href="/address" >Địa chỉ giao hàng</a><i class=""></i></div> -->
-        <div class="py-2 px-2 item_sidebar"><i class="fa-solid fa-book-open"></i><a href="{{ route('order_history') }}" >Lịch sử mua hàng</a><i class=""></i></div>
+        <div class="py-2 px-2 mt-2 item_sidebar"><i class="fa-solid fa-book-open"></i><a href="{{ route('order_history') }}" >Lịch sử mua hàng</a><i class=""></i></div>
         {{-- <div class="py-2"><a href="/wishlist" style="color: black;">Sản phẩm yêu thích</a></div> --}}
         {{-- <div class="py-2"><a href="/promotion" style="color: black;">Ưu đãi của bạn</a></div> --}}
     </li>
