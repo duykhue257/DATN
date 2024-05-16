@@ -48,14 +48,14 @@
                 <div class="col-lg-6">
                     <div class="product__details__text">
                         <h3>{{ $product->name }}<span>Thương Hiệu: ClassicMan</span></h3>
-                        <div class="rating">
+                        <!-- <div class="rating">
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
                             <span>( 138 đánh giá )</span>
-                        </div>
+                        </div> -->
                         <div class="product__details__price">
                             {{ str_replace(',', '.', number_format($product->price_reduced)) }}
                             đ<span>{{ str_replace(',', '.', number_format($product->price)) }} đ</span></div>
