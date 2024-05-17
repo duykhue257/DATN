@@ -17,85 +17,23 @@
             </form>
             <h6 class="pr-2">Đơn hàng: </h6>
         </div>
-
-        <table class="table mx-auto">
-            <thead>
-                <tr class="thead-light ">
-                    <th scope="col" style="font-weight: 700; font-size: 12px;">Mã đơn</th>
-                    <th scope="col" style="font-weight: 700; font-size: 12px; text-align: center; width: 120px;">Tên sản phẩm</th>
-                    <th scope="col" style="font-weight: 700; font-size: 12px; text-align: center;">Ngày mua</th>
-                    {{-- <th scope="col" style="font-weiht: 500; font-size: 12px;;">Số lượng</th>
-                    <th scope="col" style="font-weight: 500; font-size: 12px;;">Màu sắc</th>
-                    <th scope="col" style="font-weight: 500; font-size: 12px;;">Kích cỡ</th> --}}
-                    <th scope="col" style="font-weight: 700; font-size: 12px;">Trạng thái</th>
-                    <th scope="col" style="font-weight: 700; font-size: 12px; width: 175px;">Tình trạng thanh toán</th>
-                    <th scope="col" style="font-weight: 700; font-size: 12px;">Thao tác</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($orders as $order)
-                    <tr>
-                        <td style="font-weight: 500;font-size: 12px;">{{ $order->order_code }}</td>
-                        <td style="font-size: 12px;">
-                            @foreach ($order->detail_order as $detail)
-                                @foreach ($detail->variants as $variant)
-                                    <a class="text-dark fw-bold"
-                                        href="{{ route('detail_product', ['id' => $variant->product_id]) }}">{{ $detail->name }}</a><br>
-                                @endforeach
-                            @endforeach
-                        </td>
-
-
-
-                        <td style="font-size: 12px; width: 95px;">{{ $order->created_at }}</td>
-                        {{-- <td style="font-size: 12px;;">
-                            @foreach ($order->detail_order as $detail)
-                                <fieldset disabled>
-                                    {{ $detail->quantity }}
-                                </fieldset><br>
-                            @endforeach
-                        </td> --}}
-                        {{-- <td style="font-size: 12px;;">
-                            @foreach ($order->detail_order as $detail)
-                                @foreach ($detail->variants as $variant)
-                                    {{ $variant->colors->color }}<br>
-                                @endforeach
-                            @endforeach
-                        </td> --}}
-                        {{-- <td style="font-size: 12px;;">
-                            @foreach ($order->detail_order as $detail)
-                                @foreach ($detail->variants as $variant)
-                                    {{ $variant->sizes->size }}<br>
-                                @endforeach
-                            @endforeach
-                        </td> --}}
-                        <td style="font-size: 12px;">{{ $order->status->status }}</td>
-                        <td style="font-size: 12px;">{{ $order->payment->method }}</td>
-                        <td class="">
-                            <a class="btn btn-dark px-2" href="{{ route('orderDetailHome', $order->id) }}"><i class="fa-solid fa-circle-info"></i></a>
-                            
-                            @if ($order->status_id == 1 || $order->status_id == 2)
-                                <form action="{{ route('orders.cancel', $order->id) }}" method="POST"
-                                    style="display: inline;">
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger"
-                                        onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này không?')">Hủy</button>
-                                </form>
-                            @endif
-                        </td>
-
-                    </tr>
-                @endforeach
-            </tbody>
-
-
-        </table>
+        <div class="card">
+            <div class="card-body">
+                {{ $dataTable->table() }}
+            </div>
+        </div>
     </section>
     <style>
     .rounded-custom{
         border-radius: 20px;
     }
+    .table.dataTable {
+        font-size: 14px;
+    }
+</style>
 </style>
 @endsection
 
-
+@push('scripts')
+    {{ $dataTable->scripts() }}
+@endpush

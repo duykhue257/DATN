@@ -6,17 +6,19 @@ use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\DataTables\OrderHistoryDataTable;
 
 class AddressController extends Controller
 {
     //
-    public function OrderHistory()
+    public function OrderHistory(OrderHistoryDataTable $dataTable)
     {
         $user_id = Auth::id();
         // dd($user_id);   
         $orders = Order::with('detail_order', 'status', 'payment')->where('user_id', $user_id)->get();
        
-        return view('client.account.order_history', compact('orders'));
+        /* return view('client.account.order_history', compact('orders')); */
+        return $dataTable->render('client.account.order_history', compact('orders'));
     }
     public function orderDetailHome(string $id)
     {
