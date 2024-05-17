@@ -10,73 +10,18 @@
                 </div>
 
                 <div class="card-body">
-                    {{-- <button class="btn btn-success"><a class="text-white text-decoration-none" href="">Thêm
-                            mới</a></button>
-                    <br><br> --}}
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="order" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Mã đơn hàng</th>
-                                    <th>Tên khách hàng</th>
-                                    <th>sdt</th>
-                                    <th>số lượng</th>
-                                    <th>trạng thái</th>
-                                    <th>thời gian đặt hàng</th>
-                                    <th>Hoạt Động</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($orders as $order)
-                                    <tr>
-                                        <form class="order-form"
-                                            action="{{ route('admin.update_order_status', ['order' => $order->id]) }}"
-                                            method="POST">
-                                            @csrf
-                                            @method('POST')
-
-                                            <th>{{ $order->id }}</th>
-                                            <th>{{ $order->order_code }}</th>
-                                            <td>{{ $order->name }}</td>
-                                            <td>{{ $order->phone }}</td>
-                                            <td>{{ count($order->detail_order) }} sản phẩm</td>
-                                            {{-- <td>{{ $order->status->status }}</td> --}}
-                                            <td>
-                                                <!-- Thêm id và data-order-id cho select -->
-                                                <select name="status_id">
-                                                    @php
-                                                        $firstOptionId = $order->status->id; // Lưu id của option đầu tiên
-                                                    @endphp
-                                                    <option hidden value="{{ $firstOptionId }}">{{ $order->status->status }}
-                                                    </option>
-                                                    @foreach ($status as $stt)
-                                                        <option value="{{ $stt->id }}"
-                                                            @if ($stt->id < $firstOptionId) hidden @endif>
-                                                            {{ $stt->status }}</option>
-                                                    @endforeach
-                                                </select>
-                                                <button class="btn btn-success" type="submit">Cập nhật </button>
-                                            </td>
-
-                                            <td>{{ $order->created_at }}</td>
-
-                                            <td>
-                                                <a class=" btn btn-primary px-2"
-                                                    href="{{ route('order_detail', $order->id) }}">Chi Tiết</a>
-
-                                            </td>
-
-                                        </form>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        <div class="card">
+                                <div class="card-body">
+                                    <!-- Bắt đầu DataTables -->
+                                    {{ $dataTable->table() }}
+                                    <!-- Kết thúc DataTables -->
+                                </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
     <!-- /.row (main row) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -110,3 +55,7 @@
         });
     </script>
 @endsection
+
+@push('scripts')
+    {{ $dataTable->scripts() }}
+@endpush

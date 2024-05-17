@@ -13,14 +13,9 @@ class AddressController extends Controller
     public function OrderHistory()
     {
         $user_id = Auth::id();
-        // dd($user_id);
+        // dd($user_id);   
         $orders = Order::with('detail_order', 'status', 'payment')->where('user_id', $user_id)->get();
-        // dd($orders);
-        // foreach ($orders as $order) {
-        //     foreach ($order->detail_order as $detail) {
-        //         dd($order);
-        //     }
-        // }
+       
         return view('client.account.order_history', compact('orders'));
     }
     public function orderDetailHome(string $id)

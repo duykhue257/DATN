@@ -7,11 +7,12 @@
                 <h1>Thông tin đơn hàng</h1>
                    <hr>
                 <div id="order-details">
+                   
                     <p><strong>Mã đơn hàng:</strong> {{ $orders->order_code }}</p>
                     <p><strong>Tên người nhận:</strong> {{ $orders->name }}</p>
                     <p><strong>Số điện thoại:</strong> {{ $orders->phone }}</p>
                     <p><strong>Địa chỉ:</strong> {{ $orders->detail }},{{ $orders->address }}</p>
-
+                    <p><strong>Lưu ý của khách hàng:</strong> {{ $orders->note }}</p>
                     <p><strong>Phương thức thanh toán:</strong> {{ $orders->payment->method }}</p>
                 </div>
 

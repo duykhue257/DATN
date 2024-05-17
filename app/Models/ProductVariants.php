@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class ProductVariants extends Model
 {
@@ -37,5 +38,20 @@ class ProductVariants extends Model
     public function subtotal()
     {
         return $this->price_reduced * $this->quantity;
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($variant) {
+            // Xóa các bản ghi liên quan trong bảng order_detail
+            DB::table('order_detail')->where('product_variant_id', $variant->id)->delete();
+        });
+    }
+
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class, 'product_variant_id');
     }
 }
