@@ -24,7 +24,7 @@ class ProductVariansDataTable extends DataTable
       
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($prd) {
-                Log::info("abc",[$prd->product_id]);
+              
                 return '
                 <form class="d-flex" action="' . route('productVariant.destroy', $prd->id) . '" method="POST">
                     <input type="hidden" name="_token" value="' . csrf_token() . '">

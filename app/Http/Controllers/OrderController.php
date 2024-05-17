@@ -5,16 +5,26 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\OrderStatus;
 use Illuminate\Http\Request;
+use App\DataTables\OrderDataTable;
 
 class OrderController extends Controller
 {
     //
-    public function index()
+    // public function index()
+    // {
+    //     $orders = Order::with('detail_order', 'status')->get();
+    //     $status = OrderStatus::all();
+    //     // dd($orders);
+    //     return view('admin.order.index', compact('orders', 'status'));
+    // }
+    public function index(OrderDataTable $dataTable)
     {
         $orders = Order::with('detail_order', 'status')->get();
         $status = OrderStatus::all();
+        session(['status_data' => $status]);
         // dd($orders);
-        return view('admin.order.index', compact('orders', 'status'));
+        /* return view('admin.order.index', compact('orders', 'status')); */
+        return $dataTable->render('admin.order.index', compact('orders', 'status'));
     }
     public function updateStatusOrder(Request $request, Order $order)
     {

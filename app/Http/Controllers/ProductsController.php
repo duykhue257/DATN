@@ -84,6 +84,10 @@ class ProductsController extends Controller
     }
     public function destroy(Products $product)
     {
+        
+        $product->variants()->each(function ($variant) {
+            $variant->delete();
+        });
         $product->delete();
         return back();
     }

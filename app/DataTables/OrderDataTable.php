@@ -21,34 +21,55 @@ class OrderDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
+        $status = session('status_data'); 
         return (new EloquentDataTable($query))
-            ->addColumn('action', function ($order){
+            ->addColumn('action', function ($order) {
                 return '
-                    <a class=" btn btn-dark flex px-2" href="'.  route('order_detail',$order->id) .'"><i class="fa-solid fa-circle-info" title="Thông tin chi tiểt"></i></a>
+                    <a class=" btn btn-dark flex px-2" href="' .  route('order_detail', $order->id) . '"><i class="fa-solid fa-circle-info" title="Thông tin chi tiểt"></i></a>
                 ';
             })
             ->addColumn('count', function ($order) {
                 return count($order->detail_order);
             })
-            /* ->addColumn('status', function ($order, $status) {
-                $firstOptionId = $order->status->id;
-                $firstOptionStatus = htmlspecialchars($order->status->status);
+            ->rawColumns(['action', 'status'])
+            ->addColumn('status', function ($order) use ($status) {
+                $currentStatusId = $order->status->id;
+                $currentStatus = htmlspecialchars($order->status->status);
     
                 $options = '<select name="status_id">';
-                $options .= '<option hidden value="' . $firstOptionId . '">' . $firstOptionStatus . '</option>';
-                
                 foreach ($status as $stt) {
                     $sttId = htmlspecialchars($stt->id);
                     $sttStatus = htmlspecialchars($stt->status);
     
-                    $options .= '<option value="' . $sttId . '" ' . ($sttId < $firstOptionId ? 'hidden' : '') . '>' . $sttStatus . '</option>';
+                    // Tạo option cho mỗi trạng thái
+                    $options .= '<option value="' . $sttId . '"' . ($sttId == $currentStatusId ? ' selected' : '') . '>' . $sttStatus . '</option>';
                 }
-    
+            
                 $options .= '</select>';
-                $options .= '<button class="btn btn-success" type="submit"><i class="fa-solid fa-check" title="Cập nhật"></i></button>';
-    
+                $options .= '<button class="btn btn-success" type="submit">Cập nhật</button>';
+            
                 return $options;
-            }) */
+            })
+            
+            // ->addColumn('status', function ($order, $status) {
+            //     $firstOptionId = $order->status->id;
+            //     $firstOptionStatus = htmlspecialchars($order->status->status);
+
+            //     $options = '<select name="status_id">';
+            //     $options .= '<option hidden value="' . $firstOptionId . '">' . $firstOptionStatus . '</option>';
+
+            //     foreach ($status as $stt) {
+            //         $sttId = htmlspecialchars($stt->id);
+            //         $sttStatus = htmlspecialchars($stt->status);
+
+            //         $options .= '<option value="' . $sttId . '" ' . ($sttId < $firstOptionId ? 'hidden' : '') . '>' . $sttStatus . '</option>';
+            //     }
+
+            //     $options .= '</select>';
+            //     $options .= '<button class="btn btn-success" type="submit">Cập nhật"></button>';
+
+            //     return $options;
+            // })
             ->setRowId('id');
     }
 
@@ -66,28 +87,28 @@ class OrderDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('order-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->language([
-                        'search' => 'Tìm kiếm:',
-                        'zeroRecords' => 'Không tìm thấy bản ghi phù hợp',
-                        'info' => 'Hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ bản ghi',
-                        'infoEmpty' => 'Hiển thị từ 0 đến 0 trong tổng số 0 bản ghi',
-                        'infoFiltered' => '(được lọc từ tổng số _MAX_ bản ghi)',
-                        'lengthMenu' => 'Hiển thị _MENU_ bản ghi mỗi trang',
-                    ])
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+            ->setTableId('order-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(1)
+            ->selectStyleSingle()
+            ->language([
+                'search' => 'Tìm kiếm:',
+                'zeroRecords' => 'Không tìm thấy bản ghi phù hợp',
+                'info' => 'Hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ bản ghi',
+                'infoEmpty' => 'Hiển thị từ 0 đến 0 trong tổng số 0 bản ghi',
+                'infoFiltered' => '(được lọc từ tổng số _MAX_ bản ghi)',
+                'lengthMenu' => 'Hiển thị _MENU_ bản ghi mỗi trang',
+            ])
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            ]);
     }
 
     /**
@@ -95,13 +116,13 @@ class OrderDataTable extends DataTable
      */
     public function getColumns(): array
     {
-        return [           
+        return [
             Column::make('id'),
             Column::make('order_code')->title('Mã đơn hàng'),
             Column::make('name')->title('Tên khách hàng'),
             Column::make('phone')->title('Số điện thoại'),
             Column::make('count')->title('Số lượng'),
-            Column::make('status')->title('Trạng thái'),
+            Column::computed('status')->title('Trạng thái'),
             Column::make('created_at')->title('	thời gian đặt hàng'),
             Column::computed('action')->title('Hành động')
         ];
