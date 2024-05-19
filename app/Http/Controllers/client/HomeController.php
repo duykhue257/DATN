@@ -42,8 +42,37 @@ public function shop( Request $request){
         $productsQuery->orderBy('price_reduced', 'asc');
     }
 
+    // Tìm kiếm theo danh mục
+    if ($request->has('category')) {
+        $selectedCategories = explode(',', $request->input('category'));
+        $productsQuery->whereIn('category_id', $selectedCategories);
+    }
+
+    // Lọc theo khoảng giá
+    if ($request->has('min_price') && $request->has('max_price')) {
+        $minPrice = $request->min_price;
+        $maxPrice = $request->max_price;
+        $productsQuery->whereBetween('price_reduced', [$minPrice, $maxPrice]);
+    }
+
+    // Lọc sản phẩm theo size
+    if ($request->has('size')) {
+        $selectedSizes = explode(',', $request->input('size'));
+        $productsQuery->whereHas('variants', function ($query) use ($selectedSizes) {
+            $query->whereIn('size_id', $selectedSizes);
+        });
+    }
+
+    // Lọc sản phẩm theo màu sắc
+    if ($request->has('color')) {
+        $selectedColors = explode(',', $request->input('color'));
+        $productsQuery->whereHas('variants', function ($query) use ($selectedColors) {
+            $query->whereIn('color_id', $selectedColors);
+        });
+    }
+
     //Phân trang và đếm
-    $products = $productsQuery->paginate(9);
+    $products = $productsQuery->paginate(9)->appends($request->query());
     $totalProducts = $products->total();
 
     Paginator::useBootstrap();
