@@ -20,6 +20,8 @@ class CheckoutController extends Controller
         // Lấy total mới từ session nếu có
         // $test = $request->session()->get('test');
         // dd($test);
+        $orderNumber = substr(uniqid(), -6);
+        // dd($orderNumber);
         $newTotal = $request->session()->get('newTotal');
         // dd($newTotal);
         $discountAmount = $request->session()->get('discountAmount');
@@ -44,11 +46,10 @@ class CheckoutController extends Controller
             // Nếu có giá trị 'discountAmount' trong session, sử dụng giá trị đó
         }
 
-        $orderNumber = session('order_number');
         $cartItems = Cart::instance('cart')->content();
         $payments = Payment::all();
 
-        return view('client.checkout', compact('cartItems', 'payments', 'orderNumber', 'checkoutTotal'));
+        return view('client.checkout', compact('cartItems', 'payments', 'checkoutTotal','orderNumber'));
     }
 
     public function store(CheckoutRequest  $request)

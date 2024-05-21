@@ -24,10 +24,10 @@
                         <div class="shop__cart__table">
                             <table>
                                 <thead>
-                                    <tr>
-                                        <th>Chọn</th>
+                                    <tr  class="text-center">
+                                 
                                         <th>SẢN PHẨM</th>
-                                        <th>GIÁ</th>
+                                        <th class="text-center">GIÁ</th>
                                         <th>Kích Thước</th>
                                         <th>Màu Sắc</th>
                                         <th>SỐ LƯỢNG</th>
@@ -38,12 +38,12 @@
                                 </thead>
                                 <tbody class="">
                                     @foreach ($cartItems as $item)
-                                        <tr>
+                                        <tr  class="text-center"> 
                                             {{-- <p>{{ $item->quanty }}</p> --}}
-                                            <td><input @if ($item->is_checked) {{ 'checked' }} @endif
+                                            {{-- <td><input @if ($item->is_checked) {{ 'checked' }} @endif
                                                     type="checkbox">
 
-                                            </td>
+                                            </td> --}}
                                             <td class="cart__product__item">
                                                 <img src="{{ Storage::url($item->product_image) }}"
                                                     alt="{{ $item->product_name }}">
@@ -51,10 +51,10 @@
                                                     <h6>{{ $item->name }}</h6>
                                                 </div>
                                             </td>
-                                            <td class="cart__price">
+                                            <td class="cart__price text-center">
                                                 {{ str_replace(',', '.', number_format($item->price)) }}đ</td>
 
-                                            <td class="cart__price">
+                                            <td class="cart__price text-center">
                                                 <div class="cart__product__item__title ">
                                                     <h6>{{ $item->size }}</h6>
                                                 </div>
@@ -145,24 +145,24 @@
                     <p id="notificationContent"></p>
                 </div>
                 <div id="notificationError" class="notificationError hidden">
-                    <svg  width="64px" height="64px"  viewBox="0 0 24 24" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
+                    <svg width="64px" height="64px" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
 
-                    <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                        <g id="SVGRepo_bgCarrier" stroke-width="0" />
 
-                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
 
-                    <g id="SVGRepo_iconCarrier">
-                        <path d="M9 9L15 15" stroke="#ff0a0a" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                        <path d="M15 9L9 15" stroke="#ff0a0a" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                        <circle cx="12" cy="12" r="9" stroke="#ff0a0a" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round" />
-                    </g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path d="M9 9L15 15" stroke="#ff0a0a" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M15 9L9 15" stroke="#ff0a0a" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <circle cx="12" cy="12" r="9" stroke="#ff0a0a" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </g>
 
-                </svg>
-                   Bạn đang nhập quá số lượng hiện có
+                    </svg>
+                    Bạn đang nhập quá số lượng hiện có
                 </div>
                 <div class="row">
                     <div class="col-lg-6">
@@ -176,27 +176,20 @@
                                     readonly>
                                 <button type="button" class="site-btn btn btn-danger" onclick="cancelDiscount()"><span
                                         style="white-space: nowrap;">&nbsp&nbspHủy&nbsp&nbsp</span></button>
-
-
                                 {{-- <button class="site-btn btn btn-danger" type="submit" onclick="cancelDiscount()">Hủy mã giảm giá</button> --}}
                             </form><br>
-
-
-
 
                             <h6>MÃ CÓ THỂ DÙNG</h6><br>
                             @foreach ($discount as $dis)
                                 <form action="#" class="discount-form">
-                                    <input class="text-center discount-code border-1 rounded-lg input-hover" type="text" name="selected_discount_code"
+                                    <input class="text-center discount-code border-1 rounded-lg input-hover"
+                                        type="text" name="selected_discount_code"
                                         value="{{ $dis->code }}({{ $dis->percent }}%)" readonly>
                                     <button type="button" class="button_voucher site-btn choose-discount"
                                         data-discount="{{ $dis->code }}">&nbspdùng
                                     </button>
                                 </form>
                             @endforeach
-
-
-
 
                         </div>
                     </div>
@@ -209,8 +202,8 @@
                                         id="subtotal">{{ str_replace(',', '.', Cart::instance('cart')->subtotal()) }}đ</span>
                                 </li>
                                 <li>Giảm giá: <span id="discountAmount">0đ</span></li>
-                                <li>Phí giao hàng: <span>{{ str_replace(',', '.', Cart::instance('cart')->tax()) }}đ</span>
-                                </li>
+                                {{-- <li>Phí giao hàng: <span>{{ str_replace(',', '.', Cart::instance('cart')->tax()) }}đ</span>
+                                </li> --}}
                                 <li>Tổng cộng: <span
                                         id="total">{{ str_replace(',', '.', Cart::instance('cart')->total()) }}đ</span>
                                     {{-- <p id="percent">percent</p> --}}
@@ -237,7 +230,7 @@
         @endif
     </section>
     <style>
-        .input-hover{
+        .input-hover {
             font-size: 20px;
             font-weight: 600;
             transition: background-color 0.3s;
@@ -245,20 +238,22 @@
             color: #ffffff;
             margin: 7px 0px;
         }
+
         /* .input-hover:hover {
-            background-color: #ffffff;  
-        } */
-        .button_voucher{
+                background-color: #ffffff;
+            } */
+        .button_voucher {
             background-color: #000;
             border: none;
             color: white;
             margin: 7px 0px;
         }
-        .button_voucher:hover{
+
+        .button_voucher:hover {
             color: red;
         }
     </style>
-    
+
     <!-- Shop Cart Section End -->
     <form id="updateCartQty" action="{{ route('cart.update') }}" method="POST">
         @csrf
@@ -275,10 +270,10 @@
         @csrf
         @method('delete')
     </form>
-    @php
+    {{-- @php
         // $numProducts = count($cartItems);
         // dd($numProducts);
-    @endphp
+    @endphp --}}
 
 @endsection
 
@@ -288,16 +283,16 @@
         //  var numProducts = $('tbody').children('tr').length;
         // var percent;
         // console.log('percent :' + percent);
-        var discountStr = sessionStorage.getItem('discount');
-        var discount = parseFloat(discountStr);
+        // var discountStr = sessionStorage.getItem('discount');
+        var discount = sessionStorage.getItem('discount');
 
         if (!isNaN(discount)) {
             console.log("Discount:", discount);
             // Sử dụng giá trị discount ở đây nếu nó là một số hợp lệ
-            if (discount === 0) {
+            if (discount == 0) {
                 $('#discountAmount').text(discount + 'đ');
             } else {
-                $('#discountAmount').text('-' + parseFloat(discount).toLocaleString('vi-VN') + 'đ');
+                $('#discountAmount').text('-' + discount + 'đ');
             }
         } else {
             console.log("Giá trị không hợp lệ trong sessionStorage.");
@@ -308,21 +303,22 @@
         }
 
         var total = sessionStorage.getItem('newtotal');
+        console.log('total1'+total);
         var totalNumber = parseFloat(total);
 
-        if (!isNaN(totalNumber)) {
-            var formattedTotal = totalNumber.toLocaleString('vi-VN', {
-                minimumFractionDigits: 0
-            });
-            $('#total').text(formattedTotal + 'đ');
-            console.log('Tổng: ' + formattedTotal);
-        } else {
+        // if (!isNaN(totalNumber)) {
+        //     var formattedTotal = totalNumber.toLocaleString('vi-VN', {
+        //         minimumFractionDigits: 0
+        //     });
+        //     $('#total').text(formattedTotal + 'đ');
+        //     console.log('Tổng: ' + formattedTotal);
+        // } else {
             console.log('Giá trị không hợp lệ trong sessionStorage.');
             var totalText = $('#total').text();
             var totalNumber = totalText.replace(/\D/g, '');
             console.log(totalNumber);
             sessionStorage.setItem('newtotal', totalNumber);
-        }
+        // }
 
 
 
@@ -355,9 +351,12 @@
                             var productId = $(this).find('.cart__total').data('product-id');
                             var cartTotalElement = $('.cart__total[data-product-id="' + productId +
                                 '"]');
-                            var newTotalString = cartTotalElement.text().replace('đ', '').replace('.',
-                                '').trim();
-var subTotal = parseFloat(newTotalString);
+                            // var newTotalString = cartTotalElement.text().replace('đ', '').replace('.',
+                            //     '').trim();
+                            var newTotalString = cartTotalElement.text().replace('đ', '').replace(/(\.)/g, '').trim();
+    
+                            var subTotal = parseFloat(newTotalString);
+                            console.log('sub : '+newTotalString);
                             if (!isNaN(subTotal)) {
                                 newTotalSum += subTotal;
                             }
@@ -373,15 +372,13 @@ var subTotal = parseFloat(newTotalString);
 
                         $('#subtotal').text(newTotalSum.toLocaleString('vi-VN') + 'đ');
 
-                        // var discount = $('#discountAmount').text();
-                        // var subtotalNumber = discount.replace(/\D/g, '');
-                        // console.log(discount + 'cccoc');
+
                         console.log('sum :' + newTotalSum);
                         var percent = sessionStorage.getItem('percent');
                         var discountAmountNumber = parseInt(newTotalSum * (percent / 100));
-                        var discountAmount = discountAmountNumber / 1000;
-                        console.log(discountAmount + 'mount');
-                        sessionStorage.setItem('discount', discountAmount);
+                        var formattedTotalSum = discountAmountNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                        console.log(formattedTotalSum + 'mount');
+                        sessionStorage.setItem('discount', formattedTotalSum);
 
                         if (discountAmountNumber == 0) {
                             $('#discountAmount').text(parseFloat(discountAmountNumber).toLocaleString(
@@ -391,10 +388,6 @@ var subTotal = parseFloat(newTotalString);
                                 'vi-VN') + 'đ');
                         }
 
-
-                        // console.log('voucher' + discountAmount);
-                        // console.log('newTotalSum' + newTotalSum);
-                        //   console.log(savedPercent);
                         var newtotal = newTotalSum - taxNumber - discountAmountNumber;
                         newtotal = parseInt(newtotal);
                         console.log('newtotal :' + newtotal);
@@ -408,7 +401,7 @@ var subTotal = parseFloat(newTotalString);
                         // Cập nhật thất bại
                         console.log('Cập nhật số lượng thất bại!');
                         // Hiển thị thông báo lỗi nếu cần
-}
+                    }
                 },
                 error: function(xhr, status, error) {
                     // Xử lý lỗi nếu có
@@ -446,24 +439,24 @@ var subTotal = parseFloat(newTotalString);
 
         document.querySelectorAll('.quantity').forEach(element => {
             let defaultquantity = element.value;
-            let rowId = element.dataset.rowid; 
+            let rowId = element.dataset.rowid;
             let maxQuantity = parseFloat(element.getAttribute('max'));
 
-            console.log('defaultquantity' + defaultquantity);
-            console.log('maxQuantity' + maxQuantity);
+            // console.log('defaultquantity' + defaultquantity);
+            // console.log('maxQuantity' + maxQuantity);
             let originalValue = element.value;
 
             element.onchange = () => {
                 if (element.value > maxQuantity) {
                     element.value = maxQuantity;
-                    if(element.value == maxQuantity){
+                    if (element.value == maxQuantity) {
                         updateQuantity(element);
                     }
                     alert('Số lượng hàng vượt quá có sẵn');
-                }else if(element.value == 0){
+                } else if (element.value == 0) {
                     element.value = originalValue;
                     alert('Số lượng không hợp lệ');
-                }else {
+                } else {
                     updateQuantity(element);
                 }
             };
@@ -476,6 +469,7 @@ var subTotal = parseFloat(newTotalString);
         function removeItemFromCart(rowId) {
             $('#rowId_D').val(rowId);
             $('#deleteFromCart').submit();
+            
         }
 
         function clearCart() {
@@ -608,6 +602,7 @@ var subTotal = parseFloat(newTotalString);
                     sessionStorage.setItem('newtotal', newTotal);
                     var percent = 0;
                     sessionStorage.setItem('percent', percent);
+                    document.getElementById('discount_code').value = '';
 
                     // Gửi giá trị total mới lên server để lưu vào session
                     // updateCartTotal(newTotal);
@@ -638,6 +633,7 @@ var subTotal = parseFloat(newTotalString);
                 $('#svgsuccess').addClass('hidden');
             }, 2600); // 3000 miliseconds = 3 seconds
         }
+
         function showErrorMessage() {
             document.getElementById('notificationError').classList.remove('hidden');
 
@@ -648,4 +644,3 @@ var subTotal = parseFloat(newTotalString);
         }
     </script>
 @endpush
-

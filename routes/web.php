@@ -36,6 +36,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\client\HomeController::class, 'home']);
 
+
+Route::get('/price_range', [App\Http\Controllers\client\HomeController::class, 'price_range'])->name('price_range');
+
 Route::get('/home', [App\Http\Controllers\client\HomeController::class, 'home'])->name('homePage');
 Route::get('/blog', function () {
    return view('client.blog');

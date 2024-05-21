@@ -17,7 +17,7 @@
                         <p style="font-weight: 500;">{{  $user->email }}</p>
                     </div>
                     <div class="d-flex">
-                        <p class="mr-2">Số điện thoại: </p>
+                        <p class="mr-2">Mật khẩu: *****</p>
                         <p style="font-weight: 500;">{{  $user->phone }}</p>
                     </div>
                 </div>
@@ -76,25 +76,8 @@
                         <label for="inputNumber" class="form-label">Số điện thoại<span style="color: red;"> *</span></label>
                         <input type="text" class="form-control" id="inputNumber" placeholder="0123456789">
                     </div>
-                    <div class="col-12 mb-4">
-                        <div><label for="inputSex" class="form-label">Giới tính<span style="color: red;">
-                            *</span></label></div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                                value="option1">
-                            <label class="form-check-label" for="inlineRadio1">Nam</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                                value="option2">
-                            <label class="form-check-label" for="inlineRadio2">Nữ</label>
-                        </div>
-                    </div>
-                    <div class="col-12 mb-4">
-                        <label for="inputBirthDay" class="form-label">Sinh nhật<span style="color: red;">
-                            *</span></label>
-                        <input type="date" class="form-control" id="inputBirthDay">
-                    </div>
+                   
+                   
                     <div class="col-12">
                         <button type="submit" class="btn btn-dark btn-block">
                             CẬP NHẬT THÔNG TIN

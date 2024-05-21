@@ -20,8 +20,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h6 class="coupon__link"><span class="icon_tag_alt"></span> <a href="#"> Có phiếu giảm giá?</a>
-                        Nhấn vào đây để nhập mã của bạn.</h6>
+                    {{-- <h6 class="coupon__link"><span class="icon_tag_alt"></span> <a href="#"> Có phiếu giảm giá?</a>
+                        Nhấn vào đây để nhập mã của bạn.</h6> --}}
                         <div>
                             @if ($errors->has('ordererror'))
                                 <div style="color: red; text-align:center" class="error">{{ $errors->first('ordererror') }}</div>
@@ -51,7 +51,7 @@
                                     <span class="text-danger">{{ $message }}</span><br><br>
                                 @enderror
                                 <div class="checkout__form__input">
-                                    <p>Thị trấn/Thành phố <span>*</span></p>
+                                    <p>Tỉnh/Thành phố <span>*</span></p>
                                     <select required class="form-control" id="province" name="province"></select>
 
                                 </div>
@@ -64,7 +64,7 @@
                                     <select required class="form-control" id="ward" name="ward"></select>
                                 </div>
                                 <div class="checkout__form__input">
-                                    <p>Địa chỉ <span>*</span></p>
+                                    <p>Số nhà,tên đường/phố <span>*</span></p>
                                     <input type="text" name="detail"
                                         placeholder="Số nhà, căn hộ, tòa nhà... ( tùy chọn )" value="{{ old('detail') }}"
                                         required>
@@ -76,7 +76,7 @@
 
 
                                 <div class="checkout__form__input">
-                                    <p>Ghi chú đơn hàng <span>*</span></p>
+                                    <p>Ghi chú đơn hàng <span></span></p>
                                     <input type="text" name="note"
                                         placeholder="Lưu ý về đơn đặt hàng của bạn, ví dụ: thông báo đặc biệt về giao hàng"
                                         value="{{ old('name') }}" required>
@@ -116,8 +116,8 @@
                                     <li class="">Tổng tạm tính.
                                         <span>{{ str_replace(',', '.', Cart::instance('cart')->subtotal()) }}đ</span>
                                     </li>
-                                    <li class="">Phí vận chuyển. <span> {{ Cart::instance('cart')->tax() }}đ</span>
-                                    </li>
+                                    {{-- <li class="">Phí vận chuyển. <span> {{ Cart::instance('cart')->tax() }}đ</span>
+                                    </li> --}}
                                     {{-- <li class="">Giảm giá <span>- {{ number_format($discountAmount, 0, ',', '.') }}đ</span></li> --}}
                                     <li>Giảm giá <span id="discount"> </span></li>
 

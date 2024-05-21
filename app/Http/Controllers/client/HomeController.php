@@ -24,7 +24,12 @@ public function home()
 }
 
     
-    
+    public function price_range(){
+        return [
+            'min_price' => Products::all()->min('price_reduced'),
+            'max_price' => Products::all()->max('price_reduced')
+        ];
+    }
     
 public function shop( Request $request){
     $categories = Category::all();
@@ -34,6 +39,10 @@ public function shop( Request $request){
     $productsQuery = Products::with('variants');
     // dd($productsQuery);
 
+    $price_range = [
+        'min_price' => Products::all()->min('price_reduced'),
+        'max_price' => Products::all()->max('price_reduced')
+    ];
     // Sắp xếp sản phẩm theo giá (giảm dần hoặc tăng dần)
     $sort = $request->input('sort');
     if ($sort == 'desc_price') {
@@ -76,8 +85,8 @@ public function shop( Request $request){
     $totalProducts = $products->total();
 
     Paginator::useBootstrap();
-
-    return view('client.shop', compact('products','colors','sizes','categories'));
+// dd($price_range);
+    return view('client.shop', compact('products','colors','sizes','categories','price_range'));
 }
 
 public function ProductDetail(Request $request) {
