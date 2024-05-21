@@ -329,7 +329,7 @@
                         </div>
                     @endif
                 @endforeach
-
+                
 
             </div>
         </div>
@@ -563,5 +563,21 @@
                 }
             }
         }
+
+        // hiển thị sl khi thêm giỏ hàng 
+        document.addEventListener("DOMContentLoaded", function() {
+        var addToCartBtn = document.querySelector(".cart-btn");
+        addToCartBtn.addEventListener("click", function(event) {
+            event.preventDefault(); 
+            updateCartQuantity();
+        });
+
+        function updateCartQuantity() {
+
+            var cartQuantityElement = document.querySelector(".tip");
+            var currentQuantity = parseInt(cartQuantityElement.textContent);
+            cartQuantityElement.textContent = currentQuantity + 1;
+        }
+    });
     </script>
 @endsection
