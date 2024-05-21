@@ -31,24 +31,35 @@ class OrderDataTable extends DataTable
             ->addColumn('count', function ($order) {
                 return count($order->detail_order);
             })
+            ->addColumn('created_at', function ($order) {
+                return $order->created_at;
+            })
             ->rawColumns(['action', 'status'])
             ->addColumn('status', function ($order) use ($status) {
-                $currentStatusId = $order->status->id;
-                $currentStatus = htmlspecialchars($order->status->status);
-    
-                $options = '<select name="status_id">';
+                $firstOptionId = $order->status->id; // Lưu id của option đầu tiên
+
+                // Bắt đầu form
+                $form = '<form class="order-form" action="' . route('admin.update_order_status', ['order' => $order->id]) . '" method="POST">';
+                $form .= '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+                $form .= '<input type="hidden" name="_method" value="POST">';
+                $form .= '<td>';
+
+                // Thêm select vào form
+                $form .= '<select name="status_id">';
+                $form .= '<option hidden value="' . $firstOptionId . '">' . $order->status->status . '</option>';
                 foreach ($status as $stt) {
-                    $sttId = htmlspecialchars($stt->id);
-                    $sttStatus = htmlspecialchars($stt->status);
-    
-                    // Tạo option cho mỗi trạng thái
-                    $options .= '<option value="' . $sttId . '"' . ($sttId == $currentStatusId ? ' selected' : '') . '>' . $sttStatus . '</option>';
+                    $form .= '<option value="' . $stt->id . '"' . ($stt->id < $firstOptionId ? ' hidden' : '') . '>' . $stt->status . '</option>';
                 }
-            
-                $options .= '</select>';
-                $options .= '<button class="btn btn-success" type="submit">Cập nhật</button>';
-            
-                return $options;
+                $form .= '</select>';
+
+                // Thêm button "Cập nhật"
+                $form .= '<button class="btn btn-success" type="submit">Cập nhật</button>';
+
+                // Kết thúc form
+                $form .= '</td>';
+                $form .= '</form>';
+
+                return $form;
             })
             
             // ->addColumn('status', function ($order, $status) {

@@ -29,7 +29,9 @@
         @if (Session::has('success'))
             alert('{{ Session::get('success') }}');
         @endif
-
+        @if (Session::has('error'))
+            alert('{{ Session::get('error') }}');
+        @endif
         $(document).ready(function() {
             $('.order-form').submit(function(event) {
                 event.preventDefault(); // Ngăn chặn hành động mặc định của form

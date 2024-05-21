@@ -47,12 +47,13 @@
                             <div class="filter-range-wrap">
                                 <div id="price-range-slider"
                                     class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-                                    data-min="0" data-max="9000000"></div>
+                                    data-min="{{ $price_range['min_price'] }}" data-max="{{ $price_range['max_price'] }}"></div>
                                 <div class="range-slider">
                                     <div class="price-input">
                                         <p>Giá:</p>
-                                        <input type="text" id="minamount">
-                                        <input type="text" id="maxamount">
+                                       
+                                        <input type="text" id="minamount" value="{{ $price_range['min_price'] }}">
+                                        <input type="text" id="maxamount" value="{{ $price_range['max_price'] }}">
                                     </div>
                                 </div>
                             </div>
@@ -226,6 +227,8 @@
                 e.preventDefault();
                 var minPrice = $("#minamount").val();
                 var maxPrice = $("#maxamount").val();
+                console.log(minPrice);
+                console.log(maxPrice);
                 var categoryId = $('#category-filter').val();
                 var sortBy = $('#sortBySelect').val();
                 var url = '{{ route('shop') }}?min_price=' + minPrice + '&max_price=' + maxPrice;

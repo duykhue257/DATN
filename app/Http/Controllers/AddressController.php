@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\DataTables\OrderHistoryDataTable;
+use App\Models\ProductVariants;
 
 class AddressController extends Controller
 {
@@ -39,12 +40,23 @@ class AddressController extends Controller
         $order = Order::find($id);
 
         if (!$order) {
-            return response()->json(['message' => 'Đơn hàng không tồn tại.'], 404);
+            return redirect()->back()->with('message', 'Đơn hàng không tồn tại.');
+        }
+        if($order->status_id > 4){
+            return redirect()->back()->with('error', "đơn hàng".$order->status->status);
         }
 
         $order->status_id = '7';
         $order->save();
-
+        if($order->detail_order){
+            foreach($order->detail_order as $detail){
+                $variant = ProductVariants::find($detail['product_variant_id']);
+                if($variant){
+                    $variant->quantity = $variant->quantity + $detail['quantity'];
+                    $variant->save();
+                }
+            }
+        }
         return redirect()->back()->with('success', 'Đơn hàng đã được hủy thành công.');
     }
 }

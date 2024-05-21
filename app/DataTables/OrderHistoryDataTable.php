@@ -58,6 +58,9 @@ class OrderHistoryDataTable extends DataTable
             ->addColumn('method', function ($order) {
                 return $order->payment->method ;
             })
+            ->addColumn('created_at', function ($order) {
+                return $order->created_at ;
+            })
             ->rawColumns(['action', 'name'])
             ->setRowId('id');
     }
