@@ -38,10 +38,6 @@
                           <div class="form-check d-flex align-items-center mb-4">
                               <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33"
                                   checked />
-                              <label class="form-check-label" for="form2Example33">
-                                  Lưu thông tin đăng nhập
-                              </label>
-                              <a  class="ml-3" href="">Quên mật khẩu</a>
                           </div>
 
                           <!-- Submit button -->

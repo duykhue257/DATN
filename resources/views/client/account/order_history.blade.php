@@ -9,12 +9,7 @@
         <hr>
         <div class="mb-4 d-flex flex-row-reverse">
 
-            <form action="">
-                <select class="form-select pl-1 pr-4" aria-label="Default select example">
-                    <option value="1">Tất cả</option>
-
-                </select>
-            </form>
+    
             {{-- @push('scripts')
     <script>
         alert('Script đang chạy');
@@ -52,7 +47,6 @@
 
 
             </div>
-            <h6 class="pr-2">Đơn hàng: </h6>
         </div>
         <div class="card">
             <div class="card-body">
