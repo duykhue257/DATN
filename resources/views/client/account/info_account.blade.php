@@ -1,6 +1,6 @@
 @extends('layouts.client.layout_account')
 @section('content')
-<section class="border shadow rounded-custom py-2 px-4">
+<section class="border shadow rounded-custom py-2 px-4 pb-4">
     <div class="pt-4">
         <h6 style="font-weight: 500;">Thông tin tài khoản</h6>
         <p>Bạn có thể cập nhật thông tin của mình ở trang này</p>

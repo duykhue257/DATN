@@ -32,6 +32,12 @@ class VoucherDataTable extends DataTable
                 </form>
                 ';
             })
+            ->editColumn('min_price', function ($voucher) {
+                return number_format($voucher->min_price, 0, '', ','). 'đ';
+            })
+            ->editColumn('percent', function ($voucher) {
+                return $voucher->percent . '%';
+            })
             ->setRowId('id');
     }
 

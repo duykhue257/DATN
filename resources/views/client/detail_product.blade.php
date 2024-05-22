@@ -136,7 +136,7 @@
                                         0
                                     </div>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <span>Màu sẵn có:</span>
                                     {{-- @foreach ($product->variants->pluck('colors') as $color)
                                           <span>{{ $color->color }} </span>
@@ -160,7 +160,44 @@
                                         @endforeach
                                     </div>
 
-                                </li>
+                                </li> -->
+
+                                
+                                <li>
+    <span>Màu sẵn có:</span>
+    <div class="color__btn">
+        @php
+            $uniqueColors = [];
+            function getTextColor($bgColor) {
+                // Chuyển đổi màu thành chữ thường để dễ so sánh
+                $bgColor = strtolower($bgColor);
+                // Các màu nền tối cần đổi màu chữ thành trắng
+                $darkColors = ['black', 'navy', 'purple', 'maroon', 'darkgreen', 'darkblue', 'darkred'];
+                if (in_array($bgColor, $darkColors)) {
+                    return '#fff';
+                }
+                return '#000';
+            }
+        @endphp
+        @foreach ($product->variants->pluck('colors') as $color)
+            @if (!in_array($color->color, $uniqueColors))
+                @php
+                    $textColor = getTextColor($color->color);
+                @endphp
+                <input class="color" type="radio" id="{{ $color->color }}-btn"
+                    name="color" value="{{ $color->id }}"
+                    data-color-id="{{ $color->id }}">
+                <label for="{{ $color->color }}-btn" style="background-color: {{ $color->color }}; color: {{ $textColor }};">
+                    {{ $color->color }}
+                </label>
+                @php
+                    $uniqueColors[] = $color->color;
+                @endphp
+            @endif
+        @endforeach
+    </div>
+</li>
+
                                 <li>
                                     <span>Kích thước sẵn có:</span>
                                     <div class="size__btn">
@@ -298,7 +335,7 @@
                         <h5>NHỮNG SẢM PHẨM TƯƠNG TỰ</h5>
                     </div>
                 </div>
-                @foreach ($categoryProducts as $Prd_type)
+                <!-- @foreach ($categoryProducts as $Prd_type)
                     @if ($Prd_type->id != $product->id)
                         <div class="col-lg-3 col-md-4 col-sm-6">
                             <div class="product__item">
@@ -333,8 +370,44 @@
                             </div>
                         </div>
                     @endif
-                @endforeach
+                @endforeach -->
                 
+                @foreach ($categoryProducts as $Prd_type)
+    @if ($Prd_type->id != $product->id)
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="product__item">
+                <div class="product__item__pic set-bg"
+                     @if (isset($Prd_type->variants[0]->image)) data-setbg="{{ Storage::url($Prd_type->variants[0]->image) }}" @endif>
+                    <ul class="product__hover">
+                        @if (isset($Prd_type->variants[0]->image))
+                            <li><a class="d-flex justify-content-center align-items-center"
+                                   href="{{ Storage::url($Prd_type->variants[0]->image) }}"
+                                   class="image-popup"><span class="arrow_expand"></span></a></li>
+                        @endif
+                        <li><a class="d-flex justify-content-center align-items-center"
+                               href=""><span class="icon_heart_alt"></span></a></li>
+                    </ul>
+                </div>
+                <div class="product__item__text">
+                    <h6><a
+                            href="{{ route('detail_product') }}?id={{ $Prd_type->id }}">{{ $Prd_type->name }}</a>
+                    </h6>
+                    <div class="rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                    </div>
+                    <div class="product__price">{{ Number_format($Prd_type->price_reduced) }}đ
+                        <span>{{ Number_format($Prd_type->price) }}đ</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+@endforeach
+
 
             </div>
         </div>

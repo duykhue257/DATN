@@ -36,6 +36,9 @@ class ProductsDataTable extends DataTable
             ->addColumn('name_cate', function ($prd) {
                 return $prd->category->name_cate;
             })
+            ->editColumn('price', function ($prd) {
+                return number_format($prd->price, 0, '', ','). 'đ';
+            })
             ->setRowId('id');
     }
 
