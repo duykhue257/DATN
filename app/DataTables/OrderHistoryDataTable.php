@@ -113,7 +113,7 @@ class OrderHistoryDataTable extends DataTable
             Column::make('name')->title('Tên sản phẩm'),
             Column::make('created_at')->title('Ngày mua'),
             Column::make('status')->title('Trạng thái'),
-            Column::make('method')->title('Tình trạng thanh toán'),
+            Column::computed('method')->title('Tình trạng thanh toán'),
             Column::computed('action')->title('Thao tác')
         ];
     }

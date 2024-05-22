@@ -50,9 +50,9 @@
                             </div>
                         </div>
                     </form> --}}
-                    <h1 class="font-bold">
+                    {{-- <h1 class="font-bold">
                         DASHBOARD
-                    </h1>
+                    </h1> --}}
 
                     <ul class="navbar-nav ml-auto">
                         <div class="topbar-divider d-none d-sm-block"></div>

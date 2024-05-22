@@ -10,8 +10,8 @@
             <div class="col-xl-6 col-lg-7">
                 <nav class="header__menu align-items-center">
                     <ul>
-                        <li class=""><a href="/home">Trang chủ</a></li>
-                        <li><a href="/shop">Sản phẩm</a></li>
+                        <li class="{{ request()->is('home') ? 'active' : '' }}"><a href="/home">Trang chủ</a></li>
+                        <li class="{{ request()->is('shop') ? 'active' : '' }}"><a href="/shop">Sản phẩm</a></li>
                         {{-- <li><a href="#">Pages</a>
                             <ul class="dropdown">
                                 <li><a href="/product-details.html">Thông tin chi tiết sản phẩm</a></li>
@@ -20,8 +20,8 @@
                                 <li><a href="/blog-details.html">Chi tiết Blog</a></li>
                             </ul>
                         </li> --}}
-                        <li><a href="/blog">Tin tức</a></li>
-                        <li><a href="/contact">Liên hệ</a></li>
+                        <li class="{{ request()->is('blog') ? 'active' : '' }}"><a href="/blog">Tin tức</a></li>
+                        <li class="{{ request()->is('contact') ? 'active' : '' }}"><a href="/contact">Liên hệ</a></li>
                     </ul>
                 </nav>
             </div>

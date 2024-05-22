@@ -24,7 +24,7 @@
                           @csrf
                             <!-- 2 column grid layout with text inputs for the first and last names -->
                             <div class="form-outline mb-4">
-                                <label class="form-label custom-text-start" for="form3Example3">Username</label>
+                                <label class="form-label custom-text-start" for="form3Example3">Họ và tên</label>
                                 <input type="text" name="name" value="{{ old('name') }}" id="form3Example3" class="form-control" />
                             </div>
                             @error('name')
@@ -33,7 +33,7 @@
 
                             <!-- Email input -->
                             <div class="form-outline mb-4">
-                                <label class="form-label custom-text-start" for="form3Example3">Email</label>
+                                <label class="form-label custom-text-start" for="form3Example3">Email<span>*</span></label>
                                 <input type="email" name="email" value="{{ old('email') }}" id="form3Example3"
                                     class="form-control" />
                             </div>
@@ -43,7 +43,7 @@
 
                             <!-- Password input -->
                             <div class="form-outline mb-4">
-                                <label class="form-label custom-text-start" for="form3Example4">PassWord</label>
+                                <label class="form-label custom-text-start" for="form3Example4">Mật khẩu</label>
                                 <input type="password" name="password" id="form3Example4" class="form-control" />
                             </div>
                             @error('password')
@@ -51,7 +51,7 @@
                             @enderror
 
                             <div class="form-outline mb-4">
-                                <label class="form-label custom-text-start" for="form3Example4"> Confirm Password</label>
+                                <label class="form-label custom-text-start" for="form3Example4">Xác nhận mật khẩu</label>
                                 <input type="password" name="password_confirmation" id="form3Example4"
                                     class="form-control" />
                             </div>
