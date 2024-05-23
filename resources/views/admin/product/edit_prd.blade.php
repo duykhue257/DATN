@@ -9,6 +9,15 @@
             <div class="card-body">
                 <div class="">
                     <div class="m-8">
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                         <form action="{{ route('product.update',$product->id) }}" class="max-w-md mx-auto" method="post"
                             enctype="multipart/form-data">
                             @csrf

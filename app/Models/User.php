@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -43,7 +44,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
     
-    
+    public function updatePassword($newPassword)
+    {
+        $this->password = Hash::make($newPassword);
+        $this->save();
+    }
 
     public function bills()
     {

@@ -17,14 +17,17 @@ class ProductsController extends Controller
 
     public function index(ProductsDataTable $dataTable)
     {
-        $products = Products::join('categories', 'products.category_id', '=', 'categories.id')
+
+
+        $products = Products::withTrashed()
+            ->join('categories', 'products.category_id', '=', 'categories.id')
             ->select('products.*', 'categories.name_cate', 'products.id as id')
             ->latest()
             ->get();
-        // $products = Products::latest()->get();
-        /* return view('admin.product.list_prd', compact('products')); */
+
         return $dataTable->render('admin.product.list_prd', compact('products'));
     }
+
 
     public function create()
     {
@@ -38,29 +41,44 @@ class ProductsController extends Controller
     public function store(Request $request, Products $product)
     {
 
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'price_reduced' => 'required|numeric|min:0',
+            'description' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
+        ]);
+
+
         $product->name = $request->name;
         $product->price = $request->price;
         $product->price_reduced = $request->price_reduced;
         $product->description = $request->description;
         $product->category_id = $request->category_id;
+
+
         $product->save();
+
 
         return redirect()->route('product.index');
     }
 
 
+
     public function show(int $id, ProductVariansDataTable $dataTable)
     {
-//    dd($dataTable);
-        // Truy vấn biến thể sản phẩm theo ID sản phẩm
-        $products = ProductVariants::with('product', 'sizes', 'colors')
+
+
+        $products = ProductVariants::withTrashed()
+            ->with('product', 'sizes', 'colors')
             ->where('product_id', $id) // Lọc theo ID sản phẩm
             ->latest()
             ->get();
+
         $productId = $id;
         // dd($products);
         /* return view('admin.product.list_variant', compact('products','productId')); */
-        return $dataTable->with('id',$productId)->render('admin.product.list_variant', compact('products', 'productId'));
+        return $dataTable->with('id', $productId)->render('admin.product.list_variant', compact('products', 'productId'));
     }
 
 
@@ -74,6 +92,14 @@ class ProductsController extends Controller
     public function update(Request $request, Products $product)
     {
         // dd($request->all());
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'price_reduced' => 'nullable|numeric|min:0',
+            'description' => 'nullable|string',
+            'category_id' => 'required|exists:categories,id',
+        ]);
+        
         $product->name = $request->name;
         $product->price = $request->price;
         $product->price_reduced = $request->price_reduced;
@@ -84,11 +110,15 @@ class ProductsController extends Controller
     }
     public function destroy(Products $product)
     {
-        
-        $product->variants()->each(function ($variant) {
-            $variant->delete();
-        });
         $product->delete();
-        return back();
+        return redirect()->back()->with('success', 'Sản phẩm đã được khôi phục thành công.');
+        // return back();
+    }
+    public function restore($id)
+    {
+        $product = Products::withTrashed()->findOrFail(50);
+        $product->restore();
+
+        return redirect()->back()->with('success', 'Sản phẩm đã được khôi phục thành công.');
     }
 }

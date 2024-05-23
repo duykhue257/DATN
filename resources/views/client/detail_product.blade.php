@@ -49,21 +49,19 @@
                     <div class="product__details__text">
                         <h3>{{ $product->name }}<span>Thương Hiệu: ClassicMan</span></h3>
                         <!-- <div class="rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <span>( 138 đánh giá )</span>
-                        </div> -->
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <span>( 138 đánh giá )</span>
+                                </div> -->
                         <div class="product__details__price">
                             {{ str_replace(',', '.', number_format($product->price_reduced)) }}
-                            đ
-                            <span>
-                                @if($product->price > 0)
-                                {{ str_replace(',', '.', number_format($product->price)) }} đ
-                                @endif
-                            </span></div>
+                            đ@if ($product->price > 0)
+                                <span>{{ str_replace(',', '.', number_format($product->price)) }} đ</span>
+                            @endif
+                        </div>
 
                         - Hình ảnh sản phẩm là ảnh thật, các hình hoàn toàn do shop tự thiết kế.</br>
                         - Kiểm tra cẩn thận trước khi gói hàng giao cho Quý Khách</br>
@@ -106,27 +104,47 @@
                                 </svg>
                                 Thêm vào giỏ hàng thành công
                             </div>
-                            
+
                         </div>
                         <div id="notificationError" class="notificationError hidden">
-                            <svg  width="64px" height="64px"  viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-    
-                            <g id="SVGRepo_bgCarrier" stroke-width="0" />
-    
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
-    
-                            <g id="SVGRepo_iconCarrier">
-                                <path d="M9 9L15 15" stroke="#ff0a0a" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                                <path d="M15 9L9 15" stroke="#ff0a0a" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                                <circle cx="12" cy="12" r="9" stroke="#ff0a0a" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-    
-                        </svg>
-                           Vượt quá số lượng hiện có
+                            <svg width="64px" height="64px" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+
+                                <g id="SVGRepo_bgCarrier" stroke-width="0" />
+
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+
+                                <g id="SVGRepo_iconCarrier">
+                                    <path d="M9 9L15 15" stroke="#ff0a0a" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M15 9L9 15" stroke="#ff0a0a" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <circle cx="12" cy="12" r="9" stroke="#ff0a0a" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </g>
+
+                            </svg>
+                            Vượt quá số lượng hiện có
+                        </div>
+                        <div id="notificationError2" class="notificationError hidden">
+                            <svg width="64px" height="64px" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+
+                                <g id="SVGRepo_bgCarrier" stroke-width="0" />
+
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+
+                                <g id="SVGRepo_iconCarrier">
+                                    <path d="M9 9L15 15" stroke="#ff0a0a" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M15 9L9 15" stroke="#ff0a0a" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <circle cx="12" cy="12" r="9" stroke="#ff0a0a" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </g>
+
+                            </svg>
+                            Số lượng trong giỏ hàng vượt quá số lượng hiện có
                         </div>
                         <div class="product__details__widget">
                             <ul>
@@ -259,42 +277,36 @@
                                                     <img src="img/administrator-avatar-icon-vector-32095490.jpg"
                                                     alt="" style="width: 30px; height: 30px;">
                                                 @else --}}
-                                                   
+
                                                 {{-- @endif --}}
 
                                                 {{-- <img src="img/tải xuống.jpg" alt=""> --}}
                                                 <img src="img/tải xuống.jpg" alt=""
-                                                style="width: 50px; height: 50px; border-radius: 10px;">
+                                                    style="width: 50px; height: 50px; border-radius: 10px;">
                                                 <div>
-                                                    <small class="name_cmt">{{ $comment->user->name }} <span class="ml-2">({{ $comment->created_at->format('d/m/Y')}})</span></small>
+                                                    <small class="name_cmt">{{ $comment->user->name }} <span
+                                                            class="ml-2">({{ $comment->created_at->format('d/m/Y') }})</span></small>
                                                     <p class="text_comment">{{ $comment->content }}</p>
                                                 </div>
-                                                
+
                                             </div>
                                         @endforeach
                                         @if ($comments->count() > 5)
-                                             <p class="More_cmt" id="showMoreComments">Hiển thị thêm <i class="fa-solid fa-angles-right"></i></p>
+                                            <p class="More_cmt" id="showMoreComments">Hiển thị thêm <i
+                                                    class="fa-solid fa-angles-right"></i></p>
                                         @endif
-                                       
+
                                         <div id="remainingComments" style="display: none;">
                                             @foreach ($remainingComments as $comment)
                                                 <div class="py-2 d-flex my-3">
-                                                    {{-- @if (Auth::user()->role = 0)
-                               
-                                                        <img src="img/administrator-avatar-icon-vector-32095490.jpg"
-                                                            alt="" style="width: 30px; height: 30px;">
-                                                    {{-- @else --}} 
-                                                    {{-- @endif --}}
-                                                    {{-- <img src="img/tải xuống.jpg" alt=""
-                                                            style="width: 20px; height: 20px;">
-                                                    <small>{{ $comment->user->name }}({{ $comment->created_at->format('d/m/Y') }})</small>
-                                                    <p class="px-3">{{ $comment->content }}</p> --}}
+
                                                     <img src="img/tải xuống.jpg" alt=""
-                                                style="width: 50px; height: 50px; border-radius: 10px;">
-                                                <div>
-                                                    <small class="name_cmt">{{ $comment->user->name }} <span class="ml-2">({{ $comment->created_at->format('d/m/Y')}})</span></small>
-                                                    <p class="text_comment">{{ $comment->content }}</p>
-                                                </div>
+                                                        style="width: 50px; height: 50px; border-radius: 10px;">
+                                                    <div>
+                                                        <small class="name_cmt">{{ $comment->user->name }} <span
+                                                                class="ml-2">({{ $comment->created_at->format('d/m/Y') }})</span></small>
+                                                        <p class="text_comment">{{ $comment->content }}</p>
+                                                    </div>
 
                                                 </div>
                                             @endforeach
@@ -309,16 +321,17 @@
                                             <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                                         @endif
                                         {{-- <textarea class="" name="content" rows="3"></textarea> --}}
-                                        <input class="input_cmt " name="content" type="text" placeholder="Nhập bình luận của bạn vào đây">
+                                        <input class="input_cmt " name="content" type="text"
+                                            placeholder="Nhập bình luận của bạn vào đây">
                                         <button type="submit" class="btn btn-danger"
-                                            @if (!Auth::check()) disabled title="Vui lòng đăng nhập để đăng nhận xét" 
-                                            @endif>
+                                            @if (!Auth::check()) disabled title="Vui lòng đăng nhập để đăng nhận xét" @endif>
                                             Bình luận
                                         </button>
                                     </form>
 
                                     @if (!Auth::check())
-                                        <p class="notification_signin">Vui lòng <a class="signin_cmt" href="{{ route('login') }}">đăng nhập</a> để đăng nhận xét.</p>
+                                        <p class="notification_signin">Vui lòng <a class="signin_cmt"
+                                                href="{{ route('login') }}">đăng nhập</a> để đăng nhận xét.</p>
                                     @endif
                                 </div>
 
@@ -335,7 +348,10 @@
                         <h5>NHỮNG SẢM PHẨM TƯƠNG TỰ</h5>
                     </div>
                 </div>
-                <!-- @foreach ($categoryProducts as $Prd_type)
+                @foreach ($categoryProducts as $Prd_type)
+                    {{-- @php
+                    dd($Prd_type);
+                @endphp --}}
                     @if ($Prd_type->id != $product->id)
                         <div class="col-lg-3 col-md-4 col-sm-6">
                             <div class="product__item">
@@ -411,58 +427,78 @@
 
             </div>
         </div>
-        
+
     </section>
 
     <style>
-        .name_cmt{
+        .name_cmt {
             font-weight: 700;
             margin-left: 15px;
             margin-bottom: 15px;
             font-size: 16px;
         }
-        .text_comment{
+
+        .text_comment {
             margin-left: 15px;
             font-weight: 500;
             font-size: 18px;
         }
-        .notification_cmt{
+
+        .notification_cmt {
             text-align: center;
             font-size: 20px;
             font-weight: 600;
-            
+
         }
-        .notification_signin{
+
+        .notification_signin {
             font-size: 20px;
             font-weight: 400;
             margin-top: 10px;
         }
+
         .input_cmt {
             border-radius: 10px;
             padding: 6px 0px;
             width: 290px;
             margin-top: 40px;
         }
-        .signin_cmt{
+
+        .signin_cmt {
             color: #e9250b;
 
         }
-        .signin_cmt:hover{
+
+        .signin_cmt:hover {
             /* color: #d2d609; */
-            color: #000 
+            color: #000
         }
-        .More_cmt{
+
+        .More_cmt {
             font-weight: 600;
             font-size: 19px;
             margin-top: 10px;
         }
-        .More_cmt:hover{
+
+        .More_cmt:hover {
             color: #000;
         }
     </style>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        const debounce = (callback, wait = 500) => {
+            let timeoutId = null;
+            return (...args) => {
+                window.clearTimeout(timeoutId);
+                timeoutId = window.setTimeout(() => {
+                    callback(...args);
+                }, wait);
+            };
+        };
+
+        var newTotal = sessionStorage.getItem('newtotal');
+        console.log(newTotal + 'newTotal');
         document.getElementById('showMoreComments').addEventListener('click', function() {
             document.getElementById('remainingComments').style.display = 'block';
             this.style.display = 'none'; // Ẩn nút "Hiển thị thêm" sau khi nhấp vào
@@ -492,12 +528,22 @@
                 document.getElementById('notification').classList.add('hidden');
             }, 2000); // 3000 miliseconds = 3 seconds
         }
+
         function showErrorMessage() {
             document.getElementById('notificationError').classList.remove('hidden');
 
             // Tự động ẩn hộp thông báo sau một khoảng thời gian
             setTimeout(function() {
                 document.getElementById('notificationError').classList.add('hidden');
+            }, 2000); // 3000 miliseconds = 3 seconds
+        }
+
+        function showErrorMessage2() {
+            document.getElementById('notificationError2').classList.remove('hidden');
+
+            // Tự động ẩn hộp thông báo sau một khoảng thời gian
+            setTimeout(function() {
+                document.getElementById('notificationError2').classList.add('hidden');
             }, 2000); // 3000 miliseconds = 3 seconds
         }
 
@@ -508,8 +554,8 @@
                 url: '{{ route('cart.store') }}',
                 data: formData,
                 success: function(response) {
-                    showSuccessMessage(); // Hiển thị thông báo thành công
-                    // Thực hiện các hành động khác sau khi thêm vào giỏ hàng thành công
+                    showSuccessMessage();
+                    sessionStorage.clear();
                 },
                 error: function(xhr, status, error) {
                     console.error(xhr.responseText); // Hiển thị thông báo lỗi nếu có
@@ -532,8 +578,8 @@
                 url: '{{ route('cart.store') }}',
                 data: formData,
                 success: function(response) {
-                    showSuccessMessage(); // Hiển thị thông báo thành công
-                    // Thực hiện các hành động khác sau khi thêm vào giỏ hàng thành công
+                    showSuccessMessage();
+                    sessionStorage.clear();
                 },
                 error: function(xhr, status, error) {
                     console.error(xhr.responseText); // Hiển thị thông báo lỗi nếu có
@@ -541,6 +587,7 @@
             });
         }
         const product = <?php echo json_encode($product); ?>;
+        const cart = <?php echo json_encode($cartContent); ?>;
 
         const attribute = {
             color: null,
@@ -555,7 +602,7 @@
                 const variant1 = product.variants.filter(p => p.color_id == attribute.color);
                 variant1.forEach(variant => {
                     // console.log(variant.size_id);
-                    console.log(variant);
+                    // console.log(variant.quantity);
                 });
                 sizes.forEach(size => {
                     const sizeId = size.getAttribute('data-size-id');
@@ -575,32 +622,7 @@
                 getVariant();
             }
         });
-        // sizes.forEach(size => {
-        //     size.onclick = (event) => {
-        //         attribute.size = event.target.value
-        //         const variant1 = product.variants.filter(p => p.size_id == attribute.size);
-        //         variant1.forEach(variant => {
-        //             // console.log(variant.size_id);
-        //             console.log(variant);
-        //         });
-        //         colors.forEach(color => {
-        //             const colorId = color.getAttribute('data-color-id');
 
-        //             if (colorId) {
-        //                 const isValidColor = variant1.some(variant => variant.color_id == colorId);
-        //                 if (!isValidColor) {
-        //                     color.parentNode.style.display = 'none';
-        //                 } else {
-        //                     color.parentNode.style.display = '';
-
-        //                 }
-
-        //             }
-
-        //         });
-        //         getVariant();
-        //     }
-        // });
         sizes.forEach(size => {
             size.onclick = (event) => {
                 attribute.size = event.target.value;
@@ -610,28 +632,44 @@
             }
         });
 
-
-
+        
         function getVariant() {
             // console.log(addToCart);
             // console.log(product.variants.find(p => p.size_id == attribute.color && p.size_id == attribute.size));
             if (attribute.color !== null && attribute.size !== null) {
                 const variant = product.variants.find(p => p.color_id == attribute.color && p.size_id == attribute.size)
+                console.log(variant.id.toString());
+                for (let key in cart) {
+                    if (cart.hasOwnProperty(key) && cart[key].id === variant.id.toString()) {
+                        console.log('qty: ', cart[key].qty);
+                        var qtyCart = parseInt(cart[key].qty, 10);
+                    }
+                }
 
+                let qty = document.querySelector('#qty').value;
+                console.log(parseFloat(qty) + qtyCart);
                 if (variant) {
                     // console.log(variant);
                     document.querySelector('#avalibale_quantity').innerText = variant.quantity
                     const addToCart = document.querySelector('#addToCart')
                     addToCart.disabled = false
                     document.querySelector('#variant_id').value = variant.id
-
-                    document.querySelector('#addToCart').onclick = () => {
+                    
+                    document.querySelector('#addToCart').onclick = debounce((event)=>  {
+        //                 var app = {{ Js::from(Cart::instance('cart')->content()) }};
+        // console.log(Object.values(app));
                         if (document.querySelector('#qty').value > variant.quantity) {
                             showErrorMessage();
+                        } else if (parseFloat(qty) + qtyCart > variant.quantity) {
+                            showErrorMessage2();
                         } else {
                             this.addToCart()
+                            // setTimeout(() => window.location.reload(), 500) // load lại trạng thì bỏ comment này 
+                            // qtyCart = parseFloat(qty) + qtyCart;
+                            // console.log('qtyCart'+qtyCart);
+                            // sessionStorage.setItem('cart',qtyCart)
                         }
-                    }
+                    })
                 } else {
                     document.querySelector('#avalibale_quantity').innerText = "0"
                     const addToCart = document.querySelector('#addToCart')

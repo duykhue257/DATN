@@ -9,7 +9,17 @@
             <div class="card-body">
                 <div class="">
                     <div class="m-8">
-                        <form action="{{ route('voucher.update',$voucher->id) }}" class="max-w-md mx-auto" method="post"
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        <form action="{{ route('voucher.update', $voucher->id) }}" class="max-w-md mx-auto" method="post"
                             enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
@@ -26,7 +36,7 @@
                                 <input type="number" name="percent" id="percent" value="{{ $voucher->percent }}"
                                     class="form-control" placeholder="" />
                             </div>
-                        
+
                             <div class="mb-3">
                                 <label for="min_price" class="form-label">giá tối thiểu</label>
                                 <input type="number" name="min_price" id="min_price" value="{{ $voucher->min_price }}"
@@ -35,13 +45,17 @@
 
                             <div class="mb-3">
                                 <label for="start_at" class="form-label">Thời gian bắt đầu</label>
-                                <input type="date" name="start_at" id="start_at" value="{{ \Carbon\Carbon::parse($voucher->start_at)->format('Y-m-d') }}" class="form-control" placeholder="" />
+                                <input type="date" name="start_at" id="start_at"
+                                    value="{{ \Carbon\Carbon::parse($voucher->start_at)->format('Y-m-d') }}"
+                                    class="form-control" placeholder="" />
                             </div>
                             <div class="mb-3">
                                 <label for="end_at" class="form-label">Thời gian kết thúc</label>
-                                <input type="date" name="end_at" id="end_at" value="{{ \Carbon\Carbon::parse($voucher->end_at)->format('Y-m-d') }}" class="form-control" placeholder="" />
+                                <input type="date" name="end_at" id="end_at"
+                                    value="{{ \Carbon\Carbon::parse($voucher->end_at)->format('Y-m-d') }}"
+                                    class="form-control" placeholder="" />
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label for="quantity" class="form-label">só lượng</label>
                                 <input type="number" name="quantity" id="quantity" value="{{ $voucher->quantity }}"

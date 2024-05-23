@@ -9,6 +9,16 @@
             <div class="card-body">
                 <div class="">
                     <div class="m-8">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <form action="{{ route('product.store') }}" class="max-w-md mx-auto" method="post"
                             enctype="multipart/form-data">
                             @csrf
@@ -31,10 +41,10 @@
                             </div>
                             <div class="mb-3">
                                 <label for="description" class="form-label">Mô tả</label>
-                                <input type="text" name="description" id="price_reduced"
-                                    value="{{ old('description') }}" class="form-control" placeholder="" />
+                                <input type="text" name="description" id="price_reduced" value="{{ old('description') }}"
+                                    class="form-control" placeholder="" />
                             </div>
-                           
+
 
                             <div class="mb-3">
                                 <label class="form-label">Tên loại</label>

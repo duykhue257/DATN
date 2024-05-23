@@ -17,11 +17,24 @@ class ChartController extends Controller
     {
         // $chart = Products::query()->with('category')->get()->groupBy('category_id');
         $ProductQty = ProductVariants::query()->count();
+        $ProducutOrderqty = OrderDetail::sum('quantity');
+       
+        $OrderSuccess = OrderDetail::with('order.status_id')->whereHas('order', function ($query) {
+            $query->where('status_id', 5);
+        })->sum('quantity');
+
+        $successOrderQty = number_format(($OrderSuccess / $ProducutOrderqty) * 100, 2);
+
+
+        $total = Order::sum('total');
+        $totalsum = intval($total);
+        $ProducutOrdertotal = number_format($totalsum, 0, ',', '.');
+        
         $ProductBestSeller = OrderDetail::groupBy('product_variant_id')->groupBy('name')->selectRaw("product_variant_id, name, sum(quantity) as Total ")->orderByDesc("Total")->limit(5)->get();
         $TopUser = Order::groupBy('user_id')->selectRaw("user_id, count(user_id) as UserCount ")->orderByDesc("UserCount")->limit(5)->whereNot('user_id')->with('user')->get();
 
         // dd($TopUser);
-        return view('admin.partials.charts', compact('ProductQty', 'ProductBestSeller', 'TopUser'));
+        return view('admin.partials.charts', compact('successOrderQty','ProductQty', 'ProductBestSeller', 'TopUser','ProducutOrderqty','ProducutOrdertotal'));
     }
     public function chart()
     {

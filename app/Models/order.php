@@ -44,5 +44,8 @@ class Order extends Model
     {
         return $this->hasMany(OrderDetail::class);
     }
+    protected $casts = [
+        'total' => 'decimal:0', 
+    ];
 }
 
