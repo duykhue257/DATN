@@ -65,7 +65,7 @@
                                                 </div>
                                             </td>
                                             <td class="cart__quantity">
-                                                <div class="pro-qty">
+                                                <div class="ml-5">
                                                     <input class="quantity" data-rowid="{{ $item->rowId }}" name="quantity"
                                                         type="number" min="1" max="{{ $item->quanty }}"
                                                         onchange="updateQuantity(this)" value="{{ $item->qty }}">
@@ -168,7 +168,7 @@
                     <div class="col-lg-6">
                         <div class="discount__content">
 
-                            <h6>CHỌN MÃ GIẢM GIÁ (chỉ có thể áp dụng một mã)</h6>
+                            <h6 class="mb-2">CHỌN MÃ GIẢM GIÁ (chỉ có thể áp dụng một mã)</h6>
 
                             <form id="applyDiscountForm" action="{{ route('apply.discount') }}" method="POST">
                                 @csrf
@@ -179,18 +179,17 @@
                                 {{-- <button class="site-btn btn btn-danger" type="submit" onclick="cancelDiscount()">Hủy mã giảm giá</button> --}}
                             </form><br>
 
-                            <h6>MÃ CÓ THỂ DÙNG</h6><br>
+                            <h6 class="mt-2">MÃ CÓ THỂ DÙNG</h6><br>
                             @foreach ($discount as $dis)
-                                <form action="#" class="discount-form">
-                                    <input class="text-center discount-code border-1 rounded-lg input-hover"
-                                        type="text" name="selected_discount_code"
-                                        value="{{ $dis->code }}({{ $dis->percent }}%)" readonly>
-                                    <button type="button" class="button_voucher site-btn choose-discount"
-                                        data-discount="{{ $dis->code }}">&nbspdùng
-                                    </button>
+                                <form action="#" >
+                                        <input  class="text-center discount-code border-1 input-hover"
+                                            type="text" name="selected_discount_code"
+                                            value="{{ $dis->code }}({{ $dis->percent }}%)" readonly>
+                                        <button type="button" class="button_voucher site-btn choose-discount"
+                                            data-discount="{{ $dis->code }}">&nbspdùng
+                                        </button>
                                 </form>
                             @endforeach
-
                         </div>
                     </div>
                     <div class="col-lg-4 offset-lg-2">
@@ -232,25 +231,43 @@
         @endif
     </section>
     <style>
+            /* .input-hover {
+  border: 2px solid transparent;
+  border-image-source: linear-gradient(to right, #007bff, #28a745, #dc3545);
+  border-image-slice: 1;
+  border-image-width: 2px;
+  border-image-repeat: round;
+  transition: border-image 0.3s ease-in-out;
+  margin: 7px 0px;
+  
+}
+
+.input-hover:hover,
+.input-hover:focus {
+    border-image-source: linear-gradient(to right, #007bff, #28a745, #dc3545);
+  border-image-slice: 1;
+  border-image-width: 2px;
+  border-image-repeat: round;
+} */
         .input-hover {
             font-size: 20px;
             font-weight: 600;
             transition: background-color 0.3s;
-            background-color: black;
-            color: #ffffff;
+            background-color: rgb(255, 255, 255);
+            color: #000000;
             margin: 7px 0px;
+            border-radius: 70px;
         }
-
         /* .input-hover:hover {
                                             background-color: #ffffff;
                                         } */
         .button_voucher {
-            background-color: #000;
+            background-color: #ffffff;
             border: none;
-            color: white;
+            color: rgb(240, 18, 18);
             margin: 7px 0px;
+            padding-right: 5px ;
         }
-
         .button_voucher:hover {
             color: red;
         }
