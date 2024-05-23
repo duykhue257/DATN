@@ -16,7 +16,7 @@
             <i class="fa-solid fa-right-from-bracket"></i>
             {{-- <a href="" style="color: black; font-weight: 500;"> --}}
             <a class=""   type="submit">
-                 Đăng xuất
+                <button class="btnlog" type="submit">Đăng xuất</button>
             </a>
             <i class=""></i>
             {{-- </a> --}}
@@ -25,7 +25,13 @@
 </ul>
 
 <style>
-    <style>.list-group-item a {
+    .btnlog {
+        background-color: transparent;
+        border: none;
+        font-weight: 500;
+    }
+
+    .list-group-item a {
         text-decoration: none;
         color: black;
         transition: border-bottom 0.3s ease;
@@ -60,6 +66,9 @@
         color: white;
     }
     .item_sidebar:hover i {
+        color: white;
+    }
+    .item_sidebar:hover a button {
         color: white;
     }
 </style>

@@ -2191,6 +2191,12 @@ ol {
     border-radius: 12px;
 }
 
+.product__details__widget ul li .size__btn label:hover {
+	font-weight: bolder;
+	color: white;
+	background-color: #000;
+}
+
 .product__details__widget ul li .size__btn label:last-child {
 	margin-right: 0;
 }
@@ -2198,6 +2204,7 @@ ol {
 .product__details__widget ul li .size__btn label.active {
 	/* color: #eb0f0f; */
 	background-color: #000;
+	font-weight: bolder;
 	color: #fff;
 }
 

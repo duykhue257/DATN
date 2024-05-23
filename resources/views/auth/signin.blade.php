@@ -35,10 +35,10 @@
                               <p style="color: red">{{ $message }}</p>
                           @enderror
                           <!-- Checkbox -->
-                          <div class="form-check d-flex align-items-center mb-4">
+                          {{-- <div class="form-check d-flex align-items-center mb-4">
                               <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33"
                                   checked />
-                          </div>
+                          </div> --}}
 
                           <!-- Submit button -->
                           <button type="submit" class="btn btn-dark btn-block mb-4">

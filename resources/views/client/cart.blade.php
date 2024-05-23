@@ -168,7 +168,7 @@
                     <div class="col-lg-6">
                         <div class="discount__content">
 
-                            <h6>CHỌN MÃ GIẢM GIÁ (chỉ có thể áp dụng một mã)</h6>
+                            <h6 class="mb-2">CHỌN MÃ GIẢM GIÁ (chỉ có thể áp dụng một mã)</h6>
 
                             <form id="applyDiscountForm" action="{{ route('apply.discount') }}" method="POST">
                                 @csrf
@@ -179,7 +179,7 @@
                                 {{-- <button class="site-btn btn btn-danger" type="submit" onclick="cancelDiscount()">Hủy mã giảm giá</button> --}}
                             </form><br>
 
-                            <h6>MÃ CÓ THỂ DÙNG</h6><br>
+                            <h6 class="mt-2">MÃ CÓ THỂ DÙNG</h6><br>
                             @foreach ($discount as $dis)
                                 <form action="#" >
                                         <input  class="text-center discount-code border-1 input-hover"

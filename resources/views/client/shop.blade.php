@@ -58,7 +58,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="#" id="filter-btn">Lọc</a>
+                            <a class="mt-2" href="#" id="filter-btn">Lọc</a>
                         </div>
 
                         <div class="sidebar__sizes">

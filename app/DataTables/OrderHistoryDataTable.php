@@ -24,14 +24,14 @@ class OrderHistoryDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($order) {
                 $actionHtml = '
-                    <a class="btn btn-dark px-2" href="' . route('orderDetailHome', $order->id) . '"><i class="fa-solid fa-circle-info"></i></a>
+                    <a class="btn btn-dark px-3" href="' . route('orderDetailHome', $order->id) . '"><i class="fa-solid fa-circle-info"></i></a>
                 ';
             
                 if ($order->status_id == 1 || $order->status_id == 2) {
                     $actionHtml .= '
                         <form action="' . route('orders.cancel', $order->id) . '" method="POST" style="display: inline;">
                             ' . csrf_field() . '
-                            <button type="submit" class="btn btn-danger" onclick="return confirm(\'Bạn có chắc chắn muốn hủy đơn hàng này không?\')">Hủy</button>
+                            <button type="submit" class="btn btn-danger px-2 mt-1" onclick="return confirm(\'Bạn có chắc chắn muốn hủy đơn hàng này không?\')">Hủy</button>
                         </form>
                     ';
                 }
@@ -58,8 +58,8 @@ class OrderHistoryDataTable extends DataTable
             ->addColumn('method', function ($order) {
                 return $order->payment->method ;
             })
-            ->addColumn('created_at', function ($order) {
-                return $order->created_at ;
+            ->editColumn('created_at', function ($order) {
+                return $order->created_at->format('d-m-Y H:i:s');
             })
             ->rawColumns(['action', 'name'])
             ->setRowId('id');
@@ -70,7 +70,8 @@ class OrderHistoryDataTable extends DataTable
      */
     public function query(Order $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()
+                 ->with(['status', 'payment', 'detail_order.variants']);
     }
 
     /**
