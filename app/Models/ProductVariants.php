@@ -4,14 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 class ProductVariants extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     protected $table = 'product_variants';
     protected $fillable = [
-        'id', 'image', 'quantity', 'color_id', 'size_id', 'product_id'
+        'id', 'image', 'quantity', 'color_id', 'size_id', 'product_id','deleted_at'
     ];
 
     public function carts()

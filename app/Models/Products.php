@@ -5,13 +5,15 @@ namespace App\Models;
 use Egulias\EmailValidator\Parser\Comment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Products extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     protected $table = 'products';
     protected $fillable = [
-        'id', 'name', 'price', 'price_reduced', 'description', 'category_id', 'color_id','default_image'
+        'id', 'name', 'price', 'price_reduced', 'description', 'category_id', 'color_id','default_image','deleted_at'
     ];
     public function price_reduced_numeric()
     {
@@ -47,6 +49,6 @@ class Products extends Model
     }
     // cart 
     protected $casts = [
-        'price' => 'decimal:2', // Định dạng kiểu dữ liệu cho trường giá
+        'price' => 'decimal:0', 
     ];
 }

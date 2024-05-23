@@ -24,8 +24,8 @@
                         <div class="shop__cart__table">
                             <table>
                                 <thead>
-                                    <tr  class="text-center">
-                                 
+                                    <tr class="text-center">
+
                                         <th>SẢN PHẨM</th>
                                         <th class="text-center">GIÁ</th>
                                         <th>Kích Thước</th>
@@ -38,7 +38,7 @@
                                 </thead>
                                 <tbody class="">
                                     @foreach ($cartItems as $item)
-                                        <tr  class="text-center"> 
+                                        <tr class="text-center" >
                                             {{-- <p>{{ $item->quanty }}</p> --}}
                                             {{-- <td><input @if ($item->is_checked) {{ 'checked' }} @endif
                                                     type="checkbox">
@@ -211,6 +211,8 @@
 
                                 <input type="hidden" id="checkoutTotalInput" name="checkoutTotalInput"
                                     value="{{ Cart::instance('cart')->total() }}">
+
+
                             </ul>
 
 
@@ -240,8 +242,8 @@
         }
 
         /* .input-hover:hover {
-                background-color: #ffffff;
-            } */
+                                            background-color: #ffffff;
+                                        } */
         .button_voucher {
             background-color: #000;
             border: none;
@@ -284,7 +286,8 @@
         // var percent;
         // console.log('percent :' + percent);
         // var discountStr = sessionStorage.getItem('discount');
-        var discount = sessionStorage.getItem('discount');
+        var discount = sessionStorage.getItem('discount') || 0;
+
 
         if (!isNaN(discount)) {
             console.log("Discount:", discount);
@@ -303,22 +306,22 @@
         }
 
         var total = sessionStorage.getItem('newtotal');
-        console.log('total1'+total);
+        console.log('total1' + total);
         var totalNumber = parseFloat(total);
 
-        // if (!isNaN(totalNumber)) {
-        //     var formattedTotal = totalNumber.toLocaleString('vi-VN', {
-        //         minimumFractionDigits: 0
-        //     });
-        //     $('#total').text(formattedTotal + 'đ');
-        //     console.log('Tổng: ' + formattedTotal);
-        // } else {
+        if (!isNaN(totalNumber)) {
+            var formattedTotal = totalNumber.toLocaleString('vi-VN', {
+                minimumFractionDigits: 0
+            });
+            $('#total').text(formattedTotal + 'đ');
+            console.log('Tổng: ' + formattedTotal);
+        } else {
             console.log('Giá trị không hợp lệ trong sessionStorage.');
             var totalText = $('#total').text();
             var totalNumber = totalText.replace(/\D/g, '');
             console.log(totalNumber);
             sessionStorage.setItem('newtotal', totalNumber);
-        // }
+        }
 
 
 
@@ -353,10 +356,11 @@
                                 '"]');
                             // var newTotalString = cartTotalElement.text().replace('đ', '').replace('.',
                             //     '').trim();
-                            var newTotalString = cartTotalElement.text().replace('đ', '').replace(/(\.)/g, '').trim();
-    
+                            var newTotalString = cartTotalElement.text().replace('đ', '').replace(
+                                /(\.)/g, '').trim();
+
                             var subTotal = parseFloat(newTotalString);
-                            console.log('sub : '+newTotalString);
+                            console.log('sub : ' + newTotalString);
                             if (!isNaN(subTotal)) {
                                 newTotalSum += subTotal;
                             }
@@ -376,7 +380,8 @@
                         console.log('sum :' + newTotalSum);
                         var percent = sessionStorage.getItem('percent');
                         var discountAmountNumber = parseInt(newTotalSum * (percent / 100));
-                        var formattedTotalSum = discountAmountNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                        var formattedTotalSum = discountAmountNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g,
+                            '.');
                         console.log(formattedTotalSum + 'mount');
                         sessionStorage.setItem('discount', formattedTotalSum);
 
@@ -393,8 +398,8 @@
                         console.log('newtotal :' + newtotal);
                         // console.log('response :'+response.discountAmount);
                         sessionStorage.setItem('newtotal', newtotal);
-                        //                         var newTotal = sessionStorage.getItem('newtotal');
-                        // console.log(newTotal+'hạdkasjhk');
+                        var newTotal = sessionStorage.getItem('newtotal');
+                        console.log(newTotal + 'hạdkasjhk');
                         $('#total').text(newtotal.toLocaleString('vi-VN') + 'đ');
                         // console.log('Tổng mới: ' + newtotal.toLocaleString('vi-VN') + 'đ');
                     } else {
@@ -462,18 +467,55 @@
             };
         });
 
-
-
-
-
         function removeItemFromCart(rowId) {
-            $('#rowId_D').val(rowId);
-            $('#deleteFromCart').submit();
-            
+            $.ajax({
+                url: '/cart/remove',
+                type: 'DELETE',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    rowId: rowId
+                },
+                success: function(response) {
+                  
+                    var subtotalWithCommas = response.subtotalRm;
+
+                    var subtotal = parseFloat(subtotalWithCommas.replace(/,/g, ''));
+                      console.log(subtotal);
+                    var percent = sessionStorage.getItem('percent');
+                    var discountAmountNumber = parseInt(subtotal * (percent / 100));
+                    var formattedTotalSum = discountAmountNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g,
+                        '.');
+                    console.log(formattedTotalSum + 'mount');
+                    sessionStorage.setItem('discount', formattedTotalSum);
+
+                    if (discountAmountNumber == 0) {
+                        $('#discountAmount').text(parseFloat(discountAmountNumber).toLocaleString(
+                            'vi-VN') + 'đ');
+                    } else {
+                        $('#discountAmount').text('-' + parseFloat(discountAmountNumber).toLocaleString(
+                            'vi-VN') + 'đ');
+                    }
+
+                    var newtotal = subtotal - discountAmountNumber;
+                    newtotal = parseInt(newtotal);
+                    console.log('newtotal :' + newtotal);
+                    // console.log('response :'+response.discountAmount);
+                    sessionStorage.setItem('newtotal', newtotal);
+                    $('#total').text(newtotal.toLocaleString('vi-VN') + 'đ');
+
+                    window.location.reload();
+                },
+                error: function(xhr, status, error) {
+                    // Xử lý lỗi nếu có
+                    console.error('Error removing item:', error);
+                }
+            });
         }
+
 
         function clearCart() {
             $('#clearCart').submit();
+            sessionStorage.clear();
         }
 
         $(document).ready(function() {
@@ -604,10 +646,7 @@
                     sessionStorage.setItem('percent', percent);
                     document.getElementById('discount_code').value = '';
 
-                    // Gửi giá trị total mới lên server để lưu vào session
-                    // updateCartTotal(newTotal);
-                    // console.log(response.message);
-                    // Hiển thị thông báo thành công
+
                     showNotification(response.message, false);
                 },
                 error: function(error) {

@@ -11,7 +11,8 @@ use App\Models\Products;
 use App\Models\ProductVariants;
 use App\Models\Size;
 use Illuminate\Pagination\Paginator;
-use Cart;
+use Gloudemans\Shoppingcart\Facades\Cart;
+
 class HomeController extends Controller
 {
     //
@@ -90,19 +91,23 @@ public function shop( Request $request){
 }
 
 public function ProductDetail(Request $request) {
-       
+    $cartContent = Cart::instance('cart')->content();
+    // dd($cartContent);
+   
+
         $productId = $request->input('id') ?? $request->query('id');
         
         $product = Products::with('variants')->find($productId);
+        // dd($product);
         $comments = $product->comments;
         $commentCount = $product->comments->count();
         $firstFiveComments = $comments->take(5);
         $remainingComments = $comments->slice(5);
-        $categoryProducts = Products::where('category_id', 2)->with('variants')->get();
+        $categoryProducts = Products::where('category_id', $product->category_id)->with('variants')->get();
 
     $numbers = range(1, 6);
         
-        return view('client.detail_product', compact('firstFiveComments','remainingComments','product', 'categoryProducts', 'numbers','comments','commentCount'));
+        return view('client.detail_product', compact('firstFiveComments','remainingComments','product', 'categoryProducts', 'numbers','comments','commentCount','cartContent'));
     }
 
     public function createComment(Request $request)

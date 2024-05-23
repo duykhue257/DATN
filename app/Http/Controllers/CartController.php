@@ -38,35 +38,40 @@ class CartController extends Controller
         foreach ($cartItems as $item) {
             // $sum += $item->price;
             $productVariant = ProductVariants::with('sizes', 'colors')->find($item->id);
-         
-            $item->variant_id = $productVariant->id;
-            $item->quanty  = $productVariant->quantity;
-            // dd($productVariant->quantity);
-            $productVariant->load('product');
-            // Gán thông tin sản phẩm vào mỗi item trong giỏ hàng
-            $item->is_checked = true;
-            $item->product_image = $productVariant->image;
-            $item->name = $productVariant->product->name;
-            $item->price = $productVariant->product->price_reduced;
-            $item->size = $productVariant->sizes->size;
-            $item->color = $productVariant->colors->color;
-            $item->quantity = (int)$item->qty;
+            if ($productVariant) {
+                $item->variant_id = $productVariant->id;
+
+                // $item->variant_id = $productVariant->id;
+                $item->quanty  = $productVariant->quantity;
+                // dd($productVariant->quantity);
+                $productVariant->load('product');
+                // Gán thông tin sản phẩm vào mỗi item trong giỏ hàng
+                $item->is_checked = true;
+                $item->product_image = $productVariant->image;
+                $item->name = $productVariant->product->name;
+                $item->price = $productVariant->product->price_reduced;
+                $item->size = $productVariant->sizes->size;
+                $item->color = $productVariant->colors->color;
+                $item->quantity = (int)$item->qty;
+            } else {
+                
+            }
         }
-        
+
         return view('client.cart', compact('cartItems', 'orderNumber', 'productVariant', 'discount', 'cartItemIds'));
     }
 
     public function addToCart(Request $request)
     {
+        $Item = Cart::instance('cart')->content();
 
         $productId = $request->id;
         $variantId = $request->variant_id;
-        //  dd($request->id);
-        // Tìm sản phẩm chính và biến thể tương ứng
+        // if($request->quantity + )
+
         $product = Products::find($productId);
         $productVariant = ProductVariants::find($variantId);
 
-        // Kiểm tra xem sản phẩm và biến thể có tồn tại hay không
         if (!$product || !$productVariant) {
             return redirect()->back()->with('error', 'Sản phẩm không tồn tại');
         }
@@ -80,10 +85,9 @@ class CartController extends Controller
             $product->price
         )->associate('App\Models\ProductVariants');
 
-        // Lưu order_number vào session
         session(['order_number' => $orderNumber]);
 
-        // Lấy mảng giỏ hàng ra khỏi session
+
         $cartContent = session('cart');
         // Thêm order_number vào mục giỏ hàng mới thêm vào
         $cartContent[$cartItem->rowId]['order_number'] = $orderNumber;
@@ -95,25 +99,16 @@ class CartController extends Controller
 
     public function updateCart(Request $request)
     {
-        // $newTotalSum = $request->input('newTotalSum');
         $rowId = $request->input('rowId');
         $quantity = $request->input('quantity');
-        // $numProducts = $request->input('numProducts');
-        // $all = $request->all();
-        // $discountAmount = $request->session()->get('discountAmount', 0);
-
         $cartItem = Cart::instance('cart')->get($rowId);
 
         if ($cartItem) {
             $cartItem->quantity = $quantity;
             Cart::instance('cart')->update($rowId, $quantity);
-
-            // Tính toán giá mới
             $newsubtotal = $cartItem->price * $quantity;
-            
-            // $newPrice = $newsubtotal * $numProducts;
-            // $request->session()->put('newTotal', $newPrice);
-            return response()->json(['success' => true, 'newSubTotal' => $newsubtotal ]);
+
+            return response()->json(['success' => true, 'newSubTotal' => $newsubtotal]);
         }
 
         return response()->json(['success' => false]);
@@ -124,11 +119,15 @@ class CartController extends Controller
     {
         $rowId = $request->rowId;
         Cart::instance('cart')->remove($rowId);
-        return redirect()->route('cart.show');
+        $subtotalRm = Cart::instance('cart')->subtotal();
+
+        return response()->json(['subtotalRm' => $subtotalRm]);
     }
+
     public function clearCart()
     {
         Cart::instance('cart')->destroy();
+
         return redirect()->route('cart.show');
     }
 

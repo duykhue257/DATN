@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    
+
     <!-- Breadcrumb End -->
     <!-- Checkout Section Begin -->
     <section class="checkout spad">
@@ -22,12 +22,13 @@
                 <div class="col-lg-12">
                     {{-- <h6 class="coupon__link"><span class="icon_tag_alt"></span> <a href="#"> Có phiếu giảm giá?</a>
                         Nhấn vào đây để nhập mã của bạn.</h6> --}}
-                        <div>
-                            @if ($errors->has('ordererror'))
-                                <div style="color: red; text-align:center" class="error">{{ $errors->first('ordererror') }}</div>
-                            @endif
-                            {{-- <div style="color: red; text-align:center" class="error">hjasgdhjashjkd</div> --}}
-                        </div>
+                    <div>
+                        @if ($errors->has('ordererror'))
+                            <div style="color: red; text-align:center" class="error">{{ $errors->first('ordererror') }}
+                            </div>
+                        @endif
+                        {{-- <div style="color: red; text-align:center" class="error">hjasgdhjashjkd</div> --}}
+                    </div>
                 </div>
             </div>
             <form id="checkout-form" action="" method="POST" class="checkout__form">
@@ -40,12 +41,14 @@
 
                             <div class="col-lg-12">
                                 <div class="checkout__form__input">
-                                    <p>Họ Tên <span>*</span></p>
-                                    <input type="text" name="name" value="{{ old('name') }}" required>
+                                    <p>Điện thoại <span>*</span></p>
+                                    <input type="text" name="name"
+                                        value="@if (Auth::check()){{ Auth::user()->name }}@endif" required>
                                 </div>
                                 <div class="checkout__form__input">
                                     <p>Điện thoại <span>*</span></p>
-                                    <input type="tel" name="phone" required>
+                                    <input type="tel" name="phone"
+                                        value="@if (Auth::check()){{ Auth::user()->phone }}@endif" required>
                                 </div>
                                 @error('phone')
                                     <span class="text-danger">{{ $message }}</span><br><br>
@@ -186,7 +189,8 @@
         // $('#total').text(newTotal.toLocaleString('vi-VN') + 'đ');
         $('#total').text(parseFloat(newTotal).toLocaleString('vi-VN') + 'đ');
 
-        var discount = sessionStorage.getItem('discount');
+        var discount = sessionStorage.getItem('discount') || 0;
+
         console.log(discount);
         // $('#total').text(newTotal.toLocaleString('vi-VN') + 'đ');
         if (discount == 0) {
@@ -310,21 +314,21 @@
             });
         });
         document.addEventListener('DOMContentLoaded', function() {
-        var placeOrderBtn = document.querySelector('.site-btn');
+            var placeOrderBtn = document.querySelector('.site-btn');
 
-        placeOrderBtn.addEventListener('click', function(event) {
-            var paymentMethods = document.querySelectorAll('input[name="payment"]');
-            var isChecked = false;
-            for (var i = 0; i < paymentMethods.length; i++) {
-                if (paymentMethods[i].checked) {
-                    isChecked = true;
-                    break;
+            placeOrderBtn.addEventListener('click', function(event) {
+                var paymentMethods = document.querySelectorAll('input[name="payment"]');
+                var isChecked = false;
+                for (var i = 0; i < paymentMethods.length; i++) {
+                    if (paymentMethods[i].checked) {
+                        isChecked = true;
+                        break;
+                    }
                 }
-            }
-            if (!isChecked) {
-                alert('Vui lòng chọn một phương thức thanh toán trước khi tiếp tục!');
-            }
+                if (!isChecked) {
+                    alert('Vui lòng chọn một phương thức thanh toán trước khi tiếp tục!');
+                }
+            });
         });
-    });
     </script>
 @endpush

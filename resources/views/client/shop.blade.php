@@ -80,10 +80,10 @@
                             <div class="section-title">
                                 <h4>Màu sắc</h4>
                             </div>
-                            <div class="colorList">
+                            <div class="colorList text-uppercase">
                                 @foreach ($colors as $cl)
                                     <label for="{{ $cl->color }}">
-                                        <input class="variant_color color-filter" type="checkbox" id="{{ $cl->color }}"
+                                        <input class="variant_color color-filter " type="checkbox" id="{{ $cl->color }}"
                                             value="{{ $cl->id }}">
                                         {{ $cl->color }}
 

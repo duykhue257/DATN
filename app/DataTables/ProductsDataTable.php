@@ -23,22 +23,30 @@ class ProductsDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($prd) {
-            return '
+                return '
+            <div class="product-item" id="product-{{ $prd->id }}">
                 <form class="d-flex" action="' . route('product.destroy', $prd->id) . '" method="POST">
                     <input type="hidden" name="_token" value="' . csrf_token() . '">
                     <input type="hidden" name="_method" value="DELETE">
                     <a class="btn btn-warning mx-2" href="' . route('product.edit', $prd->id) . '" title="Cập nhật"><i class="fa-solid fa-wrench my-3"></i></a>
                     <a class="btn btn-dark items-center mr-2" href="' . route('product.show', $prd->id) . '" title="Thông tin chi tiểt"><i class="fa-solid fa-circle-info my-3"></i></a>
-                    <button onclick="return confirm(\'are you sure?\')" class="btn btn-danger" type="submit" title="Xóa"><i class="fa-solid fa-trash"></i></button>
+                    <button onclick="return confirm(\'are you sure?\')" data-id="' . $prd->id . '"  class="btn btn-danger" type="submit" title="Xóa"><i class="fa-solid fa-trash"></i></button>
                 </form>
-                ';
+            </div>
+             
+            ';
             })
+
             ->addColumn('name_cate', function ($prd) {
                 return $prd->category->name_cate;
             })
             ->setRowId('id');
     }
-
+    //    <form action="' . route('products.restore', $prd->id) . '" method="POST">
+    //                    <input type="hidden" name="_token" value="' . csrf_token() . '">
+    //                     <input type="hidden" name="_method" value="POST">
+    //                     <button type="submit" class="btn btn-success">Khôi phục</button>
+    //                 </form>
     /**
      * Get the query source of dataTable.
      */
@@ -53,28 +61,28 @@ class ProductsDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('products-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(0, 'asc')
-                    ->selectStyleSingle()
-                    ->language([
-                        'search' => 'Tìm kiếm:',
-                        'zeroRecords' => 'Không tìm thấy bản ghi phù hợp',
-                        'info' => 'Hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ bản ghi',
-                        'infoEmpty' => 'Hiển thị từ 0 đến 0 trong tổng số 0 bản ghi',
-                        'infoFiltered' => '(được lọc từ tổng số _MAX_ bản ghi)',
-                        'lengthMenu' => 'Hiển thị _MENU_ bản ghi mỗi trang',
-                    ])
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+            ->setTableId('products-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(0, 'asc')
+            ->selectStyleSingle()
+            ->language([
+                'search' => 'Tìm kiếm:',
+                'zeroRecords' => 'Không tìm thấy bản ghi phù hợp',
+                'info' => 'Hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ bản ghi',
+                'infoEmpty' => 'Hiển thị từ 0 đến 0 trong tổng số 0 bản ghi',
+                'infoFiltered' => '(được lọc từ tổng số _MAX_ bản ghi)',
+                'lengthMenu' => 'Hiển thị _MENU_ bản ghi mỗi trang',
+            ])
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            ]);
     }
 
     /**

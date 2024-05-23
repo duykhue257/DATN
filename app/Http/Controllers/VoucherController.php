@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
 use App\Models\Order;
 use App\Models\Voucher;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -28,7 +29,9 @@ class VoucherController extends Controller
     public function create()
     {
 
-        return view('admin.voucher.add');
+        $randomCode = strtoupper(Str::random(6));
+        // dd($randomCode);
+        return view('admin.voucher.add', ['randomCode' => $randomCode]);
     }
 
     /**
@@ -36,11 +39,19 @@ class VoucherController extends Controller
      */
     public function store(Request $request)
     {
-     
-        $voucher = $request->only("code", 'percent', 'min_price', 'start_at', 'end_at', 'quantity');
+        $validatedData = $request->validate([
+            'code' => 'required|string|unique:voucher',
+            'percent' => 'required|numeric|min:0|max:100',
+            'min_price' => 'required|numeric|min:0',
+            'start_at' => 'required|date',
+            'end_at' => 'required|date|after:start_at',
+            'quantity' => 'required|integer|min:1',
+        ]);
+        // $voucher = $request->only("code", 'percent', 'min_price', 'start_at', 'end_at', 'quantity');
         // dd($voucher);
-        Voucher::create($voucher);
-        return redirect()->route('voucher.index');
+        Voucher::create($validatedData);
+        return redirect()->route('voucher.index')->with('success', 'Voucher đã được tạo thành công.');
+    
     }
 
     /**
@@ -70,15 +81,26 @@ class VoucherController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Xác thực dữ liệu đầu vào
+        $validatedData = $request->validate([
+            'code' => 'required|string|unique:voucher,code,' . $id,
+            'percent' => 'required|numeric|min:0|max:100',
+            'min_price' => 'required|numeric|min:0',
+            'start_at' => 'required|date',
+            'end_at' => 'required|date|after:start_at',
+            'quantity' => 'required|integer|min:1',
+        ]);
+    
         $voucher = Voucher::find($id);
         if ($voucher) {
-            $voucher->update($request->all());
-            return back();
+            // Cập nhật voucher với dữ liệu đã xác thực
+            $voucher->update($validatedData);
+            return redirect()->route('voucher.index');
         } else {
-            return 0;
+            return redirect()->route('voucher.index');
         }
     }
+    
 
     /**
      * Remove the specified resource from storage.

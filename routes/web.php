@@ -65,6 +65,8 @@ Route::get('/signin', function () {
 /* page profile */
 route::middleware(['auth'])->group(function () {
    route::get('/account', [AddressController::class, 'showAccount'])->name('account');
+   Route::post('/profile/update/{user}', [AddressController::class, 'updateProfile'])->name('profile.update');
+   Route::post('/password/update', [AddressController::class, 'updatePassword'])->name('password.update');
    Route::get('/address', function () {
       return view('client.account.address');
    });
@@ -97,6 +99,7 @@ route::middleware(['admin'])->group(function () {
 
       //products route
       route::resource('product', ProductsController::class);
+      Route::post('/products/restore/{id}', [ProductsController::class,'restore'])->name('products.restore');
 
       //products variant route
       route::resource('productVariant', ProductVariansController::class);

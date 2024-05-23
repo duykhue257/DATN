@@ -54,12 +54,13 @@ class CheckoutController extends Controller
 
     public function store(CheckoutRequest  $request)
     {
-        // dd($request->all());
+        // dd($request->order_code);
         $total = intval($request->total);
         $order = $request->only('user_id', 'order_code', 'name', 'phone', 'province', 'district', 'ward', 'detail', 'shipping_by', 'note', 'address');
         $paymentId = $request->payment;
     
-
+        $code = $request->order_code;
+        // dd($code);
         $paymentMethod = Payment::find($paymentId);
         if ($paymentMethod) {
             $order['payment_id'] = $paymentId;
@@ -94,14 +95,10 @@ class CheckoutController extends Controller
                 }
             }
         }
-
-
-
-        // Xóa session order sau khi tạo đơn hàng thành công
         session()->forget('order');
-
+        Cart::instance('cart')->destroy();
         // Chuyển hướng đến trang cảm ơn
-        return redirect()->route('thanks');
+        return redirect()->route('thanks')->with('code',$code);
     }
     // private function checkPhoneNumber($phoneNumber)
     // {

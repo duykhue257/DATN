@@ -9,12 +9,22 @@
             <div class="card-body">
                 <div class="">
                     <div class="m-8">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <form action="{{ route('voucher.store') }}" class="max-w-md mx-auto" method="post"
                             enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
                                 <label for="code" class="form-label">Mã giảm</label>
-                                <input type="text" name="code" id="code" value="{{ old('code') }}"
+                                <input type="text" name="code" id="code" value="{{ $randomCode }}"
                                     class="form-control" placeholder="" />
                             </div>
                             {{-- @error('code')
@@ -25,7 +35,7 @@
                                 <input type="number" name="percent" id="percent" value="{{ old('percent') }}"
                                     class="form-control" placeholder="" />
                             </div>
-                        
+
                             <div class="mb-3">
                                 <label for="min_price" class="form-label">giá tối thiểu</label>
                                 <input type="number" name="min_price" id="min_price" value="{{ old('min_price') }}"
